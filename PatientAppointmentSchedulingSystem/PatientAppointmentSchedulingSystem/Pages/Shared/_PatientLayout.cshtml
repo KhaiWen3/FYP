@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Welcome to MediBook</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/fyp.styles.css" asp-append-version="true" />
+    <style>
+        :root {
+            --primary-color: #5E9CA0;
+            --secondary-color: #F4A261;
+            --light-color: #ffffff;
+            --dark-color: #333333;
+            --hover-color: #4a8084;
+            --transition-speed: 0.3s;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            font-family: 'Times New Roman', Times, serif !important;
+        }
+        <!--Remove any default margin and padding that browser apply-- >
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 30px;
+            background: var(--primary-color) !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all var(--transition-speed) ease;
+        }
+        .navbar-brand{
+            display: flex;
+            align-items: center;
+        }
+        .navbar img {
+            height: 50px;
+            width: auto;
+        }
+
+        .nav-links {
+            list-style: none; /*Removes default bullet points*/
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            margin: 0 auto; /* Centers the nav-links */
+        }
+
+            .nav-links a {
+                text-decoration: none; /*Remove underlines from links*/
+                color: var(--light-color);
+                font-size: 16px;
+                font-weight: 500;
+                padding: 8px 12px;
+                border-radius: 5px;
+                transition: all var(--transition-speed);
+                position: relative;
+                font-size: 24px;
+            }
+
+                .nav-links a:hover {
+                    color: var(--light-color);
+                    background-color: rgba(255, 255, 255, 0.1);
+                }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+            .nav-buttons button {
+                padding: 8px 16px;
+                font-size: 16px;
+                min-width: 110px;
+                text-align: center;
+                border: none;
+                cursor: pointer;
+                border-radius: 5px;
+                font-weight: 600;
+                transition: all var(--transition-speed);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+        .btn-primary {
+            background: var(--secondary-color);
+            color: var(--light-color);
+        }
+
+            .btn-primary:hover {
+                background: #e8914c;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+        .btn-secondary {
+            background: var(--light-color);
+            color: var(--secondary-color);
+            border: 2px solid var(--secondary-color);
+        }
+
+            .btn-secondary:hover {
+                background: rgba(244, 162, 97, 0.1);
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+    </style>
+</head>
+<body>
+    <!--Navigation Bar-->
+    <nav class="navbar" style="padding: 8px; background: #5E9CA0 !important">
+        <a href="#">
+            <img src="/lib/image/medibook-logo.png" alt="Company Logo">
+        </a>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="/PatientMakeAppointment">Appointment</a></li>
+            <li><a href="/Index">Logout</a></li>
+        </ul>
+        <div class="nav-buttons">
+            <button class="btn-secondary" onclick="window.location.href='/PatientLogin'">Login</button>
+            <button class="btn-primary" onclick="window.location.href='/PatientSignUp'">Sign Up</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2025 - MediBook - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

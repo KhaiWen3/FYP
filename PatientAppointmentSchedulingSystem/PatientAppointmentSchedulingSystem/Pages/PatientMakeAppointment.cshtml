@@ -1,0 +1,612 @@
+﻿@page
+@model PatientAppointmentSchedulingSystem.Pages.PatientMakeAppointmentModel
+@{
+    Layout = "_PatientLayout";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+        --primary-color: #5e9ca0; /* Updated theme color */
+        --secondary-color: #0056aa40;
+        --accent-color: #2a9df4;
+        --light-color: #ffffff;
+        --dark-color: #333333;
+        --video-color: #4CAF50;
+        --inperson-color: #9C27B0;
+        --isbooked-color: #FF0000;
+        --hover-color: #f08c41; /* Darker version of primary for hover effects */
+        --transition-speed: 0.3s;
+        --border-radius: 10px;
+        --gray-bg: #f4f6f9;
+        --gray-light: #e9ecef;
+        --gray-medium: #adb5bd;
+        }
+
+        .body {
+        background-color: var(--gray-bg);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        }
+
+        .sidebar {
+        width: 100%;
+        background-color: white;
+        border-radius: var(--border-radius);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 0px;
+        margin-right: 0px;
+        margin-bottom: 20px;
+        }
+
+        .profile-section {
+        background-color: var(--primary-color);
+        padding: 20px 0;
+        text-align: center;
+        color: white;
+        position: relative;
+        border-radius: var(--border-radius);
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><g fill="rgba(255,255,255,0.1)"><path d="M30 40c0 5.5 4.5 10 10 10s10-4.5 10-10-4.5-10-10-10-10 4.5-10 10zm10 15c-8.3 0-15 6.7-15 15v5h30v-5c0-8.3-6.7-15-15-15z"/><path d="M70 45c5.5 0 10-4.5 10-10s-4.5-10-10-10-10 4.5-10 10 4.5 10 10 10zm0 5c-8.3 0-15 6.7-15 15v5h30v-5c0-8.3-6.7-15-15-15z"/><path d="M40 80c0 5.5 4.5 10 10 10s10-4.5 10-10-4.5-10-10-10-10 4.5-10 10z"/><path d="M15 30c5.5 0 10-4.5 10-10s-4.5-10-10-10-10 4.5-10 10 4.5 10 10 10zm0 5c-8.3 0-15 6.7-15 15v5h30v-5c0-8.3-6.7-15-15-15z"/></g></svg>');
+        background-position: center;
+        background-repeat: no-repeat;
+        }
+
+        .doctor-profile {
+        display: flex;
+        text-align: center;
+        padding: 15px;
+        }
+
+        .patient-name {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 5px;
+        }
+        .doctor-info {
+        flex: 1;
+        }
+
+        .profile-pic {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #0d6efd;
+        }
+
+        .sidebar-nav .nav-link {
+        color: #6c757d;
+        padding: 10px 15px;
+        }
+
+        .sidebar-nav .nav-link:hover {
+        background-color: #f8f9fa;
+        }
+
+        .appointments-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        }
+
+        .appointment-status {
+        display: flex;
+        gap: 10px;
+        }
+
+        .appointment-status .badge {
+        padding: 5px 10px;
+        }
+
+        .appointment-card {
+        background-color: white;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        padding: 15px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .appointment-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+        }
+
+        .action-icon {
+        background-color: #f8f9fa;
+        border-radius: 50%;
+        padding: 8px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        }
+
+        <!--Search form filtering-->
+        .filter-section{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 20px;
+        }
+
+        .filter-section .form-control{
+        flex-grow:1;
+        }
+
+        .slot-button {
+            width: 100%;
+            height: 100%;
+            background: none;
+            border: none;
+            padding: 0;
+            text-align: left;
+            cursor: pointer;
+        }
+
+            .slot-button:hover {
+                background-color: #f0f0f0;
+            }
+
+        .time-slot {
+        border: 1px solid var(--gray-light);
+        border-radius: 5px;
+        padding: 10px;
+        text-align: center;
+        position: relative;
+        }
+
+        .time-slot.video {
+        border-left: 4px solid var(--video-color);
+        }
+
+        .time-slot.in-person {
+        border-left: 4px solid var(--inperson-color);
+        }
+
+        .time-slot.isbooked {
+        border-left: 4px solid var(--isbooked-color);
+        }
+
+        .page-title {
+        text-align: center;
+        font-size: 1.8rem;
+        color: var(--dark-color);
+        margin: 20px 0;
+        font-weight: 600;
+        }
+
+        .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+        }
+
+        .content-wrapper {
+        display: block;
+        margin-top: 20px;
+        }
+
+        .slots-container {
+        border: 1px solid var(--gray-light);
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 25px;
+        }
+
+        .no-slots {
+        text-align: center;
+        padding: 30px;
+        color: var(--gray-medium);
+        font-style: italic;
+        }
+
+        .slots-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 15px;
+        margin-top: 15px;
+        }
+
+        .time-slot {
+        border: 1px solid var(--gray-light);
+        border-radius: 5px;
+        padding: 10px;
+        text-align: center;
+        position: relative;
+        }
+
+        .time-slot.video {
+        border-left: 4px solid var(--video-color);
+        }
+
+        .time-slot.in-person {
+        border-left: 4px solid var(--inperson-color);
+        }
+
+        .time-slot.isbooked {
+        border-left: 4px solid var(--isbooked-color);
+        }
+
+        .slot-time {
+        font-weight: 500;
+        margin-bottom: 5px;
+        }
+
+        .slot-type {
+        font-size: 0.8rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        }
+
+        .slot-type i {
+        margin-right: 5px;
+        }
+
+        .slot-video {
+        color: var(--video-color);
+        }
+
+        .slot-inperson {
+        color: var(--inperson-color);
+        }
+
+        .slot-isbooked {
+        color: var(--isbooked-color);
+        }
+
+        .slot-actions {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        cursor: pointer;
+        color: var(--gray-medium);
+        }
+
+        .days-selector {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 25px;
+        }
+
+        .day-btn {
+        flex: 1;
+        min-width: 80px;
+        text-align: center;
+        padding: 10px;
+        border: 1px solid var(--gray-light);
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        }
+
+        .day-btn:hover {
+        background-color: var(--gray-light);
+        }
+
+        .day-btn.active {
+        background-color: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+        }
+
+        .day-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        }
+
+        .day-name {
+        font-size: 1.1rem;
+        font-weight: 600;
+        flex-grow: 1;
+        }
+
+        .main-content {
+        flex: 1;
+        background-color: white;
+        border-radius: var(--border-radius);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 25px;
+        }
+
+        .breadcrumb {
+        display: flex;
+        padding: 10px 30px;
+        background-color: transparent;
+        font-size: 0.9rem;
+        }
+
+        .breadcrumb a {
+        color: var(--primary-color);
+        text-decoration: none;
+        }
+
+        .breadcrumb-item {
+        display: flex;
+        align-items: center;
+        }
+
+        .breadcrumb-item:not(:first-child)::before {
+        content: "›";
+        margin: 0 10px;
+        color: var(--gray-medium);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="breadcrumb">
+            <div class="breadcrumb-item"><a href="/PatientHomePage"><i class="fas fa-home"></i>Patient Dashboard</a></div>
+            <div class="breadcrumb-item">My Appointment</div>
+        </div>
+
+        <h1 class="page-title">My Appointment</h1>
+
+        <div class="content-wrapper">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="profile-section">
+                    @* <img src="/api/placeholder/120/120" alt="Profile Picture" class="profile-pic"> *@
+                    @* <h4 class="mt-3">@Model.PatientFullName</h4>  *@
+                    <div class="doctor-info">
+                        <div class="patient-name">@Model.PatientFullName</div>
+                    </div>
+                </div>
+
+                @* <nav class="sidebar-nav"> *@
+                @*     <ul class="nav flex-column"> *@
+                @*         <li class="nav-item"> *@
+                @*             <a class="nav-link active" href="#"><i class="bi bi-grid-fill me-2"></i> Dashboard</a> *@
+                @*         </li> *@
+                @*         <li class="nav-item"> *@
+                @*             <a class="nav-link" href="#"><i class="bi bi-calendar-check me-2"></i> My Appointments</a> *@
+                @*         </li> *@
+                @*     </ul> *@
+                @* </nav> *@
+            </div>
+
+            <!-- Main Content -->
+            <div class="main-content">
+                @* <div class="appointments-header"> *@
+                @*     <h2>Appointments</h2> *@
+                @*     <div class="appointment-status"> *@
+                @*         <span class="badge bg-primary">Upcoming 21</span> *@
+                @*         <span class="badge bg-secondary">Cancelled 16</span> *@
+                @*         <span class="badge bg-success">Completed 214</span> *@
+                @*     </div> *@
+                @* </div> *@
+
+
+
+                <form method="get">
+                    <div class="filter-section mb-3">
+                        <div class="row align-items-center">
+                            <div class="col-md-10 col-9 pe-0">
+                                <input type="text" name="Search" class="form-control" value="@Model.Search" placeholder="Search by a speciality or service..." />
+                            </div>
+                            <div class="col-md-2 col-3 text-end">
+                                <button type="submit" class="btn btn-outline-primary">Search</button>
+                                @* <button type="submit" id="cancelSearch" class="btn btn-outline-secondary">Cancel</button> *@
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+
+                @if (!string.IsNullOrEmpty(Model.Search))
+                {
+                    if (Model.Doctors != null && Model.Doctors.Any())
+                    {
+                        //Here might be shoe detailed profile of doctor -- Proceed in FYP2
+                        <h6>Available Doctors</h6>
+                        <div class="doctors-list mb-4">
+                            @foreach (var doctor in Model.Doctors)
+                            {
+                                <div class="doctor-card mb-3 p-3 border rounded">
+                                    <h5>@doctor.DoctorName</h5>
+                                    <p class="text-muted">@doctor.DoctorMedicalService</p>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <h6>No matching doctors found.</h6>
+                    }
+
+                    @if (Model.AppointmentSlots != null && Model.AppointmentSlots.Any())
+                    {
+                        <h6>Available Slots</h6>
+
+                        @foreach (var dayGroup in Model.AppointmentSlots.GroupBy(s => s.AppointmentDate))
+                        {
+                            <div class="slots-container">
+                                <div class="day-header">
+                                    <div class="day-name">@dayGroup.Key.ToString("dddd, dd MMM yyyy")</div>
+                                </div>
+
+                                <div class="slots-grid">
+                                    @foreach (var slot in dayGroup)
+                                    {
+                                        string slotClass = slot.AppointmentStatus == 1
+                                        ? "isbooked"
+                                        : (slot.AppointmentType == "Video" ? "video" : "in-person");
+
+                                        <div class="time-slot @slotClass">
+                                            <!-- Form for Booking the Slot -->
+                                            <form method="post" asp-page-handler="BookAppointment" asp-route-slotId="@slot.SlotId" onsubmit="return confirm('Are you sure you want to book this slot?');">
+                                                <button type="submit" class="slot-button" @(slot.AppointmentType == "booked" || slot.AppointmentStatus == 1 ? "disabled" : "")>
+                                                    <div class="doctor-name">
+                                                        Doctor: @slot.Doctor.DoctorName
+                                                    </div>
+                                                    <div class="doctor-name">
+                                                        <p class="text-muted">@slot.Doctor.DoctorMedicalService</p>
+                                                    </div>
+                                                    <div class="slot-time">
+                                                        @slot.StartTime.ToString("hh\\:mm") - @slot.EndTime.ToString("hh\\:mm")
+                                                    </div>
+                                                    <div class="slot-type">
+                                                        @if (slot.AppointmentStatus == 1)
+                                                        {
+                                                            <p><i class="fas fa-check-circle"></i> Booked</p>
+                                                        }
+                                                        else if (slot.AppointmentType == "Video")
+                                                        {
+                                                            <p><i class="fas fa-video"></i> Video Visit</p>
+                                                        }
+                                                        else
+                                                        {
+                                                            <p><i class="fas fa-user-md"></i> In-Person</p>
+                                                        }
+                                                    </div>
+                                                </button>
+                                            </form>
+                                            @* <button type="button" onclick="confirmBooking('@slot.SlotId')" class="slot-button"> *@
+                                            @*     <div class="doctor-name"> *@
+                                            @*         Doctor: @slot.Doctor.DoctorName *@
+                                            @*     </div> *@
+                                            @*     <div class="doctor-name"> *@
+                                            @*         <p class="text-muted">@slot.Doctor.DoctorMedicalService</p> *@
+                                            @*     </div> *@
+                                            @*     <div class="slot-time"> *@
+                                            @*         @slot.StartTime.ToString("hh\\:mm") - @slot.EndTime.ToString("hh\\:mm") *@
+                                            @*     </div> *@
+                                            @*     <div class="slot-type"> *@
+                                            @*         @if (slot.AppointmentStatus == 1) *@
+                                            @*         { *@
+                                            @*             <p><i class="fas fa-check-circle"></i> Booked</p> *@
+                                            @*         } *@
+                                            @*         else if (slot.AppointmentType == "Video") *@
+                                            @*         { *@
+                                            @*             <p><i class="fas fa-video"></i> Video Visit</p> *@
+                                            @*         } *@
+                                            @*         else *@
+                                            @*         { *@
+                                            @*             <p><i class="fas fa-user-md"></i> In-Person</p> *@
+                                            @*         } *@
+                                            @*     </div> *@
+                                            @* </button> *@
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <h6>No slots available.</h6>
+                    }
+                }
+
+                <!-- Display Appointment Made -->
+                @foreach (var slot in Model.AppointmentSlots.Where(x => x.AppointmentStatus == 1))
+                {
+                    <div class="appointment-card mb-3">
+                        <div class="row align-items-center">
+                            <div class="col-md-2">
+                                <img src="# ?? " /api/placeholder/80/80"" alt="Doctor" class="img-fluid rounded-circle">
+                            </div>
+                            <div class="col-md-7">
+                                <h5>Dr. @slot.Doctor.DoctorName</h5>
+                                <p class="text-muted">
+                                    @(slot.AppointmentStatus == 1 ? "Booked" : slot.AppointmentType)
+                                </p>
+                                <p>@slot.StartTime.ToString("dd MMM yyyy hh:mm tt")</p>
+                            </div>
+                            <div class="col-md-3 text-end">
+                                <div class="appointment-actions d-flex justify-content-end">
+                                    <div class="action-icon mx-1"><i class="bi bi-eye"></i></div>
+                                    <div class="action-icon mx-1"><i class="bi bi-chat"></i></div>
+                                    <div class="action-icon mx-1"><i class="bi bi-x"></i></div>
+                                </div>
+                                <button class="btn btn-primary mt-2">Attend</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+                @* <div class="appointment-card"> *@
+                @*     <div class="row align-items-center"> *@
+                @*         <div class="col-md-2"> *@
+                @*             <img src="/api/placeholder/80/80" alt="Doctor" class="img-fluid rounded-circle"> *@
+                @*         </div> *@
+                @*         <div class="col-md-7"> *@
+                @*             <h5>Dr. Edalin</h5> *@
+                @*             <p class="text-muted">General Visit • Video Call</p> *@
+                @*             <p>11 Nov 2025 10:45 AM</p> *@
+                @*         </div> *@
+                @*         <div class="col-md-3 text-end"> *@
+                @*             <div class="appointment-actions"> *@
+                @*                 <div class="action-icon"><i class="bi bi-eye"></i></div> *@
+                @*                 <div class="action-icon"><i class="bi bi-chat"></i></div> *@
+                @*                 <div class="action-icon"><i class="bi bi-x"></i></div> *@
+                @*             </div> *@
+                @*             <button class="btn btn-primary mt-2">Attend</button> *@
+                @*         </div> *@
+                @*     </div> *@
+                @* </div> *@
+
+                <!-- More appointment cards can be added similarly -->
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="appointmentModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="appointmentModalLabel">Confirm Appointment</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>You are booking an appointment with <strong id="modalDoctorName"></strong></p>
+                    <p>Specialty: <span id="modalDoctorSpecialty"></span></p>
+                    <p>Date: <span id="modalAppointmentDate"></span></p>
+                    <p>Time: <span id="modalAppointmentTime"></span></p>
+                    <p>Type: <span id="modalAppointmentType"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="confirmAppointment">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+    <script>
+        function confirmBooking(slotId) {
+            if (confirm("Do you want to book this slot?")) {
+                window.location.href = '/Booking/Confirm?slotId=' + slotId;
+            }
+        }
+    </script>
+</body>
+
+@* @section Scripts { *@
+@*     <script> *@
+@*         document.getElementById('cancelSearch').addEventListener('click', function() { *@
+@*             // Clear the search input *@
+@*             document.getElementById('searchInput').value = ''; *@
+
+@*             // Submit the form to reload without search parameters *@
+@*             document.getElementById('searchForm').submit(); *@
+@*         }); *@
+@*     </script> *@
+@* } *@
+</html>

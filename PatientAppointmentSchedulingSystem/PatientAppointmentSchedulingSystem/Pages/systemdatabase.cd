@@ -1,0 +1,6 @@
+﻿namespace PatientAppointmentSchedulingSystem.Pages
+{
+    public class systemdatabase
+    {
+    }
+}
