@@ -23,10 +23,13 @@ namespace PatientAppointmentSchedulingSystem.Pages
         public List<AvailabilitySlots> AppointmentSlots { get; set; } = new List<AvailabilitySlots>();
 
         public string PatientFullName { get; set; }
+        public int? PatientId { get; set; }
 
         public void OnGet()
         {
             PatientFullName = HttpContext.Session.GetString("PatientFullName");
+            // ? Retrieve PatientId from session
+            PatientId = HttpContext.Session.GetInt32("PatientId");
 
             //step 1
             var doctorQuery = _context.Doctor.AsQueryable(); // don't ToList() yet
@@ -75,7 +78,6 @@ namespace PatientAppointmentSchedulingSystem.Pages
             }
 
             slot.PatientId = patientId.Value;
-            slot.AppointmentType = "booked";
             slot.AppointmentStatus = 1; // Booked
 
             _context.SaveChanges();

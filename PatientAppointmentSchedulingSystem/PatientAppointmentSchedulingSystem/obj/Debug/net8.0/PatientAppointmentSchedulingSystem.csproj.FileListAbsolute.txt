@@ -155,3 +155,4 @@ C:\Users\User\Documents\FYP_Code\FYP\PatientAppointmentSchedulingSystem\PatientA
 C:\Users\User\Documents\FYP_Code\FYP\PatientAppointmentSchedulingSystem\PatientAppointmentSchedulingSystem\obj\Debug\net8.0\PatientAppointmentSchedulingSystem.pdb
 C:\Users\User\Documents\FYP_Code\FYP\PatientAppointmentSchedulingSystem\PatientAppointmentSchedulingSystem\obj\Debug\net8.0\PatientAppointmentSchedulingSystem.genruntimeconfig.cache
 C:\Users\User\Documents\FYP_Code\FYP\PatientAppointmentSchedulingSystem\PatientAppointmentSchedulingSystem\obj\Debug\net8.0\ref\PatientAppointmentSchedulingSystem.dll
+C:\Users\User\Documents\FYP_Code\FYP\PatientAppointmentSchedulingSystem\PatientAppointmentSchedulingSystem\obj\Debug\net8.0\PatientAppointmentSchedulingSystem.sourcelink.json

@@ -197,6 +197,10 @@
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
     },
     {
+      "Id": "C:\\Users\\User\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\wwwroot\\lib\\image\\doctorimg1.jfif",
+      "PackagePath": "staticwebassets\\lib\\image\\doctorimg1.jfif"
+    },
+    {
       "Id": "C:\\Users\\User\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\wwwroot\\lib\\image\\medibook-logo.png",
       "PackagePath": "staticwebassets\\lib\\image\\medibook-logo.png"
     },

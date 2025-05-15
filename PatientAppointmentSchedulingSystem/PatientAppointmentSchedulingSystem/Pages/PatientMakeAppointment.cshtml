@@ -510,28 +510,46 @@
                 }
 
                 <!-- Display Appointment Made -->
-                @foreach (var slot in Model.AppointmentSlots.Where(x => x.AppointmentStatus == 1))
+                @foreach (var slot in Model.AppointmentSlots
+                    .Where(x => x.AppointmentStatus == 1
+                    && x.PatientId != null
+                    && x.PatientId == Model.PatientId))
                 {
-                    <div class="appointment-card mb-3">
+                    // Dynamically assign a CSS class based on AppointmentType
+                    var slotClass = slot.AppointmentType.ToLower() switch
+                    {
+                        "video" => "video-color",
+                        "in-person" => "inperson-slot",
+                        _ => "other-slot"
+                    };
+                    <div class="appointment-card mb-3 @slotClass">
                         <div class="row align-items-center">
                             <div class="col-md-2">
-                                <img src="# ?? " /api/placeholder/80/80"" alt="Doctor" class="img-fluid rounded-circle">
+                                <img src="/lib/image/doctorimg1" /api/placeholder/80/80"" alt="Doctor" class="img-fluid rounded-circle">
                             </div>
                             <div class="col-md-7">
                                 <h5>Dr. @slot.Doctor.DoctorName</h5>
                                 <p class="text-muted">
-                                    @(slot.AppointmentStatus == 1 ? "Booked" : slot.AppointmentType)
+                                    Medical Service: @slot.Doctor.DoctorMedicalService
                                 </p>
-                                <p>@slot.StartTime.ToString("dd MMM yyyy hh:mm tt")</p>
+                                <p class="text-primary">
+                                    @slot.AppointmentType
+                                </p>
+                                <p>
+                                    <strong>Date:</strong> @slot.AppointmentDate.ToString("dd MMM yyyy")
+                                </p>
+                                <p>
+                                    <strong>Time:</strong> @slot.StartTime.ToString("hh:mm tt") - @slot.EndTime.ToString("hh:mm tt")
+                                </p>
                             </div>
-                            <div class="col-md-3 text-end">
-                                <div class="appointment-actions d-flex justify-content-end">
-                                    <div class="action-icon mx-1"><i class="bi bi-eye"></i></div>
-                                    <div class="action-icon mx-1"><i class="bi bi-chat"></i></div>
-                                    <div class="action-icon mx-1"><i class="bi bi-x"></i></div>
-                                </div>
-                                <button class="btn btn-primary mt-2">Attend</button>
-                            </div>
+                            @* <div class="col-md-3 text-end"> *@
+                            @*     <div class="appointment-actions d-flex justify-content-end"> *@
+                            @*         <div class="action-icon mx-1"><i class="bi bi-eye"></i></div> *@
+                            @*         <div class="action-icon mx-1"><i class="bi bi-chat"></i></div> *@
+                            @*         <div class="action-icon mx-1"><i class="bi bi-x"></i></div> *@
+                            @*     </div> *@
+                            @*     <button class="btn btn-primary mt-2">Attend</button> *@
+                            @* </div> *@
                         </div>
                     </div>
                 }

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "+cPglGxEJLCvJE6UbamzdSXGjIwZNkFaw8I8kX7Uivw=",
+  "Hash": "TTqSObL2mHgUSi0FncylcgbTtUnTTK+Y1urHA7mKPGk=",
   "Source": "PatientAppointmentSchedulingSystem",
   "BasePath": "_content/PatientAppointmentSchedulingSystem",
   "Mode": "Default",
@@ -2325,6 +2325,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\LICENSE"
+    },
+    {
+      "Identity": "C:\\Users\\User\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\wwwroot\\lib\\image\\doctorimg1.jfif",
+      "SourceId": "PatientAppointmentSchedulingSystem",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\wwwroot\\",
+      "BasePath": "_content/PatientAppointmentSchedulingSystem",
+      "RelativePath": "lib/image/doctorimg1#[.{fingerprint}]?.jfif",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "j3b3snythi",
+      "Integrity": "Ee1E/pSE8MKB3aI4MgMFLjGGoCh/Y2NQHKo+5HRNnWI=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\lib\\image\\doctorimg1.jfif"
     },
     {
       "Identity": "C:\\Users\\User\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\wwwroot\\lib\\image\\medibook-logo.png",
@@ -8754,6 +8775,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-ZH6pA6BSx6fuHZvdaKph1DwUJ+VSYilIiEQu8ilnvqk="
+        }
+      ]
+    },
+    {
+      "Route": "lib/image/doctorimg1.j3b3snythi.jfif",
+      "AssetFile": "C:\\Users\\User\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\wwwroot\\lib\\image\\doctorimg1.jfif",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "724399"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/pjpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Ee1E/pSE8MKB3aI4MgMFLjGGoCh/Y2NQHKo+5HRNnWI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 09 May 2025 02:52:22 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "j3b3snythi"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/image/doctorimg1.jfif"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Ee1E/pSE8MKB3aI4MgMFLjGGoCh/Y2NQHKo+5HRNnWI="
+        }
+      ]
+    },
+    {
+      "Route": "lib/image/doctorimg1.jfif",
+      "AssetFile": "C:\\Users\\User\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\wwwroot\\lib\\image\\doctorimg1.jfif",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "724399"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/pjpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Ee1E/pSE8MKB3aI4MgMFLjGGoCh/Y2NQHKo+5HRNnWI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 09 May 2025 02:52:22 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Ee1E/pSE8MKB3aI4MgMFLjGGoCh/Y2NQHKo+5HRNnWI="
         }
       ]
     },
