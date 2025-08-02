@@ -59,7 +59,7 @@ namespace PatientAppointmentSchedulingSystem.Pages
             {
                 new Claim(ClaimTypes.NameIdentifier, doctor.DoctorId.ToString()),
                 new Claim(ClaimTypes.Email, doctor.DoctorEmail),
-                new Claim(ClaimTypes.Name, doctor.DoctorName),
+                new Claim(ClaimTypes.Name, doctor.DoctorFullName),
                 new Claim("Specialization", doctor.DoctorSpeciality), // Custom claim
                 new Claim ("MedicalService", doctor.DoctorMedicalService),
                 new Claim(ClaimTypes.Role, "Doctor")

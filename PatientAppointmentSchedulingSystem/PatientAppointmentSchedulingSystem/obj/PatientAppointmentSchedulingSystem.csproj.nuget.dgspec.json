@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj": {}
+    "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj": {
+    "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj",
+        "projectUniqueName": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj",
         "projectName": "PatientAppointmentSchedulingSystem",
-        "projectPath": "C:\\Users\\User\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\obj\\",
+        "projectPath": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj",
+        "packagesPath": "C:\\Users\\wen\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\wen\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -44,7 +45,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.200"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net8.0": {
@@ -68,11 +69,13 @@
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[8.0.15, )"
+              "version": "[9.0.7, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.15, )"
+              "version": "[9.0.7, )"
             }
           },
           "imports": [
@@ -94,7 +97,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

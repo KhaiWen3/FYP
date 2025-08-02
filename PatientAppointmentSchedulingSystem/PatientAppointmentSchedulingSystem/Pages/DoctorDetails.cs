@@ -8,7 +8,7 @@ namespace PatientAppointmentSchedulingSystem.Pages
         public int DoctorId { get; set; }
 
         [Required]
-        public string DoctorName { get; set; }
+        public string DoctorFullName { get; set; }
 
         [Required]
         public string DoctorPhoneNum { get; set; }
@@ -24,6 +24,12 @@ namespace PatientAppointmentSchedulingSystem.Pages
         
         [Required]
         public string DoctorPassword { get; set; }
+
+        [Required]
+        public string DoctorRoomNum { get; set; }
+
+        [Required]
+        public string  DoctorAffiliatedHospitalClinic { get; set; }
 
         //public List<AvailabilitySlots> AvailabilitySlots { get; set; }
     }

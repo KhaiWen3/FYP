@@ -117,21 +117,61 @@
     </style>
 </head>
 <body>
-    <!--Navigation Bar-->
-    <nav class="navbar" style="padding: 8px; background: #5E9CA0 !important">
-        <a href="#">
-            <img src="/lib/image/medibook-logo.png" alt="Company Logo">
-        </a>
-        <ul class="nav-links">
-            <li><a href="/PatientHomePage">Home</a></li>
-            <li><a href="/PatientMakeAppointment">Appointment</a></li>
-            <li><a href="/Index">Logout</a></li>
-        </ul>
-        <div class="nav-buttons">
-            <button class="btn-secondary" onclick="window.location.href='/PatientLogin'">Login</button>
-            <button class="btn-primary" onclick="window.location.href='/PatientSignUp'">Sign Up</button>
+    <!-- ======= Header =======-->
+    <header class="fbs__net-navbar navbar navbar-expand-lg dark" aria-label="freebootstrap.net navbar">
+        <div class="container d-flex align-items-center justify-content-between">
+
+            <!-- Start Logo-->
+            <a class="navbar-brand w-auto" href="Index.html">
+                <!-- logo dark--><img class="logo dark img-fluid" src="/images/medibook-logo.svg" alt="FreeBootstrap.net image placeholder">
+            </a>
+            <!-- End Logo-->
+            <!-- Start offcanvas-->
+            <div class="offcanvas offcanvas-start w-75" id="fbs__net-navbars" tabindex="-1" aria-labelledby="fbs__net-navbarsLabel">
+
+                <div class="offcanvas-header">
+                    <div class="offcanvas-header-logo">
+                        <a class="logo-link" id="fbs__net-navbarsLabel" href="Index.html">
+                            <!-- logo dark -->
+                            <img class="logo dark svg-fluid" src="/images/medibook-logo.svg" alt="FreeBootstrap.net image placeholder" />
+                        </a>
+                    </div>
+                    <button class="btn-close btn-close-black" type="button" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+
+                <div class="offcanvas-body d-flex justify-content-center">
+
+
+                    <ul class="navbar-nav nav d-flex flex-row gap-4">
+                        <li class="nav-item"><a class="nav-link scroll-link active" aria-current="page" href="#home">Home</a></li>
+                        <li class="nav-item"><a class="nav-link scroll-link" href="#services">My Appointment</a></li>
+                        <li class="nav-item"><a class="nav-link scroll-link" href="#how-it-works">Services</a></li>
+                        <li class="nav-item"><a class="nav-link scroll-link" href="#about">Profile</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- End offcanvas-->
+
+            <div class="ms-auto w-auto">
+                <div class="header-social d-flex align-items-center gap-1">
+                    <a class="btn btn-primary py-2" href="/PatientLogin">Make an Appointment</a>
+
+                    <button class="fbs__net-navbar-toggler justify-content-center align-items-center ms-auto" data-bs-toggle="offcanvas" data-bs-target="#fbs__net-navbars" aria-controls="fbs__net-navbars" aria-label="Toggle navigation" aria-expanded="false">
+                        <svg class="fbs__net-icon-menu" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="21" x2="3" y1="6" y2="6"></line>
+                            <line x1="15" x2="3" y1="12" y2="12"></line>
+                            <line x1="17" x2="3" y1="18" y2="18"></line>
+                        </svg>
+                        <svg class="fbs__net-icon-close" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 6 6 18"></path>
+                            <path d="m6 6 12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
         </div>
-    </nav>
+    </header>
+    <!-- End Header-->
 
     <div class="container">
         <main role="main" class="pb-3">
@@ -139,15 +179,74 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - MediBook - <a asp-area="" asp-page="/Privacy">Privacy</a>
+    <!-- ======= Footer =======-->
+    <footer class="bg-primary text-light pt-5 pb-4">
+        <div class="container text-center text-md-start">
+            <div class="row">
+                <!-- About -->
+                <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                    <h5 class="text-uppercase fw-bold mb-4">MediBook</h5>
+                    <p>Your trusted platform to search doctors, book appointments, and manage your healthcare effortlessly.</p>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                    <h6 class="text-uppercase fw-bold mb-4">Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#home" class="text-light text-decoration-none">Home</a></li>
+                        <li><a href="#services" class="text-light text-decoration-none">Services</a></li>
+                        <li><a href="#how-it-works" class="text-light text-decoration-none">How It Works</a></li>
+                        <li><a href="#about" class="text-light text-decoration-none">About</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                    <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+                    <p>Email: support@medibook.com</p>
+                    <p>Phone: +60 12-345 6789</p>
+                    <p>Location: Kampar, Perak, Malaysia</p>
+                </div>
+
+                <!-- Social Media -->
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-4">
+                    <h6 class="text-uppercase fw-bold mb-4">Follow Us</h6>
+                    <a href="#" class="me-3 text-light"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="me-3 text-light"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="me-3 text-light"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="me-3 text-light"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="text-center pt-3 border-top border-light mt-4">
+                <p class="mb-0">&copy; 2025 MediBook. All Rights Reserved.</p>
+            </div>
         </div>
     </footer>
+    <!-- End Footer-->
 
+    
+
+    <!-- ======= Back to Top =======-->
+    <button id="back-to-top"><i class="bi bi-arrow-up-short"></i></button>
+    <!-- End Back to top-->
+    <!-- ======= Javascripts =======-->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script src="/vendors/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="/vendors/gsap/gsap.min.js"></script>
+    <script src="/vendors/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="/vendors/isotope/isotope.pkgd.min.js"></script>
+    <script src="/vendors/glightbox/glightbox.min.js"></script>
+    <script src="/vendors/swiper/swiper-bundle.min.js"></script>
+    <script src="/vendors/aos/aos.js"></script>
+    <script src="/vendors/purecounter/purecounter.js"></script>
+    <script src="/js/custom.js"></script>
+    <script src="/js/send_email.js"></script>
+    <!-- End JavaScripts-->
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

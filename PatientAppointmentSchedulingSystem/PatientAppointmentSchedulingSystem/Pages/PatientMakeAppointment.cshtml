@@ -414,7 +414,7 @@
                             @foreach (var doctor in Model.Doctors)
                             {
                                 <div class="doctor-card mb-3 p-3 border rounded">
-                                    <h5>@doctor.DoctorName</h5>
+                                    <h5>@doctor.DoctorFullName</h5>
                                     <p class="text-muted">@doctor.DoctorMedicalService</p>
                                 </div>
                             }
@@ -448,7 +448,7 @@
                                             <form method="post" asp-page-handler="BookAppointment" asp-route-slotId="@slot.SlotId" onsubmit="return confirm('Are you sure you want to book this slot?');">
                                                 <button type="submit" class="slot-button" @(slot.AppointmentType == "booked" || slot.AppointmentStatus == 1 ? "disabled" : "")>
                                                     <div class="doctor-name">
-                                                        Doctor: @slot.Doctor.DoctorName
+                                                        Doctor: @slot.Doctor.DoctorFullName
                                                     </div>
                                                     <div class="doctor-name">
                                                         <p class="text-muted">@slot.Doctor.DoctorMedicalService</p>
@@ -528,7 +528,7 @@
                                 <img src="/lib/image/doctorimg1" /api/placeholder/80/80"" alt="Doctor" class="img-fluid rounded-circle">
                             </div>
                             <div class="col-md-7">
-                                <h5>Dr. @slot.Doctor.DoctorName</h5>
+                                <h5>Dr. @slot.Doctor.DoctorFullName</h5>
                                 <p class="text-muted">
                                     Medical Service: @slot.Doctor.DoctorMedicalService
                                 </p>
@@ -592,7 +592,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>You are booking an appointment with <strong id="modalDoctorName"></strong></p>
+                    <p>You are booking an appointment with <strong id="modalDoctorFullName"></strong></p>
                     <p>Specialty: <span id="modalDoctorSpecialty"></span></p>
                     <p>Date: <span id="modalAppointmentDate"></span></p>
                     <p>Time: <span id="modalAppointmentTime"></span></p>

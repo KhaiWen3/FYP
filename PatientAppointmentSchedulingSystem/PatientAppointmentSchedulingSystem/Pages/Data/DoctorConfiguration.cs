@@ -10,9 +10,10 @@ namespace PatientAppointmentSchedulingSystem.Pages.Data
                 new DoctorDetails
                 {
                     DoctorId = 1,
-                    DoctorName = "Goh Jin Xing",
+                    DoctorFullName = "Goh Jin Xing",
                     DoctorPhoneNum = "016-9801560",
                     DoctorSpeciality = "Family Medicine",
+                    //DoctorMedicalService = 
                     DoctorEmail = "gjx@gmail.com",
                     DoctorPassword= "gjx"
                 }
