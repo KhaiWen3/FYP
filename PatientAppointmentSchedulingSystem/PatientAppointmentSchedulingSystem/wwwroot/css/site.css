@@ -1,22 +1,33 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+:root {
+    --bs-primary: #4A90E2; /* Patient Module Primary Color */
+    --bs-secondary: #E1F5FE; /* Patient Module Secondary Color */
+    --bs-body-bg: #ffffff; /* Body Background Color */
+    --bs-body-color: #494B5B; /* Body Text Color */
+    --bs-heading-color: #16181B; /* Heading Color */
 }
 
 body {
-  margin-bottom: 60px;
+    background-color: var(--bs-body-bg);
+    color: var(--bs-body-color;
 }
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--bs-heading-color);
+}
+
+a {
+    color: var(--bs-primary);
+}
+
+    a:hover {
+        color: var(--bs-secondary);
+    }
+
+.btn {
+    background-color: var(--bs-primary);
+    color: #fff;
+}
+
+    .btn:hover {
+        background-color: var(--bs-secondary);
+    }

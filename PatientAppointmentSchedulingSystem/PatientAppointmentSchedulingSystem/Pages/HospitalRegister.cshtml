@@ -290,280 +290,280 @@
                     <i class="fas fa-info-circle me-2"></i> All fields marked with * are required. After registration, our team will verify your information within 1-2 business days.
                 </div>
 
-                @* <form method="post"> *@
-                @*     <!-- Validation Summary --> *@
-                @*     <div asp-validation-summary="ModelOnly" class="text-danger"></div> *@
+                 <form method="post"> 
+     <!-- validation summary --> 
+     <div asp-validation-summary="modelonly" class="text-danger"></div> 
 
-                @*     <!-- Hospital Information --> *@
-                @*     <div class="form-section"> *@
-                @*         <h3><i class="fas fa-building me-2"></i>Hospital Information</h3> *@
+     <!-- hospital information --> 
+     <div class="form-section"> 
+         <h3><i class="fas fa-building me-2"></i>hospital information</h3> 
 
-                @*         <div class="mb-3"> *@
-                @*             <label asp-for="HospitalName" class="form-label required">Hospital Name</label> *@
-                @*             <input asp-for="Input.HospitalName" type="text" class="form-control" placeholder="Enter hospital full name" required> *@
-                @*             <span asp-validation-for="Input.HospitalName" class="text-danger"></span> *@
-                @*         </div> *@
+         <div class="mb-3"> 
+             <label asp-for="hospitalname" class="form-label required">hospital name</label> 
+             <input asp-for="input.hospitalname" type="text" class="form-control" placeholder="enter hospital full name" required> 
+             <span asp-validation-for="input.hospitalname" class="text-danger"></span> 
+         </div> 
 
-                @*         <div class="row mb-3"> *@
-                @*             <div class="col-md-6"> *@
-                @*                 <label asp-for="HospitalEstablishedYear" class="form-label">Year Established</label> *@
-                @*                 <input asp-for="Input.EstablishedYear" type="number" class="form-control" placeholder="e.g. 1990"> *@
-                @*                 <span asp-validation-for="Input.EstablishedYear" class="text-danger"></span> *@
-                @*             </div> *@
-                @*             <div class="col-md-6"> *@
-                @*                 <label asp-for="HospitalType" class="form-label required">Hospital Type</label> *@
-                @*                 <select asp-for="Input.HospitalType" class="form-select" required> *@
-                @*                     <option value="">-- Select Type --</option> *@
-                @*                     <option value="Public">Public</option> *@
-                @*                     <option value="Private">Private</option> *@
-                @*                     <option value="NonProfit">Non-Profit</option> *@
-                @*                     <option value="University">University Hospital</option> *@
-                @*                     <option value="Specialized">Specialized Care</option> *@
-                @*                 </select> *@
-                @*                 <span asp-validation-for="Hospital.HospitalType" class="text-danger"></span> *@
-                @*             </div> *@
-                @*         </div> *@
+         <div class="row mb-3"> 
+             <div class="col-md-6"> 
+                 <label asp-for="hospitalestablishedyear" class="form-label">year established</label> 
+                 <input asp-for="input.establishedyear" type="number" class="form-control" placeholder="e.g. 1990"> 
+                 <span asp-validation-for="input.establishedyear" class="text-danger"></span> 
+             </div> 
+             <div class="col-md-6"> 
+                 <label asp-for="hospitaltype" class="form-label required">hospital type</label> 
+                 <select asp-for="input.hospitaltype" class="form-select" required> 
+                     <option value="">-- select type --</option> 
+                     <option value="public">public</option> 
+                     <option value="private">private</option> 
+                     <option value="nonprofit">non-profit</option> 
+                     <option value="university">university hospital</option> 
+                     <option value="specialized">specialized care</option> 
+                 </select> 
+                 <span asp-validation-for="hospital.hospitaltype" class="text-danger"></span> 
+             </div> 
+         </div> 
 
-                @*         <div class="mb-3"> *@
-                @*             <label asp-for="Hospital.Description" class="form-label">Hospital Description</label> *@
-                @*             <textarea asp-for="Hospital.Description" class="form-control" rows="3" placeholder="Brief description of your hospital and specialties"></textarea> *@
-                @*             <span asp-validation-for="Hospital.Description" class="text-danger"></span> *@
-                @*         </div> *@
+         <div class="mb-3"> 
+             <label asp-for="hospital.description" class="form-label">hospital description</label> 
+             <textarea asp-for="hospital.description" class="form-control" rows="3" placeholder="brief description of your hospital and specialties"></textarea> 
+             <span asp-validation-for="hospital.description" class="text-danger"></span> 
+         </div> 
 
-                @*         <div class="mb-3"> *@
-                @*             <label class="form-label">Hospital Logo</label> *@
-                @*             <div class="file-upload"> *@
-                @*                 <label class="file-upload-label"><i class="fas fa-upload me-2"></i>Upload Logo</label> *@
-                @*                 <input type="file" accept="image/*" class="form-control"> *@
-                @*             </div> *@
-                @*             <div class="form-text">Upload your hospital logo (PNG, JPG, or SVG format, max 2MB)</div> *@
-                @*         </div> *@
-                @*     </div> *@
+         <div class="mb-3"> 
+             <label class="form-label">hospital logo</label> 
+             <div class="file-upload"> 
+                 <label class="file-upload-label"><i class="fas fa-upload me-2"></i>upload logo</label> 
+                 <input type="file" accept="image/*" class="form-control"> 
+             </div> 
+             <div class="form-text">upload your hospital logo (png, jpg, or svg format, max 2mb)</div> 
+         </div> 
+     </div> 
 
-                @*     <!-- Address Information --> *@
-                @*     <div class="form-section"> *@
-                @*         <h3><i class="fas fa-map-marker-alt me-2"></i>Address Information</h3> *@
+     <!-- address information --> 
+     <div class="form-section"> 
+         <h3><i class="fas fa-map-marker-alt me-2"></i>address information</h3> 
 
-                @*         <div class="mb-3"> *@
-                @*             <label asp-for="Hospital.Address.StreetAddress" class="form-label required">Street Address</label> *@
-                @*             <input asp-for="Hospital.Address.StreetAddress" type="text" class="form-control" placeholder="Enter street address" required> *@
-                @*             <span asp-validation-for="Hospital.Address.StreetAddress" class="text-danger"></span> *@
-                @*         </div> *@
+         <div class="mb-3"> 
+             <label asp-for="hospital.address.streetaddress" class="form-label required">street address</label> 
+             <input asp-for="hospital.address.streetaddress" type="text" class="form-control" placeholder="enter street address" required> 
+             <span asp-validation-for="hospital.address.streetaddress" class="text-danger"></span> 
+         </div> 
 
-                @*         <div class="row mb-3"> *@
-                @*             <div class="col-md-4"> *@
-                @*                 <label asp-for="Hospital.Address.City" class="form-label required">City</label> *@
-                @*                 <input asp-for="Hospital.Address.City" type="text" class="form-control" placeholder="Enter city" required> *@
-                @*                 <span asp-validation-for="Hospital.Address.City" class="text-danger"></span> *@
-                @*             </div> *@
-                @*             <div class="col-md-4"> *@
-                @*                 <label asp-for="Hospital.Address.State" class="form-label required">State/Province</label> *@
-                @*                 <input asp-for="Hospital.Address.State" type="text" class="form-control" placeholder="Enter state" required> *@
-                @*                 <span asp-validation-for="Hospital.Address.State" class="text-danger"></span> *@
-                @*             </div> *@
-                @*             <div class="col-md-4"> *@
-                @*                 <label asp-for="Hospital.Address.ZipCode" class="form-label required">Postal/Zip Code</label> *@
-                @*                 <input asp-for="Hospital.Address.ZipCode" type="text" class="form-control" placeholder="Enter postal code" required> *@
-                @*                 <span asp-validation-for="Hospital.Address.ZipCode" class="text-danger"></span> *@
-                @*             </div> *@
-                @*         </div> *@
+         <div class="row mb-3"> 
+             <div class="col-md-4"> 
+                 <label asp-for="hospital.address.city" class="form-label required">city</label> 
+                 <input asp-for="hospital.address.city" type="text" class="form-control" placeholder="enter city" required> 
+                 <span asp-validation-for="hospital.address.city" class="text-danger"></span> 
+             </div> 
+             <div class="col-md-4"> 
+                 <label asp-for="hospital.address.state" class="form-label required">state/province</label> 
+                 <input asp-for="hospital.address.state" type="text" class="form-control" placeholder="enter state" required> 
+                 <span asp-validation-for="hospital.address.state" class="text-danger"></span> 
+             </div> 
+             <div class="col-md-4"> 
+                 <label asp-for="hospital.address.zipcode" class="form-label required">postal/zip code</label> 
+                 <input asp-for="hospital.address.zipcode" type="text" class="form-control" placeholder="enter postal code" required> 
+                 <span asp-validation-for="hospital.address.zipcode" class="text-danger"></span> 
+             </div> 
+         </div> 
 
-                @*         <div class="mb-3"> *@
-                @*             <label asp-for="Hospital.Address.Country" class="form-label required">Country</label> *@
-                @*             <select asp-for="Hospital.Address.Country" class="form-select" required> *@
-                @*                 <option value="">-- Select Country --</option> *@
-                @*                 <option value="US">United States</option> *@
-                @*                 <option value="CA">Canada</option> *@
-                @*                 <option value="UK">United Kingdom</option> *@
-                @*                 <option value="AU">Australia</option> *@
-                @*                 <option value="IN">India</option> *@
-                @*                 <!-- Add more countries as needed --> *@
-                @*             </select> *@
-                @*             <span asp-validation-for="Hospital.Address.Country" class="text-danger"></span> *@
-                @*         </div> *@
-                @*     </div> *@
+         <div class="mb-3"> 
+             <label asp-for="hospital.address.country" class="form-label required">country</label> 
+             <select asp-for="hospital.address.country" class="form-select" required> 
+                 <option value="">-- select country --</option> 
+                 <option value="us">united states</option> 
+                 <option value="ca">canada</option> 
+                 <option value="uk">united kingdom</option> 
+                 <option value="au">australia</option> 
+                 <option value="in">india</option> 
+                 <!-- add more countries as needed --> 
+             </select> 
+             <span asp-validation-for="hospital.address.country" class="text-danger"></span> 
+         </div> 
+     </div> 
 
-                @*     <!-- Contact Information --> *@
-                @*     <div class="form-section"> *@
-                @*         <h3><i class="fas fa-address-card me-2"></i>Primary Contact Information</h3> *@
+     <!-- contact information --> 
+     <div class="form-section"> 
+         <h3><i class="fas fa-address-card me-2"></i>primary contact information</h3> 
 
-                @*         <div class="row mb-3"> *@
-                @*             <div class="col-md-6"> *@
-                @*                 <label asp-for="Hospital.Contact.FirstName" class="form-label required">First Name</label> *@
-                @*                 <input asp-for="Hospital.Contact.FirstName" type="text" class="form-control" placeholder="Contact person's first name" required> *@
-                @*                 <span asp-validation-for="Hospital.Contact.FirstName" class="text-danger"></span> *@
-                @*             </div> *@
-                @*             <div class="col-md-6"> *@
-                @*                 <label asp-for="Hospital.Contact.LastName" class="form-label required">Last Name</label> *@
-                @*                 <input asp-for="Hospital.Contact.LastName" type="text" class="form-control" placeholder="Contact person's last name" required> *@
-                @*                 <span asp-validation-for="Hospital.Contact.LastName" class="text-danger"></span> *@
-                @*             </div> *@
-                @*         </div> *@
+         <div class="row mb-3"> 
+             <div class="col-md-6"> 
+                 <label asp-for="hospital.contact.firstname" class="form-label required">first name</label> 
+                 <input asp-for="hospital.contact.firstname" type="text" class="form-control" placeholder="contact person's first name" required> 
+                 <span asp-validation-for="hospital.contact.firstname" class="text-danger"></span> 
+             </div> 
+             <div class="col-md-6"> 
+                 <label asp-for="hospital.contact.lastname" class="form-label required">last name</label> 
+                 <input asp-for="hospital.contact.lastname" type="text" class="form-control" placeholder="contact person's last name" required> 
+                 <span asp-validation-for="hospital.contact.lastname" class="text-danger"></span> 
+             </div> 
+         </div> 
 
-                @*         <div class="mb-3"> *@
-                @*             <label asp-for="Hospital.Contact.JobTitle" class="form-label required">Job Title</label> *@
-                @*             <input asp-for="Hospital.Contact.JobTitle" type="text" class="form-control" placeholder="e.g. Hospital Administrator" required> *@
-                @*             <span asp-validation-for="Hospital.Contact.JobTitle" class="text-danger"></span> *@
-                @*         </div> *@
+         <div class="mb-3"> 
+             <label asp-for="hospital.contact.jobtitle" class="form-label required">job title</label> 
+             <input asp-for="hospital.contact.jobtitle" type="text" class="form-control" placeholder="e.g. hospital administrator" required> 
+             <span asp-validation-for="hospital.contact.jobtitle" class="text-danger"></span> 
+         </div> 
 
-                @*         <div class="row mb-3"> *@
-                @*             <div class="col-md-6"> *@
-                @*                 <label asp-for="Hospital.Contact.Email" class="form-label required">Email Address</label> *@
-                @*                 <input asp-for="Hospital.Contact.Email" type="email" class="form-control" placeholder="Enter email address" required> *@
-                @*                 <span asp-validation-for="Hospital.Contact.Email" class="text-danger"></span> *@
-                @*             </div> *@
-                @*             <div class="col-md-6"> *@
-                @*                 <label asp-for="Hospital.Contact.PhoneNumber" class="form-label required">Phone Number</label> *@
-                @*                 <input asp-for="Hospital.Contact.PhoneNumber" type="tel" class="form-control" placeholder="Enter phone number" required> *@
-                @*                 <span asp-validation-for="Hospital.Contact.PhoneNumber" class="text-danger"></span> *@
-                @*             </div> *@
-                @*         </div> *@
-                @*     </div> *@
+         <div class="row mb-3"> 
+             <div class="col-md-6"> 
+                 <label asp-for="hospital.contact.email" class="form-label required">email address</label> 
+                 <input asp-for="hospital.contact.email" type="email" class="form-control" placeholder="enter email address" required> 
+                 <span asp-validation-for="hospital.contact.email" class="text-danger"></span> 
+             </div> 
+             <div class="col-md-6"> 
+                 <label asp-for="hospital.contact.phonenumber" class="form-label required">phone number</label> 
+                 <input asp-for="hospital.contact.phonenumber" type="tel" class="form-control" placeholder="enter phone number" required> 
+                 <span asp-validation-for="hospital.contact.phonenumber" class="text-danger"></span> 
+             </div> 
+         </div> 
+     </div> 
 
-                @*     <!-- Account Credentials --> *@
-                @*     <div class="form-section"> *@
-                @*         <h3><i class="fas fa-user-lock me-2"></i>Account Credentials</h3> *@
+     <!-- account credentials --> 
+     <div class="form-section"> 
+         <h3><i class="fas fa-user-lock me-2"></i>account credentials</h3> 
 
-                @*         <div class="mb-3"> *@
-                @*             <label asp-for="Hospital.AdminEmail" class="form-label required">Admin Email</label> *@
-                @*             <input asp-for="Hospital.AdminEmail" type="email" class="form-control" placeholder="This email will be used for login" required> *@
-                @*             <div class="form-text">This will be the primary administrator account for your hospital</div> *@
-                @*             <span asp-validation-for="Hospital.AdminEmail" class="text-danger"></span> *@
-                @*         </div> *@
+         <div class="mb-3"> 
+             <label asp-for="hospital.adminemail" class="form-label required">admin email</label> 
+             <input asp-for="hospital.adminemail" type="email" class="form-control" placeholder="this email will be used for login" required> 
+             <div class="form-text">this will be the primary administrator account for your hospital</div> 
+             <span asp-validation-for="hospital.adminemail" class="text-danger"></span> 
+         </div> 
 
-                @*         <div class="row mb-3"> *@
-                @*             <div class="col-md-6"> *@
-                @*                 <label asp-for="Hospital.Password" class="form-label required">Password</label> *@
-                @*                 <input asp-for="Hospital.Password" type="password" class="form-control" placeholder="Create a secure password" required> *@
-                @*                 <div class="form-text">Must be at least 8 characters with numbers and special characters</div> *@
-                @*                 <span asp-validation-for="Hospital.Password" class="text-danger"></span> *@
-                @*             </div> *@
-                @*             <div class="col-md-6"> *@
-                @*                 <label asp-for="Hospital.ConfirmPassword" class="form-label required">Confirm Password</label> *@
-                @*                 <input asp-for="Hospital.ConfirmPassword" type="password" class="form-control" placeholder="Confirm your password" required> *@
-                @*                 <span asp-validation-for="Hospital.ConfirmPassword" class="text-danger"></span> *@
-                @*             </div> *@
-                @*         </div> *@
-                @*     </div> *@
+         <div class="row mb-3"> 
+             <div class="col-md-6"> 
+                 <label asp-for="hospital.password" class="form-label required">password</label> 
+                 <input asp-for="hospital.password" type="password" class="form-control" placeholder="create a secure password" required> 
+                 <div class="form-text">must be at least 8 characters with numbers and special characters</div> 
+                 <span asp-validation-for="hospital.password" class="text-danger"></span> 
+             </div> 
+             <div class="col-md-6"> 
+                 <label asp-for="hospital.confirmpassword" class="form-label required">confirm password</label> 
+                 <input asp-for="hospital.confirmpassword" type="password" class="form-control" placeholder="confirm your password" required> 
+                 <span asp-validation-for="hospital.confirmpassword" class="text-danger"></span> 
+             </div> 
+         </div> 
+     </div> 
 
-                @*     <!-- Hospital Facilities & Services --> *@
-                @*     <div class="form-section"> *@
-                @*         <h3><i class="fas fa-stethoscope me-2"></i>Hospital Facilities & Services</h3> *@
+     <!-- hospital facilities & services --> 
+     <div class="form-section"> 
+         <h3><i class="fas fa-stethoscope me-2"></i>hospital facilities & services</h3> 
 
-                @*         <div class="mb-3"> *@
-                @*             <label class="form-label">Available Departments</label> *@
-                @*             <div class="row"> *@
-                @*                 <div class="col-md-4 mb-2"> *@
-                @*                     <div class="form-check"> *@
-                @*                         <input class="form-check-input" type="checkbox" id="dept1" name="Hospital.Departments" value="Emergency"> *@
-                @*                         <label class="form-check-label" for="dept1">Emergency Medicine</label> *@
-                @*                     </div> *@
-                @*                 </div> *@
-                @*                 <div class="col-md-4 mb-2"> *@
-                @*                     <div class="form-check"> *@
-                @*                         <input class="form-check-input" type="checkbox" id="dept2" name="Hospital.Departments" value="Cardiology"> *@
-                @*                         <label class="form-check-label" for="dept2">Cardiology</label> *@
-                @*                     </div> *@
-                @*                 </div> *@
-                @*                 <div class="col-md-4 mb-2"> *@
-                @*                     <div class="form-check"> *@
-                @*                         <input class="form-check-input" type="checkbox" id="dept3" name="Hospital.Departments" value="Pediatrics"> *@
-                @*                         <label class="form-check-label" for="dept3">Pediatrics</label> *@
-                @*                     </div> *@
-                @*                 </div> *@
-                @*                 <div class="col-md-4 mb-2"> *@
-                @*                     <div class="form-check"> *@
-                @*                         <input class="form-check-input" type="checkbox" id="dept4" name="Hospital.Departments" value="Orthopedics"> *@
-                @*                         <label class="form-check-label" for="dept4">Orthopedics</label> *@
-                @*                     </div> *@
-                @*                 </div> *@
-                @*                 <div class="col-md-4 mb-2"> *@
-                @*                     <div class="form-check"> *@
-                @*                         <input class="form-check-input" type="checkbox" id="dept5" name="Hospital.Departments" value="Neurology"> *@
-                @*                         <label class="form-check-label" for="dept5">Neurology</label> *@
-                @*                     </div> *@
-                @*                 </div> *@
-                @*                 <div class="col-md-4 mb-2"> *@
-                @*                     <div class="form-check"> *@
-                @*                         <input class="form-check-input" type="checkbox" id="dept6" name="Hospital.Departments" value="OB-GYN"> *@
-                @*                         <label class="form-check-label" for="dept6">Obstetrics & Gynecology</label> *@
-                @*                     </div> *@
-                @*                 </div> *@
-                @*                 <div class="col-md-4 mb-2"> *@
-                @*                     <div class="form-check"> *@
-                @*                         <input class="form-check-input" type="checkbox" id="dept7" name="Hospital.Departments" value="Oncology"> *@
-                @*                         <label class="form-check-label" for="dept7">Oncology</label> *@
-                @*                     </div> *@
-                @*                 </div> *@
-                @*                 <div class="col-md-4 mb-2"> *@
-                @*                     <div class="form-check"> *@
-                @*                         <input class="form-check-input" type="checkbox" id="dept8" name="Hospital.Departments" value="Psychiatry"> *@
-                @*                         <label class="form-check-label" for="dept8">Psychiatry</label> *@
-                @*                     </div> *@
-                @*                 </div> *@
-                @*                 <div class="col-md-4 mb-2"> *@
-                @*                     <div class="form-check"> *@
-                @*                         <input class="form-check-input" type="checkbox" id="dept9" name="Hospital.Departments" value="Radiology"> *@
-                @*                         <label class="form-check-label" for="dept9">Radiology</label> *@
-                @*                     </div> *@
-                @*                 </div> *@
-                @*             </div> *@
-                @*         </div> *@
+         <div class="mb-3"> 
+             <label class="form-label">available departments</label> 
+             <div class="row"> 
+                 <div class="col-md-4 mb-2"> 
+                     <div class="form-check"> 
+                         <input class="form-check-input" type="checkbox" id="dept1" name="hospital.departments" value="emergency"> 
+                         <label class="form-check-label" for="dept1">emergency medicine</label> 
+                     </div> 
+                 </div> 
+                 <div class="col-md-4 mb-2"> 
+                     <div class="form-check"> 
+                         <input class="form-check-input" type="checkbox" id="dept2" name="hospital.departments" value="cardiology"> 
+                         <label class="form-check-label" for="dept2">cardiology</label> 
+                     </div> 
+                 </div> 
+                 <div class="col-md-4 mb-2"> 
+                     <div class="form-check"> 
+                         <input class="form-check-input" type="checkbox" id="dept3" name="hospital.departments" value="pediatrics"> 
+                         <label class="form-check-label" for="dept3">pediatrics</label> 
+                     </div> 
+                 </div> 
+                 <div class="col-md-4 mb-2"> 
+                     <div class="form-check"> 
+                         <input class="form-check-input" type="checkbox" id="dept4" name="hospital.departments" value="orthopedics"> 
+                         <label class="form-check-label" for="dept4">orthopedics</label> 
+                     </div> 
+                 </div> 
+                 <div class="col-md-4 mb-2"> 
+                     <div class="form-check"> 
+                         <input class="form-check-input" type="checkbox" id="dept5" name="hospital.departments" value="neurology"> 
+                         <label class="form-check-label" for="dept5">neurology</label> 
+                     </div> 
+                 </div> 
+                 <div class="col-md-4 mb-2"> 
+                     <div class="form-check"> 
+                         <input class="form-check-input" type="checkbox" id="dept6" name="hospital.departments" value="ob-gyn"> 
+                         <label class="form-check-label" for="dept6">obstetrics & gynecology</label> 
+                     </div> 
+                 </div> 
+                 <div class="col-md-4 mb-2"> 
+                     <div class="form-check"> 
+                         <input class="form-check-input" type="checkbox" id="dept7" name="hospital.departments" value="oncology"> 
+                         <label class="form-check-label" for="dept7">oncology</label> 
+                     </div> 
+                 </div> 
+                 <div class="col-md-4 mb-2"> 
+                     <div class="form-check"> 
+                         <input class="form-check-input" type="checkbox" id="dept8" name="hospital.departments" value="psychiatry"> 
+                         <label class="form-check-label" for="dept8">psychiatry</label> 
+                     </div> 
+                 </div> 
+                 <div class="col-md-4 mb-2"> 
+                     <div class="form-check"> 
+                         <input class="form-check-input" type="checkbox" id="dept9" name="hospital.departments" value="radiology"> 
+                         <label class="form-check-label" for="dept9">radiology</label> 
+                     </div> 
+                 </div> 
+             </div> 
+         </div> 
 
-                @*         <div class="mb-3"> *@
-                @*             <label asp-for="Hospital.BedCount" class="form-label">Number of Beds</label> *@
-                @*             <input asp-for="Hospital.BedCount" type="number" class="form-control" placeholder="Total bed capacity"> *@
-                @*             <span asp-validation-for="Hospital.BedCount" class="text-danger"></span> *@
-                @*         </div> *@
+         <div class="mb-3"> 
+             <label asp-for="hospital.bedcount" class="form-label">number of beds</label> 
+             <input asp-for="hospital.bedcount" type="number" class="form-control" placeholder="total bed capacity"> 
+             <span asp-validation-for="hospital.bedcount" class="text-danger"></span> 
+         </div> 
 
-                @*         <div class="mb-3"> *@
-                @*             <label class="form-label">Operating Hours</label> *@
-                @*             <div class="form-check mb-2"> *@
-                @*                 <input class="form-check-input" type="checkbox" id="24hours" name="Hospital.Is24Hours" checked> *@
-                @*                 <label class="form-check-label" for="24hours">24/7 Operation</label> *@
-                @*             </div> *@
-                @*         </div> *@
-                @*     </div> *@
+         <div class="mb-3"> 
+             <label class="form-label">operating hours</label> 
+             <div class="form-check mb-2"> 
+                 <input class="form-check-input" type="checkbox" id="24hours" name="hospital.is24hours" checked> 
+                 <label class="form-check-label" for="24hours">24/7 operation</label> 
+             </div> 
+         </div> 
+     </div> 
 
-                @*     <!-- Terms & Conditions --> *@
-                @*     <div class="form-section"> *@
-                @*         <h3><i class="fas fa-file-contract me-2"></i>Terms & Conditions</h3> *@
+     <!-- terms & conditions --> 
+     <div class="form-section"> 
+         <h3><i class="fas fa-file-contract me-2"></i>terms & conditions</h3> 
 
-                @*         <div class="mb-3"> *@
-                @*             <div class="form-check"> *@
-                @*                 <input class="form-check-input" type="checkbox" id="termsAgree" required> *@
-                @*                 <label class="form-check-label" for="termsAgree"> *@
-                @*                     I agree to the <a href="#" target="_blank">Terms of Service</a> and <a href="#" target="_blank">Privacy Policy</a> *@
-                @*                 </label> *@
-                @*             </div> *@
-                @*         </div> *@
+         <div class="mb-3"> 
+             <div class="form-check"> 
+                 <input class="form-check-input" type="checkbox" id="termsagree" required> 
+                 <label class="form-check-label" for="termsagree"> 
+                     i agree to the <a href="#" target="_blank">terms of service</a> and <a href="#" target="_blank">privacy policy</a> 
+                 </label> 
+             </div> 
+         </div> 
 
-                @*         <div class="mb-3"> *@
-                @*             <div class="form-check"> *@
-                @*                 <input class="form-check-input" type="checkbox" id="dataConsent" required> *@
-                @*                 <label class="form-check-label" for="dataConsent"> *@
-                @*                     I consent to the processing of my hospital's data according to the privacy policy *@
-                @*                 </label> *@
-                @*             </div> *@
-                @*         </div> *@
+         <div class="mb-3"> 
+             <div class="form-check"> 
+                 <input class="form-check-input" type="checkbox" id="dataconsent" required> 
+                 <label class="form-check-label" for="dataconsent"> 
+                     i consent to the processing of my hospital's data according to the privacy policy 
+                 </label> 
+             </div> 
+         </div> 
 
-                @*         <div class="mb-3"> *@
-                @*             <div class="form-check"> *@
-                @*                 <input class="form-check-input" type="checkbox" id="marketingConsent"> *@
-                @*                 <label class="form-check-label" for="marketingConsent"> *@
-                @*                     I would like to receive updates and marketing communications (optional) *@
-                @*                 </label> *@
-                @*             </div> *@
-                @*         </div> *@
-                @*     </div> *@
+         <div class="mb-3"> 
+             <div class="form-check"> 
+                 <input class="form-check-input" type="checkbox" id="marketingconsent"> 
+                 <label class="form-check-label" for="marketingconsent"> 
+                     i would like to receive updates and marketing communications (optional) 
+                 </label> 
+             </div> 
+         </div> 
+     </div> 
 
-                @*     <div class="text-danger">@Model.ErrorMessage</div> <!-- Display registration error --> *@
+     <div class="text-danger">@model.errormessage</div> <!-- display registration error --> 
 
-                @*     <div class="d-flex justify-content-between mt-4"> *@
-                @*         <a href="#" class="btn btn-outline-secondary"><i class="fas fa-arrow-left me-2"></i>Back to Home</a> *@
-                @*         <button type="submit" class="btn btn-primary">Register Hospital<i class="fas fa-arrow-right ms-2"></i></button> *@
-                @*     </div> *@
-                @* </form> *@
+     <div class="d-flex justify-content-between mt-4"> 
+         <a href="#" class="btn btn-outline-secondary"><i class="fas fa-arrow-left me-2"></i>back to home</a> 
+         <button type="submit" class="btn btn-primary">register hospital<i class="fas fa-arrow-right ms-2"></i></button> 
+     </div> 
+ </form> 
             </div>
         </main>
     </div>

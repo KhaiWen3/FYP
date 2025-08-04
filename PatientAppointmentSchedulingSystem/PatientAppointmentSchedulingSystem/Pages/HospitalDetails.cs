@@ -13,31 +13,24 @@ namespace PatientAppointmentSchedulingSystem.Pages
         public string HospitalDescription { get; set; }
 
         [Required]
+        public string HospitalContactNum { get; set; }
+
+        [Required]
         public int HospitalEstablishedYear { get; set; }
 
         [Required]
-        public string HospitalType {get; set; }
+        [RegularExpression(@"^(public|private|university|nonprofit|specialized)$", ErrorMessage = "Invalid hospital type.")]
+        public string HospitalType { get; set; }
 
         [Required]
-        public string HospitalAdress { get; set; }
+        public string HospitalAddress { get; set; }
 
         [Required]
-        [Url(ErrorMessage = "Must be a valid URL to the logo image")]
-        [RegularExpression(@"\.(png|jpg|jpeg|gif)$",
-        ErrorMessage = "Logo must be a PNG, JPG, JPEG, or GIF image")]
+        public string HospitalState { get; set; }
+
+        [Required]
+        [FileExtensions(Extensions = "jpg,jpeg,png,gif", ErrorMessage = "Logo must be an image file")]
         public string HospitalLogo { get; set; }
-
-        [Required]
-        public string HospitalPrimaryContactFirstName { get; set; }
-
-        [Required]
-        public string HospitalPrimaryContactLastName { get; set; }
-
-        [Required]
-        public string HospitalPrimaryContactPosition { get; set; }
-
-        [Required]
-        public string HospitalPrimaryContactPhoneNum { get; set; }
 
         [Required]
         public string HospitalEmail { get; set; }
@@ -47,8 +40,9 @@ namespace PatientAppointmentSchedulingSystem.Pages
 
         [Required]  
         public string HospitalServices { get; set; }
+        //emergency or cardiology and so on
 
         [Required]
-        public int HospitalBed {  get; set; }
+        public int HospitalBedCount {  get; set; }
     }
 }
