@@ -15,8 +15,13 @@ namespace PatientAppointmentSchedulingSystem.Pages
             _context = context;
         }
         public string ErrorMessage { get; set; }
+
         [BindProperty]
         public HospitalDetails Input { get; set; } //Connect to HospitalDetails.cs rather than create another InputModel
+
+        public void OnGet()
+        {
+        }
 
         // Handle POST requests (when the form is submitted)
         public async Task<IActionResult> OnPostAsync()
@@ -40,21 +45,57 @@ namespace PatientAppointmentSchedulingSystem.Pages
                 // Proceed with registration if email is not in use
                 var hashedPassword = BCrypt.Net.BCrypt.HashPassword(Input.HospitalPassword);
 
-                var sql = "INSERT INTO Hospital (HospitalName, HospitalDescription, HospitalEstablishedYear, HospitalType, HospitalAdress, PatientPhoneNum) VALUES (@FirstName, @LastName, @Email, @Password, @Age, @PhoneNumber)";
+                var sql = @"INSERT INTO Hospital 
+                (
+                    HospitalName, 
+                    HospitalDesc, 
+                    HospitalContactNum, 
+                    HospitalEmail, 
+                    HospitalPassword, 
+                    HospitalAddress, 
+                    HospitalBedCount, 
+                    HospitalType, 
+                    HospitalState, 
+                    HospitalLogo, 
+                    HospitalServices, 
+                    HospitalEstablishedYear
+                ) 
+                VALUES 
+                (
+                    @HospitalName, 
+                    @HospitalDesc, 
+                    @HospitalContactNum, 
+                    @HospitalEmail, 
+                    @HospitalPassword, 
+                    @HospitalAddress, 
+                    @HospitalBedCount, 
+                    @HospitalType, 
+                    @HospitalState, 
+                    @HospitalLogo, 
+                    @HospitalServices, 
+                    @HospitalEstablishedYear
+                )";
+
 
                 var parameters = new[]
                 {
-                new SqlParameter("@FirstName", Input.HospitalName),
-                new SqlParameter("@LastName", Input.HospitalDescription),
-                new SqlParameter("@Email", Input.HospitalEmail),
-                new SqlParameter("@Password", hashedPassword),
-                new SqlParameter("@Age", Input.HospitalAdress),
-                new SqlParameter("@PhoneNumber", Input.HospitalContactNum)
+                new SqlParameter("@HospitalName", Input.HospitalName),
+                new SqlParameter("@HospitalDesc", Input.HospitalDescription),
+                new SqlParameter("@HospitalContactNum", Input.HospitalContactNum),
+                new SqlParameter("@HospitalEmail", Input.HospitalEmail),
+                new SqlParameter("@HospitalPassword", hashedPassword),
+                new SqlParameter("@HospitalAddress", Input.HospitalAddress),
+                new SqlParameter("@HospitalBedCount", Input.HospitalBedCount),
+                new SqlParameter("@HospitalType", Input.HospitalType),
+                new SqlParameter("@HospitalState", Input.HospitalState),
+                new SqlParameter("@HospitalLogo", Input.HospitalLogo),
+                new SqlParameter("@HospitalServices", Input.HospitalServices),
+                new SqlParameter("@HospitalEstablishedYear", Input.HospitalEstablishedYear)
                 };
 
                 await _context.Database.ExecuteSqlRawAsync(sql, parameters);
 
-                return RedirectToPage("/PatientLogin");
+                return RedirectToPage("/DoctorLogin");
             }
         }
     }

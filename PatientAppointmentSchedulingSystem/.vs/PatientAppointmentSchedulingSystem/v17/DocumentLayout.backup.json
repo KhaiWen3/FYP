@@ -3,56 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C5968842-2324-4620-BABE-702344FCBA32}|PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj|c:\\users\\wen\\documents\\fyp_code\\fyp\\patientappointmentschedulingsystem\\patientappointmentschedulingsystem\\wwwroot\\css\\patient.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{C5968842-2324-4620-BABE-702344FCBA32}|PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj|solutionrelative:patientappointmentschedulingsystem\\wwwroot\\css\\patient.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C5968842-2324-4620-BABE-702344FCBA32}|PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj|c:\\users\\wen\\documents\\fyp_code\\fyp\\patientappointmentschedulingsystem\\patientappointmentschedulingsystem\\wwwroot\\css\\style.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{C5968842-2324-4620-BABE-702344FCBA32}|PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj|solutionrelative:patientappointmentschedulingsystem\\wwwroot\\css\\style.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C5968842-2324-4620-BABE-702344FCBA32}|PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj|c:\\users\\wen\\documents\\fyp_code\\fyp\\patientappointmentschedulingsystem\\patientappointmentschedulingsystem\\pages\\patientlogin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{C5968842-2324-4620-BABE-702344FCBA32}|PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj|solutionrelative:patientappointmentschedulingsystem\\pages\\patientlogin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{C5968842-2324-4620-BABE-702344FCBA32}|PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj|c:\\users\\wen\\documents\\fyp_code\\fyp\\patientappointmentschedulingsystem\\patientappointmentschedulingsystem\\pages\\hospitalregister.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{C5968842-2324-4620-BABE-702344FCBA32}|PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj|solutionrelative:patientappointmentschedulingsystem\\pages\\hospitalregister.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C5968842-2324-4620-BABE-702344FCBA32}|PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj|c:\\users\\wen\\documents\\fyp_code\\fyp\\patientappointmentschedulingsystem\\patientappointmentschedulingsystem\\pages\\patienthomepage.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{C5968842-2324-4620-BABE-702344FCBA32}|PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj|solutionrelative:patientappointmentschedulingsystem\\pages\\patienthomepage.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{C5968842-2324-4620-BABE-702344FCBA32}|PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj|c:\\users\\wen\\documents\\fyp_code\\fyp\\patientappointmentschedulingsystem\\patientappointmentschedulingsystem\\pages\\patientsignup.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C5968842-2324-4620-BABE-702344FCBA32}|PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj|solutionrelative:patientappointmentschedulingsystem\\pages\\patientsignup.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C5968842-2324-4620-BABE-702344FCBA32}|PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj|c:\\users\\wen\\documents\\fyp_code\\fyp\\patientappointmentschedulingsystem\\patientappointmentschedulingsystem\\pages\\shared\\_patientlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{C5968842-2324-4620-BABE-702344FCBA32}|PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj|solutionrelative:patientappointmentschedulingsystem\\pages\\shared\\_patientlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{C5968842-2324-4620-BABE-702344FCBA32}|PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj|c:\\users\\wen\\documents\\fyp_code\\fyp\\patientappointmentschedulingsystem\\patientappointmentschedulingsystem\\pages\\hospitalregister.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C5968842-2324-4620-BABE-702344FCBA32}|PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj|solutionrelative:patientappointmentschedulingsystem\\pages\\hospitalregister.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C5968842-2324-4620-BABE-702344FCBA32}|PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj|c:\\users\\wen\\documents\\fyp_code\\fyp\\patientappointmentschedulingsystem\\patientappointmentschedulingsystem\\pages\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{C5968842-2324-4620-BABE-702344FCBA32}|PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj|solutionrelative:patientappointmentschedulingsystem\\pages\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{C5968842-2324-4620-BABE-702344FCBA32}|PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj|c:\\users\\wen\\documents\\fyp_code\\fyp\\patientappointmentschedulingsystem\\patientappointmentschedulingsystem\\pages\\patientsignup.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C5968842-2324-4620-BABE-702344FCBA32}|PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj|solutionrelative:patientappointmentschedulingsystem\\pages\\patientsignup.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C5968842-2324-4620-BABE-702344FCBA32}|PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj|c:\\users\\wen\\documents\\fyp_code\\fyp\\patientappointmentschedulingsystem\\patientappointmentschedulingsystem\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{C5968842-2324-4620-BABE-702344FCBA32}|PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj|solutionrelative:patientappointmentschedulingsystem\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+      "AbsoluteMoniker": "D:0:0:{C5968842-2324-4620-BABE-702344FCBA32}|PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj|c:\\users\\wen\\documents\\fyp_code\\fyp\\patientappointmentschedulingsystem\\patientappointmentschedulingsystem\\pages\\hospitallogin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C5968842-2324-4620-BABE-702344FCBA32}|PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj|solutionrelative:patientappointmentschedulingsystem\\pages\\hospitallogin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C5968842-2324-4620-BABE-702344FCBA32}|PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj|c:\\users\\wen\\documents\\fyp_code\\fyp\\patientappointmentschedulingsystem\\patientappointmentschedulingsystem\\pages\\doctorlogin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{C5968842-2324-4620-BABE-702344FCBA32}|PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj|solutionrelative:patientappointmentschedulingsystem\\pages\\doctorlogin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C5968842-2324-4620-BABE-702344FCBA32}|PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj|c:\\users\\wen\\documents\\fyp_code\\fyp\\patientappointmentschedulingsystem\\patientappointmentschedulingsystem\\pages\\data\\availabilityslotdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C5968842-2324-4620-BABE-702344FCBA32}|PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj|solutionrelative:patientappointmentschedulingsystem\\pages\\data\\availabilityslotdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C5968842-2324-4620-BABE-702344FCBA32}|PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj|c:\\users\\wen\\documents\\fyp_code\\fyp\\patientappointmentschedulingsystem\\patientappointmentschedulingsystem\\pages\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C5968842-2324-4620-BABE-702344FCBA32}|PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj|solutionrelative:patientappointmentschedulingsystem\\pages\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C5968842-2324-4620-BABE-702344FCBA32}|PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj|c:\\users\\wen\\documents\\fyp_code\\fyp\\patientappointmentschedulingsystem\\patientappointmentschedulingsystem\\pages\\data\\patientdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C5968842-2324-4620-BABE-702344FCBA32}|PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj|solutionrelative:patientappointmentschedulingsystem\\pages\\data\\patientdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C5968842-2324-4620-BABE-702344FCBA32}|PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj|c:\\users\\wen\\documents\\fyp_code\\fyp\\patientappointmentschedulingsystem\\patientappointmentschedulingsystem\\pages\\data\\doctordbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C5968842-2324-4620-BABE-702344FCBA32}|PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem.csproj|solutionrelative:patientappointmentschedulingsystem\\pages\\data\\doctordbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -61,140 +33,83 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 136,
+          "DockedWidth": 257,
           "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "patient.css",
-              "DocumentMoniker": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\wwwroot\\css\\patient.css",
-              "RelativeDocumentMoniker": "PatientAppointmentSchedulingSystem\\wwwroot\\css\\patient.css",
-              "ToolTip": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\wwwroot\\css\\patient.css*",
-              "RelativeToolTip": "PatientAppointmentSchedulingSystem\\wwwroot\\css\\patient.css*",
-              "ViewState": "AgIAAEIFAAAAAAAAAAAmwG0FAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-08-04T12:46:39.994Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "PatientLogin.cshtml",
-              "DocumentMoniker": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\Pages\\PatientLogin.cshtml",
-              "RelativeDocumentMoniker": "PatientAppointmentSchedulingSystem\\Pages\\PatientLogin.cshtml",
-              "ToolTip": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\Pages\\PatientLogin.cshtml",
-              "RelativeToolTip": "PatientAppointmentSchedulingSystem\\Pages\\PatientLogin.cshtml",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAcAAAAcAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-08-04T12:43:48.341Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "style.css",
-              "DocumentMoniker": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\wwwroot\\css\\style.css",
-              "RelativeDocumentMoniker": "PatientAppointmentSchedulingSystem\\wwwroot\\css\\style.css",
-              "ToolTip": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\wwwroot\\css\\style.css",
-              "RelativeToolTip": "PatientAppointmentSchedulingSystem\\wwwroot\\css\\style.css",
-              "ViewState": "AgIAAK8EAAAAAAAAAAAiwNoEAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-08-04T12:18:55.379Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
               "Title": "HospitalRegister.cshtml",
               "DocumentMoniker": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\Pages\\HospitalRegister.cshtml",
               "RelativeDocumentMoniker": "PatientAppointmentSchedulingSystem\\Pages\\HospitalRegister.cshtml",
               "ToolTip": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\Pages\\HospitalRegister.cshtml",
               "RelativeToolTip": "PatientAppointmentSchedulingSystem\\Pages\\HospitalRegister.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD4CAABYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-08-04T12:17:24.762Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\Pages\\Index.cshtml",
-              "RelativeDocumentMoniker": "PatientAppointmentSchedulingSystem\\Pages\\Index.cshtml",
-              "ToolTip": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\Pages\\Index.cshtml",
-              "RelativeToolTip": "PatientAppointmentSchedulingSystem\\Pages\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAEAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "PatientSignUp.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\Pages\\PatientSignUp.cshtml.cs",
+              "RelativeDocumentMoniker": "PatientAppointmentSchedulingSystem\\Pages\\PatientSignUp.cshtml.cs",
+              "ToolTip": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\Pages\\PatientSignUp.cshtml.cs",
+              "RelativeToolTip": "PatientAppointmentSchedulingSystem\\Pages\\PatientSignUp.cshtml.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAAowBkAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-05T06:08:02.842Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 15,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "PatientSignUp.cshtml",
+              "DocumentMoniker": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\Pages\\PatientSignUp.cshtml",
+              "RelativeDocumentMoniker": "PatientAppointmentSchedulingSystem\\Pages\\PatientSignUp.cshtml",
+              "ToolTip": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\Pages\\PatientSignUp.cshtml",
+              "RelativeToolTip": "PatientAppointmentSchedulingSystem\\Pages\\PatientSignUp.cshtml",
+              "ViewState": "AgIAAFEAAAAAAAAAAAAxwD4AAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-08-02T08:05:11.607Z",
+              "WhenOpened": "2025-08-05T06:01:35.98Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "AvailabilitySlotDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\Pages\\Data\\AvailabilitySlotDbContext.cs",
-              "RelativeDocumentMoniker": "PatientAppointmentSchedulingSystem\\Pages\\Data\\AvailabilitySlotDbContext.cs",
-              "ToolTip": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\Pages\\Data\\AvailabilitySlotDbContext.cs",
-              "RelativeToolTip": "PatientAppointmentSchedulingSystem\\Pages\\Data\\AvailabilitySlotDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "HospitalRegister.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\Pages\\HospitalRegister.cshtml.cs",
+              "RelativeDocumentMoniker": "PatientAppointmentSchedulingSystem\\Pages\\HospitalRegister.cshtml.cs",
+              "ToolTip": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\Pages\\HospitalRegister.cshtml.cs",
+              "RelativeToolTip": "PatientAppointmentSchedulingSystem\\Pages\\HospitalRegister.cshtml.cs",
+              "ViewState": "AgIAAD4AAAAAAAAAAAAkwFsAAABMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-02T08:02:01.534Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "ApplicationDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\Pages\\Data\\ApplicationDbContext.cs",
-              "RelativeDocumentMoniker": "PatientAppointmentSchedulingSystem\\Pages\\Data\\ApplicationDbContext.cs",
-              "ToolTip": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\Pages\\Data\\ApplicationDbContext.cs",
-              "RelativeToolTip": "PatientAppointmentSchedulingSystem\\Pages\\Data\\ApplicationDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-02T08:01:57.416Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "_PatientLayout.cshtml",
-              "DocumentMoniker": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\Pages\\Shared\\_PatientLayout.cshtml",
-              "RelativeDocumentMoniker": "PatientAppointmentSchedulingSystem\\Pages\\Shared\\_PatientLayout.cshtml",
-              "ToolTip": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\Pages\\Shared\\_PatientLayout.cshtml",
-              "RelativeToolTip": "PatientAppointmentSchedulingSystem\\Pages\\Shared\\_PatientLayout.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAcAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-08-02T07:24:34.256Z",
+              "WhenOpened": "2025-08-05T05:45:23.016Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "PatientHomePage.cshtml",
-              "DocumentMoniker": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\Pages\\PatientHomePage.cshtml",
-              "RelativeDocumentMoniker": "PatientAppointmentSchedulingSystem\\Pages\\PatientHomePage.cshtml",
-              "ToolTip": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\Pages\\PatientHomePage.cshtml",
-              "RelativeToolTip": "PatientAppointmentSchedulingSystem\\Pages\\PatientHomePage.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAF4BAAAgAAAAAAAAAA==",
+              "Title": "HospitalLogin.cshtml",
+              "DocumentMoniker": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\Pages\\HospitalLogin.cshtml",
+              "RelativeDocumentMoniker": "PatientAppointmentSchedulingSystem\\Pages\\HospitalLogin.cshtml",
+              "ToolTip": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\Pages\\HospitalLogin.cshtml",
+              "RelativeToolTip": "PatientAppointmentSchedulingSystem\\Pages\\HospitalLogin.cshtml",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-08-02T07:12:19.764Z",
+              "WhenOpened": "2025-08-04T16:57:21.19Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "site.css",
-              "DocumentMoniker": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\wwwroot\\css\\site.css",
-              "RelativeDocumentMoniker": "PatientAppointmentSchedulingSystem\\wwwroot\\css\\site.css",
-              "ToolTip": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\wwwroot\\css\\site.css",
-              "RelativeToolTip": "PatientAppointmentSchedulingSystem\\wwwroot\\css\\site.css",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-08-04T12:33:50.168Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 5,
               "Title": "DoctorLogin.cshtml",
               "DocumentMoniker": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\Pages\\DoctorLogin.cshtml",
               "RelativeDocumentMoniker": "PatientAppointmentSchedulingSystem\\Pages\\DoctorLogin.cshtml",
@@ -202,31 +117,8 @@
               "RelativeToolTip": "PatientAppointmentSchedulingSystem\\Pages\\DoctorLogin.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-08-02T08:04:53.068Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "PatientDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\Pages\\Data\\PatientDbContext.cs",
-              "RelativeDocumentMoniker": "PatientAppointmentSchedulingSystem\\Pages\\Data\\PatientDbContext.cs",
-              "ToolTip": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\Pages\\Data\\PatientDbContext.cs",
-              "RelativeToolTip": "PatientAppointmentSchedulingSystem\\Pages\\Data\\PatientDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-02T07:59:11.95Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "DoctorDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\Pages\\Data\\DoctorDbContext.cs",
-              "RelativeDocumentMoniker": "PatientAppointmentSchedulingSystem\\Pages\\Data\\DoctorDbContext.cs",
-              "ToolTip": "C:\\Users\\wen\\Documents\\FYP_Code\\FYP\\PatientAppointmentSchedulingSystem\\PatientAppointmentSchedulingSystem\\Pages\\Data\\DoctorDbContext.cs",
-              "RelativeToolTip": "PatientAppointmentSchedulingSystem\\Pages\\Data\\DoctorDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-02T07:59:02.426Z"
+              "WhenOpened": "2025-08-02T08:04:53.068Z",
+              "EditorCaption": ""
             }
           ]
         }
