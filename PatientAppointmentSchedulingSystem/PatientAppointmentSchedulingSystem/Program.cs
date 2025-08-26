@@ -27,7 +27,7 @@ builder.Services.AddDbContext<PatientDbContext>(options =>
 });
 
 //2. HospitalDetails.cs
-builder.Services.AddDbContext<HospitalDbContext>(options =>
+builder.Services.AddDbContext<ProviderDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("SystemDatabaseDbConnString"));
 });

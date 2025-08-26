@@ -1,5 +1,5 @@
 ﻿ @page
- @model PatientAppointmentSchedulingSystem.Pages.HospitalRegisterModel
+ @model PatientAppointmentSchedulingSystem.Pages.ProviderRegisterModel
  @{ 
  }
 <html lang="en">
@@ -246,21 +246,12 @@
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <a href="#" class="navbar-brand">
-            <img src="/images/medibook-logo.svg" alt="MediBook Logo">
-        </a>
-        <div>
-            <a href="#" class="btn btn-outline-light me-2">Login</a>
-            <a href="#" class="btn btn-light">Sign Up</a>
-        </div>
-    </nav>
 
     <div class="container">
         <main role="main" class="pb-5">
             <div class="registration-container">
                 <div class="registration-header">
-                    <h2><i class="fas fa-hospital me-2"></i>Hospital Registration</h2>
+                    <h2><i class="fas fa-hospital me-2"></i>Provider Registration</h2>
                     <p>Join MediBook to manage appointments and provide better patient care</p>
                 </div>
 
@@ -268,20 +259,25 @@
                     <div class="step active">
                         <div class="step-line"></div>
                         <div class="step-number">1</div>
-                        <div class="step-title">Hospital Details</div>
+                        <div class="step-title">Provider Type</div>
                     </div>
                     <div class="step">
                         <div class="step-line"></div>
                         <div class="step-number">2</div>
-                        <div class="step-title">Contact Info</div>
+                        <div class="step-title">Details</div>
                     </div>
                     <div class="step">
                         <div class="step-line"></div>
                         <div class="step-number">3</div>
+                        <div class="step-title">Contact Info</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-line"></div>
+                        <div class="step-number">4</div>
                         <div class="step-title">Services</div>
                     </div>
                     <div class="step">
-                        <div class="step-number">4</div>
+                        <div class="step-number">5</div>
                         <div class="step-title">Review</div>
                     </div>
                 </div>
@@ -290,76 +286,79 @@
                     <i class="fas fa-info-circle me-2"></i> All fields marked with * are required. After registration, our team will verify your information within 1-2 business days.
                 </div>
 
-                 <form method="post"> 
+                 <form method="post">
+                    @Html.AntiForgeryToken()
                      <!-- validation summary --> 
-                     <div asp-validation-summary="ModelOnly" class="text-danger"></div> 
+                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <!-- provider type (NEW) -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-sitemap me-2"></i>Provider Type</h3>
+                        <div class="mb-3">
+                            <label class="form-label required">provider type</label>
+                            <select asp-for="Input.ProviderType" class="form-select" id="providerType" required>
+                                <option value="">-- Select --</option>
+                                <option value="Hospital">Hospital</option>
+                                <option value="Clinic">Clinic</option>
+                            </select>
+                            <span asp-validation-for="Input.ProviderType" class="text-danger"></span>
+                        </div>
+                    </div>
 
                      <!-- hospital information --> 
                      <div class="form-section"> 
-                         <h3><i class="fas fa-building me-2"></i>hospital information</h3> 
+                         <h3><i class="fas fa-building me-2"></i>Provider Information</h3> 
 
                          <div class="mb-3"> 
-                             <label for="HospitalName" class="form-label required">hospital name</label> 
-                             <input asp-for="Input.HospitalName" class="form-control" placeholder="enter hospital full name" required> 
-                             <span asp-validation-for="Input.HospitalName" class="text-danger"></span> 
-                         </div> 
+                             <label for="HospitalName" class="form-label required">Hospital/Clinic Name</label> 
+                             <input asp-for="Input.Name" class="form-control" placeholder="Enter Full Name" required>
+                            <span asp-validation-for="Input.Name" class="text-danger"></span>
+                        </div> 
 
                          <div class="row mb-3"> 
                              <div class="col-md-6"> 
-                                 <label for="hospitalestablishedyear" class="form-label">year established</label>
-                                <input asp-for="Input.HospitalEstablishedYear" type="number" class="form-control" placeholder="e.g. 1990">
-                                <span asp-validation-for="Input.HospitalEstablishedYear" class="text-danger"></span>
-                            </div> 
-                             <div class="col-md-6"> 
-                                 <label for="HospitalType" class="form-label required">hospital type</label> 
-                                 <select asp-for="Input.HospitalType" class="form-select" required> 
-                                     <option value="">-- select type --</option> 
-                                     <option value="public">public</option> 
-                                     <option value="private">private</option> 
-                                     <option value="nonprofit">non-profit</option> 
-                                     <option value="university">university hospital</option> 
-                                     <option value="specialized">specialized care</option> 
+                                 <label for="HospitalType" class="form-label required">Ownership Type</label> 
+                                 <select asp-for="Input.OwnershipType" class="form-select" required> 
+                                     <option value="">-- Select --</option>
+                                    <option value="Private">Private</option>
+                                    <option value="Public">Public</option>
+                                    <option value="Government">Government</option>
                                  </select>
-                                <span asp-validation-for="Input.HospitalType" class="text-danger"></span>
+                                <span asp-validation-for="Input.OwnershipType" class="text-danger"></span>
                             </div> 
                          </div> 
 
                          <div class="mb-3"> 
-                             <label for="HospitalDescription" class="form-label">hospital description</label> 
-                             <textarea asp-for="Input.HospitalDescription" class="form-control" rows="3" placeholder="brief description of your hospital and specialties"></textarea>
-                            <span asp-validation-for="Input.HospitalDescription" class="text-danger"></span>
+                             <label for="HospitalDescription" class="form-label">Hospital/Clinic Description</label> 
+                             <textarea asp-for="Input.Description" class="form-control" rows="3" placeholder="Brief Description of Your Hospital and Specialties"></textarea>
+                            <span asp-validation-for="Input.Description" class="text-danger"></span>
                         </div> 
 
                          <div class="mb-3"> 
-                             <label class="form-label">hospital logo</label> 
+                             <label class="form-label">Logo</label> 
                              <div class="file-upload"> 
-                                 <label class="file-upload-label"><i class="fas fa-upload me-2"></i>upload logo</label> 
+                                 <label class="file-upload-label"><i class="fas fa-upload me-2"></i>Upload Logo</label> 
                                  <input type="file" accept="image/*" class="form-control"> 
                              </div> 
-                             <div class="form-text">upload your hospital logo (png, jpg, or svg format, max 2mb)</div> 
+                             <div class="form-text">Upload Your Hospital/Clinic Logo (png, jpg, or svg format, max 2mb)</div> 
                          </div> 
                      </div> 
 
                      <!-- address information --> 
                      <div class="form-section"> 
-                         <h3><i class="fas fa-map-marker-alt me-2"></i>address information</h3> 
+                         <h3><i class="fas fa-map-marker-alt me-2"></i>Address Information</h3> 
 
                          <div class="mb-3"> 
-                             <label for="HospitalAddress" class="form-label required">street address</label>
-                            <input asp-for="Input.HospitalAddress" type="text" class="form-control" placeholder="enter street address" required>
-                            <span asp-validation-for="Input.HospitalAddress" class="text-danger"></span>
+                             <label for="HospitalAddress" class="form-label required">Street Address</label>
+                            <input asp-for="Input.Address" type="text" class="form-control" placeholder="Enter Street Address" required>
+                            <span asp-validation-for="Input.Address" class="text-danger"></span>
                         </div> 
 
-                         <div class="row mb-3"> 
-                             @* <div class="col-md-4"> 
-                                 <label asp-for="hospital.address.city" class="form-label required">city</label> 
-                                 <input asp-for="hospital.address.city" type="text" class="form-control" placeholder="enter city" required> 
-                                 <span asp-validation-for="hospital.address.city" class="text-danger"></span> 
-                             </div>  *@
+                         <div class="row mb-3">
                              <div class="col-md-4"> 
-                                 <label for="HospitalState" class="form-label required">state/province</label>
-                                <input asp-for="Input.HospitalState" type="text" class="form-control" placeholder="enter state" required>
-                                <span asp-validation-for="Input.HospitalState" class="text-danger"></span>
+                                 <label for="HospitalState" class="form-label required">State/Province</label>
+                                <input asp-for="Input.State" type="text" class="form-control" placeholder="Enter State" required>
+                                <span asp-validation-for="Input.State" class="text-danger"></span>
                             </div> 
                              @* <div class="col-md-4"> 
                                  <label asp-for="hospital.address.zipcode" class="form-label required">postal/zip code</label> 
@@ -385,43 +384,23 @@
 
                      <!-- contact information --> 
                      <div class="form-section"> 
-                         <h3><i class="fas fa-address-card me-2"></i>primary contact information</h3> 
-
-                         @* <div class="row mb-3"> 
-                             <div class="col-md-6"> 
-                                 <label asp-for="hospital.contact.firstname" class="form-label required">first name</label> 
-                                 <input asp-for="hospital.contact.firstname" type="text" class="form-control" placeholder="contact person's first name" required> 
-                                 <span asp-validation-for="hospital.contact.firstname" class="text-danger"></span> 
-                             </div> 
-                             <div class="col-md-6"> 
-                                 <label asp-for="hospital.contact.lastname" class="form-label required">last name</label> 
-                                 <input asp-for="hospital.contact.lastname" type="text" class="form-control" placeholder="contact person's last name" required> 
-                                 <span asp-validation-for="hospital.contact.lastname" class="text-danger"></span> 
-                             </div> 
-                         </div>  *@
-
-                         @* <div class="mb-3"> 
-                             <label asp-for="hospital.contact.jobtitle" class="form-label required">job title</label> 
-                             <input asp-for="hospital.contact.jobtitle" type="text" class="form-control" placeholder="e.g. hospital administrator" required> 
-                             <span asp-validation-for="hospital.contact.jobtitle" class="text-danger"></span> 
-                         </div>  *@
-
+                         <h3><i class="fas fa-address-card me-2"></i>Contact Information</h3> 
                          <div class="row mb-3"> 
                              <div class="col-md-6">
-                                <label for="HospitalContactNum" class="form-label required">phone number</label>
-                                <input asp-for="Input.HospitalContactNum" type="tel" class="form-control" placeholder="enter phone number" required>
-                                <span asp-validation-for="Input.HospitalContactNum" class="text-danger"></span>
+                                <label for="HospitalContactNum" class="form-label required">Phone Number</label>
+                                <input asp-for="Input.ContactNum" type="tel" class="form-control" placeholder="Enter Phone Number" required>
+                                <span asp-validation-for="Input.ContactNum" class="text-danger"></span>
                             </div>
                             <div class="col-md-6">
-                                <label for="HospitalEmail" class="form-label required">email address</label>
-                                <input asp-for="Input.HospitalEmail" type="email" class="form-control" placeholder="enter email address" required>
-                                <span asp-validation-for="Input.HospitalEmail" class="text-danger"></span>
+                                <label for="HospitalEmail" class="form-label required">Email Address</label>
+                                <input asp-for="Input.Email" type="email" class="form-control" placeholder="Enter Email Address" required>
+                                <span asp-validation-for="Input.Email" class="text-danger"></span>
                             </div>
                             <div class="col-md-6">
-                                <label for="HospitalPassword" class="form-label required">password</label>
-                                <input asp-for="Input.HospitalPassword" type="password" class="form-control" placeholder="create a secure password" required>
-                                <div class="form-text">must be at least 8 characters with numbers and special characters</div>
-                                <span asp-validation-for="Input.HospitalPassword" class="text-danger"></span>
+                                <label for="HospitalPassword" class="form-label required">Password</label>
+                                <input asp-for="Input.Password" type="password" class="form-control" placeholder="Create a Secure Password" required>
+                                <div class="form-text">Must be at least 8 characters with numbers and special characters</div>
+                                <span asp-validation-for="Input.Password" class="text-danger"></span>
                             </div>
                             @* <div class="col-md-6">
                                 <label asp-for="hospital.confirmpassword" class="form-label required">confirm password</label>
@@ -431,38 +410,36 @@
                         </div> 
                      </div> 
 
-                     <!-- account credentials --> 
-                     @* <div class="form-section"> 
-                         <h3><i class="fas fa-user-lock me-2"></i>account credentials</h3> 
-
-                         <div class="mb-3"> 
-                             <label asp-for="hospital.adminemail" class="form-label required">admin email</label> 
-                             <input asp-for="hospital.adminemail" type="email" class="form-control" placeholder="this email will be used for login" required> 
-                             <div class="form-text">this will be the primary administrator account for your hospital</div> 
-                             <span asp-validation-for="hospital.adminemail" class="text-danger"></span> 
-                         </div> 
-
-                         <div class="row mb-3"> 
-                             <div class="col-md-6"> 
-                                 <label asp-for="hospital.password" class="form-label required">password</label> 
-                                 <input asp-for="hospital.password" type="password" class="form-control" placeholder="create a secure password" required> 
-                                 <div class="form-text">must be at least 8 characters with numbers and special characters</div> 
-                                 <span asp-validation-for="hospital.password" class="text-danger"></span> 
-                             </div> 
-                             <div class="col-md-6"> 
-                                 <label asp-for="hospital.confirmpassword" class="form-label required">confirm password</label> 
-                                 <input asp-for="hospital.confirmpassword" type="password" class="form-control" placeholder="confirm your password" required> 
-                                 <span asp-validation-for="hospital.confirmpassword" class="text-danger"></span> 
-                             </div> 
-                         </div> 
-                     </div>  *@
-
                      <!-- hospital facilities & services --> 
                      <div class="form-section"> 
-                         <h3><i class="fas fa-stethoscope me-2"></i>hospital facilities & services</h3> 
+                         <h3><i class="fas fa-stethoscope me-2"></i>Facilities & Services</h3>
 
-                         <div class="mb-3"> 
-                             <label class="form-label">available departments</label> 
+                        <div class="mb-3">
+                            <label class="form-label">Available Specialties</label>
+                            <div class="row">
+                                @foreach (var s in Model.Specialties)
+                                {
+                                    <div class="col-12 col-sm-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input"
+                                                   type="checkbox"
+                                                   id="sp_@s.SpecialtyId"
+                                                   value="@s.SpecialtyId"
+                                                   asp-for="SelectedSpecialtyIds"
+                                                   checked="@(Model.SelectedSpecialtyIds?.Contains(s.SpecialtyId) == true)" />
+                                            <label class="form-check-label" for="sp_@s.SpecialtyId">
+                                                @s.SpecialtyName
+                                            </label>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+
+                            <span asp-validation-for="SelectedSpecialtyIds" class="text-danger"></span>
+                        </div>
+
+                         @* <div class="mb-3"> 
+                             <label class="form-label">Available Specialities</label> 
                              <div class="row"> 
                                  <div class="col-md-4 mb-2"> 
                                      <div class="form-check"> 
@@ -519,13 +496,14 @@
                                      </div> 
                                  </div> 
                              </div> 
-                         </div> 
+                         </div> *@
 
-                         <div class="mb-3"> 
-                             <label for = "HospitalBedCount" class="form-label">number of beds</label> 
-                             <input asp-for="Input.HospitalBedCount" type="number" class="form-control" placeholder="total bed capacity">
-                            <span asp-validation-for="Input.HospitalBedCount" class="text-danger"></span>
-                        </div> 
+                        <!-- Bed Count: add id so JS can toggle -->
+                        <div class="mb-3" id="bedCountGroup" style="display:none;">
+                            <label class="form-label">number of beds</label>
+                            <input asp-for="Input.BedCount" type="number" class="form-control" placeholder="total bed capacity" />
+                            <span asp-validation-for="Input.BedCount" class="text-danger"></span>
+                        </div>
 
                          @* <div class="mb-3"> 
                              <label class="form-label">operating hours</label> 
@@ -572,31 +550,29 @@
 
                     <div class="d-flex justify-content-between mt-4"> 
                          <a href="#" class="btn btn-outline-secondary"><i class="fas fa-arrow-left me-2"></i>back to home</a> 
-                         <button type="submit" class="btn btn-primary">Register Hospitall<i class="fas fa-arrow-right ms-2"></i></button> 
+                         <button type="submit" class="btn btn-primary">Register Hospital<i class="fas fa-arrow-right ms-2"></i></button> 
                      </div> 
                  </form> 
             </div>
         </main>
     </div>
 
-    @* <footer class="border-top footer text-muted mt-5">
-        <div class="container py-3">
-            <div class="row">
-                <div class="col-md-6">
-                    &copy; 2025 - MediBook - <a asp-area="" asp-page="/Privacy">Privacy</a>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <a href="#" class="me-3">Terms of Service</a>
-                    <a href="#" class="me-3">Support</a>
-                    <a href="#">Contact Us</a>
-                </div>
-            </div>
-        </div>
-    </footer> *@
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
+
+        // Toggle Bed Count when ProviderType changes
+        const providerType = document.getElementById('providerType');
+        const bedGroup = document.getElementById('bedCountGroup');
+
+        function toggleBedCount() {
+          if (!providerType || !bedGroup) return;
+          bedGroup.style.display = providerType.value === 'Hospital' ? '' : 'none';
+        }
+        providerType?.addEventListener('change', toggleBedCount);
+        toggleBedCount();
+
         // File upload preview
         document.querySelector('input[type="file"]').addEventListener('change', function(e) {
             let fileName = e.target.files[0].name;
@@ -608,5 +584,9 @@
             // Here you would show/hide operating hours inputs
         });
     </script>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
 </body>
 </html>

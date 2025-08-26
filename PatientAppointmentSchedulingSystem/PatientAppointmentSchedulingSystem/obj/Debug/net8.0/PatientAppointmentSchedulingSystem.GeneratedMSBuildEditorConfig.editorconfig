@@ -48,20 +48,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/wen/Documents/FYP_Code/FYP/PatientAppointmentSchedulingSystem/PatientAppointmentSchedulingSystem/Pages/HospitalLogin.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9zcGl0YWxMb2dpbi5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/wen/Documents/FYP_Code/FYP/PatientAppointmentSchedulingSystem/PatientAppointmentSchedulingSystem/Pages/HospitalRegister.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9zcGl0YWxSZWdpc3Rlci5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/wen/Documents/FYP_Code/FYP/PatientAppointmentSchedulingSystem/PatientAppointmentSchedulingSystem/Pages/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/wen/Documents/FYP_Code/FYP/PatientAppointmentSchedulingSystem/PatientAppointmentSchedulingSystem/Pages/LandingPage.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTGFuZGluZ1BhZ2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/wen/Documents/FYP_Code/FYP/PatientAppointmentSchedulingSystem/PatientAppointmentSchedulingSystem/Pages/Logout.cshtml]
@@ -86,6 +74,18 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/wen/Documents/FYP_Code/FYP/PatientAppointmentSchedulingSystem/PatientAppointmentSchedulingSystem/Pages/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/wen/Documents/FYP_Code/FYP/PatientAppointmentSchedulingSystem/PatientAppointmentSchedulingSystem/Pages/ProviderHomePage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvdmlkZXJIb21lUGFnZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/wen/Documents/FYP_Code/FYP/PatientAppointmentSchedulingSystem/PatientAppointmentSchedulingSystem/Pages/ProviderLogin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvdmlkZXJMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/wen/Documents/FYP_Code/FYP/PatientAppointmentSchedulingSystem/PatientAppointmentSchedulingSystem/Pages/ProviderRegister.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvdmlkZXJSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/wen/Documents/FYP_Code/FYP/PatientAppointmentSchedulingSystem/PatientAppointmentSchedulingSystem/Pages/Shared/_AdminLayout.cshtml]

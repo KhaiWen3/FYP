@@ -6,12 +6,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PatientAppointmentSchedulingSystem.Pages
 {
-    public class AdminLoginModel : PageModel
+    public class ProviderLoginModel : PageModel
     {
-        private readonly HospitalDbContext _context;
+        private readonly ProviderDbContext _context;
         public string ErrorMessage { get; set; }
 
-        public AdminLoginModel(HospitalDbContext context)
+        public ProviderLoginModel(ProviderDbContext context)
         {
             _context = context;
         }
@@ -19,11 +19,11 @@ namespace PatientAppointmentSchedulingSystem.Pages
         [BindProperty]
         public InputModel Input { get; set; }
 
-        public IList<HospitalDetails> Hospital { get; set; }
+        public IList<ProviderDetails> Provider { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            Hospital = await _context.Hospital.ToListAsync();
+            Provider = await _context.Provider.ToListAsync();
             return Page();
         }
 
@@ -43,17 +43,17 @@ namespace PatientAppointmentSchedulingSystem.Pages
             }
 
             // Retrieve the hospital based on the email
-            var hospital = await _context.Hospital
-                .FirstOrDefaultAsync(h => h.HospitalEmail == Input.Email);
+            var provider = await _context.Provider
+                .FirstOrDefaultAsync(p => p.Email == Input.Email);
 
-            if (hospital == null)
+            if (provider == null)
             {
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                 return Page();
             }
 
             // Verify the provided password against the stored hashed password
-            var passwordMatch = BCrypt.Net.BCrypt.Verify(Input.Password, hospital.HospitalPassword);
+            var passwordMatch = BCrypt.Net.BCrypt.Verify(Input.Password, provider.Password);
 
             if (!passwordMatch)
             {
@@ -62,9 +62,9 @@ namespace PatientAppointmentSchedulingSystem.Pages
             }
 
             // Redirect to the homepage or another page upon successful login
-            HospitalSession.HospitalId = hospital.HospitalId;
+            ProviderSession.ProviderId = provider.ProviderId;
             System.Diagnostics.Debug.WriteLine("Current User : " + PatientSession.PatientId);
-            return RedirectToPage("/PatientHomePage");
+            return RedirectToPage("/ProviderHomePage");
         }
 
         // A method to verify password (assuming hashed password)

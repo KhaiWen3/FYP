@@ -1,4 +1,5 @@
 wwwroot\css\patient.css
+wwwroot\css\provider.css
 wwwroot\css\site.css
 wwwroot\css\style.css
 wwwroot\favicon.ico
@@ -81,6 +82,7 @@ wwwroot\images\logo\logo-uber__black.svg
 wwwroot\images\logo\logo-youtube.svg
 wwwroot\images\logo\logo-youtube__black.svg
 wwwroot\images\medibook-logo.svg
+wwwroot\images\medibook.svg
 wwwroot\images\person-sq-1-min.jpg
 wwwroot\images\person-sq-2-min.jpg
 wwwroot\images\person-sq-3-min.jpg

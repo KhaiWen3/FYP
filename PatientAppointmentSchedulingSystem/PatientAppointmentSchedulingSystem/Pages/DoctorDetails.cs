@@ -28,9 +28,6 @@ namespace PatientAppointmentSchedulingSystem.Pages
         [Required]
         public string DoctorRoomNum { get; set; }
 
-        [Required]
-        public string  DoctorAffiliatedHospitalClinic { get; set; }
-
         //public List<AvailabilitySlots> AvailabilitySlots { get; set; }
     }
 }
