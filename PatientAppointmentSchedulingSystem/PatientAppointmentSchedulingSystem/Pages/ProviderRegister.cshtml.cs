@@ -25,7 +25,7 @@ namespace PatientAppointmentSchedulingSystem.Pages
         // 3) IDs of specialties selected by the provider via checkboxes
         [BindProperty]
         public List<int> SelectedSpecialtyIds { get; set; } = new();
-        public async Task OnGet()
+        public async Task OnGetAsync()
         {
             Specialties = await _context.Specialty
                 .OrderBy(s=> s.SpecialtyName)
@@ -77,67 +77,30 @@ namespace PatientAppointmentSchedulingSystem.Pages
                     // --- BEGIN: minimal changes for part 3 + 4 ---
                     using var tx = await _context.Database.BeginTransactionAsync();
 
-                    // Proceed with registration if email is not in use
-                    var hashedPassword = BCrypt.Net.BCrypt.HashPassword(Input.Password);
-
-                    var sql = @"INSERT INTO Provider 
-                (
-                    ProviderType, Name, Description, ContactNum, Email,
-                    Password, Address, BedCount, OwnershipType, State, Logo
-                )
-                VALUES
-                (
-                    @ProviderType, @Name, @Description, @ContactNum, @Email,
-                    @Password, @Address, @BedCount, @OwnershipType, @State, @Logo
-                )";
-
-
-                    var parameters = new[]
+                    // 1) Insert provider with EF so we get the PK immediately
+                    var provider = new ProviderDetails
                     {
-                    new SqlParameter("@ProviderType",  Input.ProviderType),
-                    new SqlParameter("@Name",          Input.Name),
-                    new SqlParameter("@Description",   (object?)Input.Description ?? DBNull.Value),
-                    new SqlParameter("@ContactNum",    Input.ContactNum),
-                    new SqlParameter("@Email",         Input.Email),
-                    new SqlParameter("@Password",  hashedPassword),
-                    new SqlParameter("@Address",       Input.Address),
-                    new SqlParameter("@BedCount",      (object?)Input.BedCount ?? DBNull.Value),
-                    new SqlParameter("@OwnershipType", Input.OwnershipType),
-                    new SqlParameter("@State",         Input.State),
-                    new SqlParameter("@Logo",          (object?)Input.Logo ?? DBNull.Value),
-                };
-                    //save provider first
-                    await _context.Database.ExecuteSqlRawAsync(sql, parameters);
+                        ProviderType = Input.ProviderType,
+                        Name = Input.Name,
+                        Description = Input.Description,
+                        ContactNum = Input.ContactNum,
+                        Email = Input.Email,
+                        Password = BCrypt.Net.BCrypt.HashPassword(Input.Password),
+                        Address = Input.Address,
+                        BedCount = Input.BedCount,
+                        OwnershipType = Input.OwnershipType,
+                        State = Input.State,
+                        Logo = Input.Logo
+                    };
 
-                    // Get ProviderId of the row we just inserted (email is unique, we checked above)
-                    var providerId = await _context.Provider
-                        .Where(p => p.Email == Input.Email)
-                        .Select(p => p.ProviderId)
-                        .FirstAsync();
+                    _context.Provider.Add(provider);
+                    await _context.SaveChangesAsync();            // provider.ProviderId is now set
+                    var providerId = provider.ProviderId;
 
-                    // Gather selected specialties from the posted form WITHOUT adding new bound properties
-                    // Your markup uses two names ("HospitalServices" and one "hospital.departments"), so read both.
-                    var selected1 = Request.Form["HospitalServices"].ToArray();
-                    var selected2 = Request.Form["hospital.departments"].ToArray(); // just in case the first checkbox is used
-                    var selectedAll = selected1.Concat(selected2)
-                                               .Select(v => v?.ToString()?.Trim() ?? "")
-                                               .Where(v => !string.IsNullOrWhiteSpace(v))
-                                               .Select(v => v.ToLowerInvariant())
-                                               .Distinct()
-                                               .ToList();
-
-                    if (selectedAll.Count > 0)
+                    // 2) Insert join rows for specialties (keep your raw SQL)
+                    if (SelectedSpecialtyIds?.Any() == true)
                     {
-                        // Map posted names (e.g., "cardiology") to SpecialtyIds in DB
-                        // Assumes Specialty.SpecialtyName stores names like "cardiology", "orthopedics", etc.
-                        // If your names are Title Case, the ToLower() normalization below will still match.
-                        var specialtyIds = await _context.Specialty
-                            .Where(s => selectedAll.Contains(s.SpecialtyName.ToLower()))
-                            .Select(s => s.SpecialtyId)
-                            .ToListAsync();
-
-                        // Insert join rows
-                        foreach (var sid in specialtyIds.Distinct())
+                        foreach (var sid in SelectedSpecialtyIds.Distinct())
                         {
                             await _context.Database.ExecuteSqlRawAsync(
                                 "INSERT INTO ProviderSpecialty (ProviderId, SpecialtyId) VALUES (@pid, @sid)",
@@ -148,6 +111,84 @@ namespace PatientAppointmentSchedulingSystem.Pages
                     }
 
                     await tx.CommitAsync();
+                    // --- END: minimal changes for part 3 + 4 ---
+
+
+                    //    // --- BEGIN: minimal changes for part 3 + 4 ---
+                    //    using var tx = await _context.Database.BeginTransactionAsync();
+
+                    //    // Proceed with registration if email is not in use
+                    //    var hashedPassword = BCrypt.Net.BCrypt.HashPassword(Input.Password);
+
+                    //    var sql = @"INSERT INTO Provider 
+                    //(
+                    //    ProviderType, Name, Description, ContactNum, Email,
+                    //    Password, Address, BedCount, OwnershipType, State, Logo
+                    //)
+                    //VALUES
+                    //(
+                    //    @ProviderType, @Name, @Description, @ContactNum, @Email,
+                    //    @Password, @Address, @BedCount, @OwnershipType, @State, @Logo
+                    //)";
+
+
+                    //    var parameters = new[]
+                    //    {
+                    //    new SqlParameter("@ProviderType",  Input.ProviderType),
+                    //    new SqlParameter("@Name",          Input.Name),
+                    //    new SqlParameter("@Description",   (object?)Input.Description ?? DBNull.Value),
+                    //    new SqlParameter("@ContactNum",    Input.ContactNum),
+                    //    new SqlParameter("@Email",         Input.Email),
+                    //    new SqlParameter("@Password",  hashedPassword),
+                    //    new SqlParameter("@Address",       Input.Address),
+                    //    new SqlParameter("@BedCount",      (object?)Input.BedCount ?? DBNull.Value),
+                    //    new SqlParameter("@OwnershipType", Input.OwnershipType),
+                    //    new SqlParameter("@State",         Input.State),
+                    //    new SqlParameter("@Logo",          (object?)Input.Logo ?? DBNull.Value),
+                    //};
+                    //    //save provider first
+                    //    await _context.Database.ExecuteSqlRawAsync(sql, parameters);
+
+                    //    // Get ProviderId of the row we just inserted (email is unique, we checked above)
+                    //    var providerId = await _context.Provider
+                    //        .Where(p => p.Email == Input.Email)
+                    //        .Select(p => p.ProviderId)
+                    //        .FirstAsync();
+
+                    //    // Gather selected specialties from the posted form WITHOUT adding new bound properties
+                    //    // Your markup uses two names ("HospitalServices" and one "hospital.departments"), so read both.
+                    //    var selected1 = Request.Form["HospitalServices"].ToArray();
+                    //    var selected2 = Request.Form["hospital.departments"].ToArray(); // just in case the first checkbox is used
+                    //    var selectedAll = selected1.Concat(selected2)
+                    //                               .Select(v => v?.ToString()?.Trim() ?? "")
+                    //                               .Where(v => !string.IsNullOrWhiteSpace(v))
+                    //                               .Select(v => v.ToLowerInvariant())
+                    //                               .Distinct()
+                    //                               .ToList();
+
+                    //    // After you insert the Provider and have providerId:
+                    //    if (SelectedSpecialtyIds?.Any() == true)
+                    //    {
+                    //        foreach (var sid in SelectedSpecialtyIds.Distinct())
+                    //        {
+                    //            try
+                    //            {
+                    //                await _context.Database.ExecuteSqlRawAsync(
+                    //                    "INSERT INTO ProviderSpecialty (ProviderId, SpecialtyId) VALUES (@pid, @sid)",
+                    //                    new SqlParameter("@pid", providerId),
+                    //                    new SqlParameter("@sid", sid)
+                    //                );
+                    //            }
+                    //            catch (SqlException ex)
+                    //            {
+                    //                Console.WriteLine($"Join insert failed for sid={sid}: {ex.Number} {ex.Message}");
+                    //                throw; // rethrow so you actually see the error in dev
+                    //            }
+                    //        }
+                    //    }
+
+
+                    //    await tx.CommitAsync();
                     // --- END: minimal changes for part 3 + 4 ---
 
                     return RedirectToPage("/ProviderLogin");

@@ -360,8 +360,6 @@
     </script>
 </head>
 <body>
-
-
     <!-- ======= Site Wrap =======-->
     <div class="site-wrap">
         <!-- ======= Main =======-->
@@ -422,104 +420,107 @@
                     </div>
 
                     <!-- Main Content -->
-                    <div class="main-content">
-                        <form method="get">
-                            <div class="filter-section mb-3">
-                                <div class="row align-items-center">
-                                    <div class="col-md-10 col-9 pe-0">
-                                        <input type="text" name="Search" class="form-control" value="@Model.Search" placeholder="Search by a speciality or service..." />
-                                    </div>
-                                    <div class="col-md-2 col-3 text-end">
-                                        <button type="submit" class="btn btn-outline-primary">Search</button>
-                                        @* <button type="submit" id="cancelSearch" class="btn btn-outline-secondary">Cancel</button> *@
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-
-
-                        @if (!string.IsNullOrEmpty(Model.Search))
-                        {
-                            if (Model.Doctors != null && Model.Doctors.Any())
-                            {
-                                //Here might be shoe detailed profile of doctor -- Proceed in FYP2
-                                <h6>Available Doctors</h6>
-                                <div class="doctors-list mb-4">
-                                    @foreach (var doctor in Model.Doctors)
-                                    {
-                                        <div class="doctor-card mb-3 p-3 border rounded">
-                                            <h5>@doctor.DoctorFullName</h5>
-                                            <p class="text-muted">@doctor.DoctorMedicalService</p>
+                    <section class="section services__v3" id="search">
+                        <div class="container">
+                            <form method="get">
+                                <div class="filter-section mb-3">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-10 col-9 pe-0">
+                                            <input type="text" name="Search" class="form-control" value="@Model.Search" placeholder="Search by a speciality or service..." />
                                         </div>
-                                    }
+                                        <div class="col-md-2 col-3 text-end">
+                                            <button type="submit" class="btn btn-outline-primary">Search</button>
+                                            @* <button type="submit" id="cancelSearch" class="btn btn-outline-secondary">Cancel</button> *@
+                                        </div>
+                                    </div>
                                 </div>
-                            }
-                            else
-                            {
-                                <h6>No matching doctors found.</h6>
-                            }
+                            </form>
 
-                            @if (Model.AppointmentSlots != null && Model.AppointmentSlots.Any())
-                            {
-                                <h6>Available Slots</h6>
 
-                                @foreach (var dayGroup in Model.AppointmentSlots.GroupBy(s => s.AppointmentDate))
+                            @if (!string.IsNullOrEmpty(Model.Search))
+                            {
+                                if (Model.Doctors != null && Model.Doctors.Any())
                                 {
-                                    <div class="slots-container">
-                                        <div class="day-header">
-                                            <div class="day-name">@dayGroup.Key.ToString("dddd, dd MMM yyyy")</div>
-                                        </div>
-
-                                        <div class="slots-grid">
-                                            @foreach (var slot in dayGroup)
-                                            {
-                                                string slotClass = slot.AppointmentStatus == 1
-                                                ? "isbooked"
-                                                : (slot.AppointmentType == "Video" ? "video" : "in-person");
-
-                                                <div class="time-slot @slotClass">
-                                                    <!-- Form for Booking the Slot -->
-                                                    <form method="post" asp-page-handler="BookAppointment" asp-route-slotId="@slot.SlotId" onsubmit="return confirm('Are you sure you want to book this slot?');">
-                                                        <button type="submit" class="slot-button" @(slot.AppointmentType == "booked" || slot.AppointmentStatus == 1 ? "disabled" : "")>
-                                                            <div class="patient-name">
-                                                                Doctor: @slot.Doctor.DoctorFullName
-                                                            </div>
-                                                            <div class="patient-name">
-                                                                <p class="text-muted">@slot.Doctor.DoctorMedicalService</p>
-                                                            </div>
-                                                            <div class="slot-time">
-                                                                @slot.StartTime.ToString("hh\\:mm") - @slot.EndTime.ToString("hh\\:mm")
-                                                            </div>
-                                                            <div class="slot-type">
-                                                                @if (slot.AppointmentStatus == 1)
-                                                                {
-                                                                    <p><i class="fas fa-check-circle"></i> Booked</p>
-                                                                }
-                                                                else if (slot.AppointmentType == "Video")
-                                                                {
-                                                                    <p><i class="fas fa-video"></i> Video Visit</p>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <p><i class="fas fa-user-md"></i> In-Person</p>
-                                                                }
-                                                            </div>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            }
-                                        </div>
+                                    //Here might be shoe detailed profile of doctor -- Proceed in FYP2
+                                    <h6>Available Doctors</h6>
+                                    <div class="doctors-list mb-4">
+                                        @foreach (var doctor in Model.Doctors)
+                                        {
+                                            <div class="doctor-card mb-3 p-3 border rounded">
+                                                <h5>@doctor.DoctorFullName</h5>
+                                                <p class="text-muted">@doctor.DoctorMedicalService</p>
+                                            </div>
+                                        }
                                     </div>
                                 }
+                                else
+                                {
+                                    <h6>No matching doctors found.</h6>
+                                }
+
+                                @if (Model.AppointmentSlots != null && Model.AppointmentSlots.Any())
+                                {
+                                    <h6>Available Slots</h6>
+
+                                    @foreach (var dayGroup in Model.AppointmentSlots.GroupBy(s => s.AppointmentDate))
+                                    {
+                                        <div class="slots-container">
+                                            <div class="day-header">
+                                                <div class="day-name">@dayGroup.Key.ToString("dddd, dd MMM yyyy")</div>
+                                            </div>
+
+                                            <div class="slots-grid">
+                                                @foreach (var slot in dayGroup)
+                                                {
+                                                    string slotClass = slot.AppointmentStatus == 1
+                                                    ? "isbooked"
+                                                    : (slot.AppointmentType == "Video" ? "video" : "in-person");
+
+                                                    <div class="time-slot @slotClass">
+                                                        <!-- Form for Booking the Slot -->
+                                                        <form method="post" asp-page-handler="BookAppointment" asp-route-slotId="@slot.SlotId" onsubmit="return confirm('Are you sure you want to book this slot?');">
+                                                            <button type="submit" class="slot-button" @(slot.AppointmentType == "booked" || slot.AppointmentStatus == 1 ? "disabled" : "")>
+                                                                <div class="patient-name">
+                                                                    Doctor: @slot.Doctor.DoctorFullName
+                                                                </div>
+                                                                <div class="patient-name">
+                                                                    <p class="text-muted">@slot.Doctor.DoctorMedicalService</p>
+                                                                </div>
+                                                                <div class="slot-time">
+                                                                    @slot.StartTime.ToString("hh\\:mm") - @slot.EndTime.ToString("hh\\:mm")
+                                                                </div>
+                                                                <div class="slot-type">
+                                                                    @if (slot.AppointmentStatus == 1)
+                                                                    {
+                                                                        <p><i class="fas fa-check-circle"></i> Booked</p>
+                                                                    }
+                                                                    else if (slot.AppointmentType == "Video")
+                                                                    {
+                                                                        <p><i class="fas fa-video"></i> Video Visit</p>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <p><i class="fas fa-user-md"></i> In-Person</p>
+                                                                    }
+                                                                </div>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <h6>No slots available.</h6>
+                                }
                             }
-                            else
-                            {
-                                <h6>No slots available.</h6>
-                            }
-                        }
 
 
-                    </div>
+                        </div>
+                    </section>
+                    
                 </div>
             </div>
 

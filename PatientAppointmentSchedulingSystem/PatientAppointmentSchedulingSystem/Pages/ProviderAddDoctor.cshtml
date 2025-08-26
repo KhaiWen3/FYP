@@ -1,0 +1,133 @@
+﻿@page
+@model PatientAppointmentSchedulingSystem.Pages.ProviderAddDoctorModel
+@{
+    Layout = "_ProviderLayout";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome to MediBook</title>
+
+    <!-- ======= Google Font =======-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet">
+    <!-- End Google Font-->
+    <!-- ======= Styles =======-->
+    <link href="/vendors/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="/vendors/glightbox/glightbox.min.css" rel="stylesheet">
+    <link href="/vendors/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="/vendors/aos/aos.css" rel="stylesheet">
+    <!-- End Styles-->
+    <!-- ======= Theme Style =======-->
+    <link href="/css/provider.css" rel="stylesheet">
+    <!-- End Theme Style-->
+    <!-- ======= Apply theme =======-->
+    <script>
+        // Apply the theme as early as possible to avoid flicker
+        (function() {
+        const storedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-bs-theme', storedTheme);
+        })();
+    </script>
+</head>
+
+<body>
+    <section class="py-4" style="background:#f4f6f9;">
+        <div class="container">
+            <div class="registration-container" style="max-width: 960px;">
+                <div class="registration-header">
+                    <h2>Add Doctor</h2>
+                    <p class="mb-0">Fill in all required details and assign a specialty.</p>
+                </div>
+
+                <form method="post" novalidate>
+                    <div class="form-section">
+                        <h3>Doctor Info</h3>
+
+                        <div class="row g-3">
+                            <div class="col-12 col-md-6">
+                                <label class="form-label required" for="DoctorFullName">Full name</label>
+                                <input asp-for="Input.DoctorFullName" class="form-control" id="DoctorFullName" />
+                                <span asp-validation-for="Input.DoctorFullName" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label class="form-label required" for="SpecialtyId">Specialty</label>
+                                <select asp-for="Input.SpecialtyId" class="form-select" id="SpecialtyId">
+                                    <option value="">-- Select --</option>
+                                    @foreach (var s in Model.Specialties)
+                                    {
+                                        <option value="@s.SpecialtyId">@s.SpecialtyName</option>
+                                    }
+                                </select>
+                                <span asp-validation-for="Input.SpecialtyId" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label class="form-label required" for="DoctorPhoneNum">Phone</label>
+                                <input asp-for="Input.DoctorPhoneNum" class="form-control" id="DoctorPhoneNum" />
+                                <span asp-validation-for="Input.DoctorPhoneNum" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label class="form-label required" for="DoctorEmail">Email</label>
+                                <input asp-for="Input.DoctorEmail" type="email" class="form-control" id="DoctorEmail" />
+                                <span asp-validation-for="Input.DoctorEmail" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label class="form-label required" for="DoctorPassword">Password</label>
+                                <input asp-for="Input.DoctorPassword" type="password" class="form-control" id="DoctorPassword" />
+                                <span asp-validation-for="Input.DoctorPassword" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label class="form-label required" for="DoctorRoomNum">Room No.</label>
+                                <input asp-for="Input.DoctorRoomNum" class="form-control" id="DoctorRoomNum" />
+                                <span asp-validation-for="Input.DoctorRoomNum" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label class="form-label required" for="DoctorLanguageSpoken">Languages (comma-separated)</label>
+                                <input asp-for="Input.DoctorLanguageSpoken" class="form-control" id="DoctorLanguageSpoken" placeholder="English, Bahasa, Mandarin" />
+                                <span asp-validation-for="Input.DoctorLanguageSpoken" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label class="form-label required" for="DoctorMedicalService">Medical Service</label>
+                                <input asp-for="Input.DoctorMedicalService" class="form-control" id="DoctorMedicalService" placeholder="e.g., General Consultation" />
+                                <span asp-validation-for="Input.DoctorMedicalService" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label class="form-label" for="DoctorPhoto">Photo URL / filename</label>
+                                <input asp-for="Input.DoctorPhoto" class="form-control" id="DoctorPhoto" placeholder="/images/doctors/dr_ali.jpg" />
+                                <span asp-validation-for="Input.DoctorPhoto" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">Save Doctor</button>
+                        <a asp-page="/provider/dashboard" class="btn btn-outline-secondary">Back</a>
+                    </div>
+                </form>
+
+                @if (!string.IsNullOrWhiteSpace(Model.SuccessMessage))
+                {
+                    <div class="alert alert-info mt-3">@Model.SuccessMessage</div>
+                }
+            </div>
+        </div>
+    </section>
+
+    @section Scripts{
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+</body>
+</html>

@@ -12,7 +12,7 @@ namespace PatientAppointmentSchedulingSystem.Pages.Data
                     DoctorId = 1,
                     DoctorFullName = "Goh Jin Xing",
                     DoctorPhoneNum = "016-9801560",
-                    DoctorSpeciality = "Family Medicine",
+                    //DoctorSpeciality = "Family Medicine",
                     //DoctorMedicalService = 
                     DoctorEmail = "gjx@gmail.com",
                     DoctorPassword= "gjx"

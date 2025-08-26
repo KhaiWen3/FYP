@@ -63,7 +63,7 @@ namespace PatientAppointmentSchedulingSystem.Pages
 
             // Redirect to the homepage or another page upon successful login
             ProviderSession.ProviderId = provider.ProviderId;
-            System.Diagnostics.Debug.WriteLine("Current User : " + PatientSession.PatientId);
+            System.Diagnostics.Debug.WriteLine("Current User : " + ProviderSession.ProviderId);
             return RedirectToPage("/ProviderHomePage");
         }
 

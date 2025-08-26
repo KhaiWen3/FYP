@@ -33,8 +33,8 @@ namespace PatientAppointmentSchedulingSystem.Pages
             {
                 doctorQuery = doctorQuery
                     .Where(d => d.DoctorMedicalService.ToLower().Contains(Search.ToLower()) ||
-                           d.DoctorFullName.ToLower().Contains(Search.ToLower()) ||
-                           d.DoctorSpeciality.ToLower().Contains(Search.ToLower()));
+                           d.DoctorFullName.ToLower().Contains(Search.ToLower())); //||
+                           //d.DoctorSpeciality.ToLower().Contains(Search.ToLower())
             }
 
             //step 3 fetch filtered doctors

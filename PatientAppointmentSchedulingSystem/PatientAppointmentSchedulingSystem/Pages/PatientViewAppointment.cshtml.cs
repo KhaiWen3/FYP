@@ -5,19 +5,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace PatientAppointmentSchedulingSystem.Pages
 {
-    public class PatientMakeAppointmentModel : PageModel
+    public class PatientViewAppointmentModel : PageModel
     {
         //database connection to query doctor and slots data
         private readonly DoctorDbContext _context;
 
         //constructor
-        public PatientMakeAppointmentModel(DoctorDbContext context)
+        public PatientViewAppointmentModel(DoctorDbContext context)
         {
             _context = context;
         }
 
         [BindProperty(SupportsGet = true)]
-        public string Search {  get; set; }
+        public string Search { get; set; }
 
         public List<DoctorDetails> Doctors { get; set; } = new List<DoctorDetails>();
         public List<AvailabilitySlots> AppointmentSlots { get; set; } = new List<AvailabilitySlots>();
