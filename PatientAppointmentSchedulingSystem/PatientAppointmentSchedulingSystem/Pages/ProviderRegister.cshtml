@@ -1,4 +1,4 @@
-﻿ @page
+ @page
  @model PatientAppointmentSchedulingSystem.Pages.ProviderRegisterModel
  @{ 
  }
@@ -417,19 +417,205 @@
                         <div class="mb-3">
                             <label class="form-label">Available Specialties</label>
                             <div class="row">
-                                @foreach (var s in Model.Specialties)
+                                @if (Model.Specialties != null && Model.Specialties.Count > 0)
+                                {
+                                    foreach (var s in Model.Specialties)
+                                    {
+                                        <div class="col-12 col-sm-6 col-md-4 mb-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input"
+                                                       type="checkbox"
+                                                       id="sp_@s.SpecialtyId"
+                                                       value="@s.SpecialtyId"
+                                                       asp-for="SelectedSpecialtyIds"
+                                                       checked="@(Model.SelectedSpecialtyIds?.Contains(s.SpecialtyId) == true)" />
+                                                <label class="form-check-label" for="sp_@s.SpecialtyId">
+                                                    @s.SpecialtyName
+                                                </label>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else
                                 {
                                     <div class="col-12 col-sm-6 col-md-4 mb-2">
                                         <div class="form-check">
-                                            <input class="form-check-input"
-                                                   type="checkbox"
-                                                   id="sp_@s.SpecialtyId"
-                                                   value="@s.SpecialtyId"
-                                                   asp-for="SelectedSpecialtyIds"
-                                                   checked="@(Model.SelectedSpecialtyIds?.Contains(s.SpecialtyId) == true)" />
-                                            <label class="form-check-label" for="sp_@s.SpecialtyId">
-                                                @s.SpecialtyName
-                                            </label>
+                                            <input class="form-check-input" type="checkbox" id="dept_em" name="HospitalServices" value="emergency medicine">
+                                            <label class="form-check-label" for="dept_em">Emergency Medicine</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="dept_card" name="HospitalServices" value="cardiology">
+                                            <label class="form-check-label" for="dept_card">Cardiology</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="dept_im" name="HospitalServices" value="internal medicine">
+                                            <label class="form-check-label" for="dept_im">Internal Medicine</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="dept_fm" name="HospitalServices" value="family medicine">
+                                            <label class="form-check-label" for="dept_fm">Family Medicine</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="dept_ped" name="HospitalServices" value="pediatrics">
+                                            <label class="form-check-label" for="dept_ped">Pediatrics</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="dept_obgyn" name="HospitalServices" value="obstetrics & gynecology">
+                                            <label class="form-check-label" for="dept_obgyn">Obstetrics & Gynecology</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="dept_ortho" name="HospitalServices" value="orthopedic surgery">
+                                            <label class="form-check-label" for="dept_ortho">Orthopedic Surgery</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="dept_gs" name="HospitalServices" value="general surgery">
+                                            <label class="form-check-label" for="dept_gs">General Surgery</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="dept_neuro" name="HospitalServices" value="neurology">
+                                            <label class="form-check-label" for="dept_neuro">Neurology</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="dept_psych" name="HospitalServices" value="psychiatry">
+                                            <label class="form-check-label" for="dept_psych">Psychiatry</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="dept_derm" name="HospitalServices" value="dermatology">
+                                            <label class="form-check-label" for="dept_derm">Dermatology</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="dept_oph" name="HospitalServices" value="ophthalmology">
+                                            <label class="form-check-label" for="dept_oph">Ophthalmology</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="dept_ent" name="HospitalServices" value="otorhinolaryngology (ent)">
+                                            <label class="form-check-label" for="dept_ent">Otorhinolaryngology (ENT)</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="dept_rad" name="HospitalServices" value="radiology (diagnostic)">
+                                            <label class="form-check-label" for="dept_rad">Radiology (Diagnostic)</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="dept_anesth" name="HospitalServices" value="anesthesiology">
+                                            <label class="form-check-label" for="dept_anesth">Anesthesiology</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="dept_urol" name="HospitalServices" value="urology">
+                                            <label class="form-check-label" for="dept_urol">Urology</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="dept_nephr" name="HospitalServices" value="nephrology">
+                                            <label class="form-check-label" for="dept_nephr">Nephrology</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="dept_endo" name="HospitalServices" value="endocrinology">
+                                            <label class="form-check-label" for="dept_endo">Endocrinology</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="dept_gastro" name="HospitalServices" value="gastroenterology">
+                                            <label class="form-check-label" for="dept_gastro">Gastroenterology</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="dept_pulm" name="HospitalServices" value="pulmonology (respiratory)">
+                                            <label class="form-check-label" for="dept_pulm">Pulmonology (Respiratory)</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="dept_onc" name="HospitalServices" value="oncology (medical)">
+                                            <label class="form-check-label" for="dept_onc">Oncology (Medical)</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="dept_hema" name="HospitalServices" value="hematology">
+                                            <label class="form-check-label" for="dept_hema">Hematology</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="dept_rheu" name="HospitalServices" value="rheumatology">
+                                            <label class="form-check-label" for="dept_rheu">Rheumatology</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="dept_infect" name="HospitalServices" value="infectious diseases">
+                                            <label class="form-check-label" for="dept_infect">Infectious Diseases</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="dept_geri" name="HospitalServices" value="geriatrics">
+                                            <label class="form-check-label" for="dept_geri">Geriatrics</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="dept_pmr" name="HospitalServices" value="physical medicine & rehabilitation">
+                                            <label class="form-check-label" for="dept_pmr">Physical Medicine & Rehabilitation</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="dept_path" name="HospitalServices" value="pathology">
+                                            <label class="form-check-label" for="dept_path">Pathology</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="dept_nm" name="HospitalServices" value="nuclear medicine">
+                                            <label class="form-check-label" for="dept_nm">Nuclear Medicine</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="dept_plast" name="HospitalServices" value="plastic surgery">
+                                            <label class="form-check-label" for="dept_plast">Plastic Surgery</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="dept_ns" name="HospitalServices" value="neurosurgery">
+                                            <label class="form-check-label" for="dept_ns">Neurosurgery</label>
                                         </div>
                                     </div>
                                 }
