@@ -38,5 +38,7 @@ namespace PatientAppointmentSchedulingSystem.Pages
         public string? DoctorPhoto { get; set; }
 
         //public List<AvailabilitySlots> AvailabilitySlots { get; set; }
+        public ICollection<AvailabilitySlots> AvailabilitySlots { get; set; } = new List<AvailabilitySlots>();
+
     }
 }

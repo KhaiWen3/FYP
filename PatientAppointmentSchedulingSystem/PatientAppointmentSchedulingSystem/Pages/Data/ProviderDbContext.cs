@@ -10,6 +10,8 @@ namespace PatientAppointmentSchedulingSystem.Pages.Data
         public DbSet<ProviderDetails> Provider => Set<ProviderDetails>();
         public DbSet<Specialty> Specialty => Set<Specialty>();
         public DbSet<ProviderSpecialty> ProviderSpecialties => Set<ProviderSpecialty>();
+        public DbSet<AvailabilitySlots> AvailabilitySlots => Set<AvailabilitySlots>();
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -30,6 +32,12 @@ namespace PatientAppointmentSchedulingSystem.Pages.Data
                 .HasOne(ps => ps.Specialty)
                 .WithMany(s => s.ProviderSpecialties)
                 .HasForeignKey(ps => ps.SpecialtyId);
+
+            modelBuilder.Entity<AvailabilitySlots>()
+                .HasOne(a => a.Doctor)
+                .WithMany(d => d.AvailabilitySlots)
+                .HasForeignKey(a => a.DoctorId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

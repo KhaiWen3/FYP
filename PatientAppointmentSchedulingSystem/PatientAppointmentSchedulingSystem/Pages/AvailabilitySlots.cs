@@ -37,5 +37,6 @@ namespace PatientAppointmentSchedulingSystem.Pages
 
         // Foreign key for Patient (nullable, as a slot may not be booked yet)
         public int? PatientId { get; set; }
+
     }
 }
