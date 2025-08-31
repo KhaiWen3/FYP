@@ -4,16 +4,47 @@
     Layout = "_PatientLayout";
     // var editing = Model.IsEditing;
 }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> Welcome to MediBook </title>
 
+
+    <!-- ======= Google Font =======-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet">
+    <!-- End Google Font-->
+    <!-- ======= Styles =======-->
+    <link href="/vendors/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="/vendors/glightbox/glightbox.min.css" rel="stylesheet">
+    <link href="/vendors/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="/vendors/aos/aos.css" rel="stylesheet">
+    <!-- End Styles-->
+    <!-- ======= Theme Style =======-->
+    <link href="/css/style.css" rel="stylesheet">
+    <!-- End Theme Style-->
+    <!-- ======= Apply theme =======-->
+    <script>
+        // Apply the theme as early as possible to avoid flicker
+        (function() {
+        const storedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-bs-theme', storedTheme);
+        })();
+    </script>
+</head>
 <body>
     <!-- ======= Site Wrap =======-->
     <div class="site-wrap">
         <!-- ======= Main =======-->
         <main>
             
-            <section class="hero__v6 section" id="home">
+            <section class="hero__v6 section" id="home" style="padding:70px 0 0 0 !important">
                 <!-- ======= Everything Start from HERE!! =======-->
-                <main class="pt-nav">
+                @* <main> *@
 
                     <div class="container">
                         <div class="content-wrapper">
@@ -31,8 +62,8 @@
                                                         <i class="bi bi-person text-white fs-3"></i>
                                                     </div>
                                                     <div>
-                                                        <h1 class="h4 mb-1">Patient.PatientFirstName Patient.PatientLastName</h1>
-                                                        <div class="text-muted small">Patient ID: Patient.PatientId</div>
+                                                        <h1 class="h4 mb-1">@Model.Patient.PatientFirstName @Model.Patient.PatientLastName</h1>
+                                                        <div class="text-muted small">@Model.Patient ID: Patient.PatientId</div>
                                                     </div>
                                                 </div>
                                                 <div class="text-muted small">Last updated: @Model.LastUpdated?.ToString("yyyy-MM-dd")</div>
@@ -45,7 +76,7 @@
 
                                             <div class="row g-4">
                                                 <!-- Personal -->
-                                                <div class="col-12 col-lg-6">
+                                                <div class="col-12">
                                                     <div class="card border h-100">
                                                         <div class="card-body">
                                                             <h3 class="h6 mb-3"><i class="bi bi-person-fill me-2"></i>Personal Information</h3>
@@ -83,7 +114,7 @@
                                                 </div>
 
                                                 <!-- Contact -->
-                                                <div class="col-12 col-lg-6">
+                                                <div class="col-12">
                                                     <div class="card border h-100">
                                                         <div class="card-body">
                                                             <h3 class="h6 mb-3"><i class="bi bi-envelope-fill me-2"></i>Contact Information</h3>
@@ -104,7 +135,7 @@
                                                 </div>
 
                                                 <!-- Address -->
-                                                <div class="col-12 col-lg-6">
+                                                <div class="col-12">
                                                     <div class="card border h-100">
                                                         <div class="card-body">
                                                             <h3 class="h6 mb-3"><i class="bi bi-geo-alt-fill me-2"></i>Address</h3>
@@ -138,7 +169,7 @@
                                                 </div>
 
                                                 <!-- Emergency -->
-                                                <div class="col-12 col-lg-6">
+                                                <div class="col-12 ">
                                                     <div class="card border h-100">
                                                         <div class="card-body">
                                                             <h3 class="h6 mb-3"><i class="bi bi-telephone-fill me-2"></i>Emergency Contact</h3>
@@ -159,7 +190,7 @@
                                                 </div>
 
                                                 <!-- Insurance + Medical -->
-                                                <div class="col-12 col-lg-6">
+                                                <div class="col-12 ">
                                                     <div class="card border h-100">
                                                         <div class="card-body">
                                                             <h3 class="h6 mb-3"><i class="bi bi-shield-check me-2"></i>Insurance</h3>
@@ -213,402 +244,10 @@
                                         </form>
                                     </div>
                                 </section>
-            @*                     <section class="py-4">
-                                    <div class="container" style="max-width: 1100px;">
-                                        <!-- Header -->
-                                        <div class="card shadow-sm border rounded-3 mb-4"> 
-                                            <div class="card-body d-flex align-items-center justify-content-between">
-
-                                            <!-- Always show the 3 buttons; backend decides action -->
-                                            <form method="post" class="d-flex gap-2">
-                                                <input type="hidden" asp-for="IsEditing" />
-                                                <button type="submit" name="action" value="edit" class="btn btn-primary"
-                                                        disabled="@(Model.IsEditing ? "disabled" : null)">
-                                                    <i class="bi bi-pencil-square me-1"></i> Edit Information
-                                                </button>
-                                                <button type="submit" name="action" value="save" class="btn btn-success"
-                                                        disabled="@(Model.IsEditing ? null : "disabled")">
-                                                    <i class="bi bi-check-lg me-1"></i> Save Changes
-                                                </button>
-                                                <button type="submit" name="action" value="cancel" class="btn btn-secondary"
-                                                        disabled="@(Model.IsEditing ? null : "disabled")">
-                                                    <i class="bi bi-x-lg me-1"></i> Cancel
-                                                </button>
-                                            </form>
-                                        </div>
-
-                                        <div class="card-footer bg-light border-top" hidden="@(Model.IsEditing ? null : "hidden")">
-                                        <div class="small text-primary">
-                                            You are currently editing. Complete required fields before saving.
-                                        </div>
-                                    </div>
-                                        </div>
-
-                                        <!-- Content -->
-                                        <div class="d-flex align-items-center gap-3">
-                                            <div class="rounded-circle d-flex align-items-center justify-content-center"
-                                                 style="width:64px;height:64px;background:linear-gradient(135deg, var(--bs-primary), #6f42c1);">
-                                                <i class="bi bi-person text-white fs-3"></i>
-                                            </div>
-                                            <div>
-                                                <h1 class="h4 mb-1">
-                                                    @Model.Patient.PatientFirstName @Model.Patient.PatientLastName
-                                                </h1>
-                                                <div class="text-muted small">Patient ID: @Model.Patient.PatientId</div>
-                                            </div>
-                                        </div>
-
-                                        <form method="post">
-                <input type="hidden" asp-for="Patient.PatientId" />
-                <input type="hidden" asp-for="IsEditing" />
-                <div class="row g-4">
-
-                    <!-- Personal Information -->
-                    <div class="col-12 col-lg-6">
-                        <div class="card border h-100">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center gap-2 mb-3">
-                                    <div class="p-2 rounded bg-primary bg-opacity-10 text-primary">
-                                        <i class="bi bi-person-fill"></i>
-                                    </div>
-                                    <h3 class="h6 m-0">Personal Information</h3>
-                                </div>
-
-                                <div class="row g-3">
-                                    <div class="col-12 col-md-6">
-                                        <label asp-for="Input.FirstName" class="form-label">
-                                            First Name <span class="text-danger">*</span>
-                                        </label>
-                                        <input asp-for="Input.FirstName"
-                                               class="form-control @(Model.IsEditing ? "" : "form-control-plaintext bg-light")"
-                                               readonly="@(Model.IsEditing ? null : "readonly")" />
-                                        <span asp-validation-for="Input.FirstName" class="text-danger small"></span>
-                                    </div>
-
-                                    <div class="col-12 col-md-6">
-                                        <label asp-for="Input.LastName" class="form-label">
-                                            Last Name <span class="text-danger">*</span>
-                                        </label>
-                                        <input asp-for="Input.LastName"
-                                               class="form-control @(Model.IsEditing ? "" : "form-control-plaintext bg-light")"
-                                               readonly="@(Model.IsEditing ? null : "readonly")" />
-                                        <span asp-validation-for="Input.LastName" class="text-danger small"></span>
-                                    </div>
-
-                                    <div class="col-12">
-                                        <label asp-for="Input.DateOfBirth" class="form-label">
-                                            Date of Birth <span class="text-danger">*</span>
-                                        </label>
-                                        <input asp-for="Input.DateOfBirth" type="date"
-                                               class="form-control @(Model.IsEditing ? "" : "form-control-plaintext bg-light")"
-                                               readonly="@(Model.IsEditing ? null : "readonly")" />
-                                        <span asp-validation-for="Input.DateOfBirth" class="text-danger small"></span>
-                                    </div>
-
-                                    <div class="col-12">
-                                        <label asp-for="Input.Gender" class="form-label">Gender <span class="text-danger">*</span></label>
-                                        <select asp-for="Input.Gender" class="form-select"
-                                                disabled="@(Model.IsEditing ? null : "disabled")">
-                                            <option value="">Select Gender</option>
-                                            <option>Male</option>
-                                            <option>Female</option>
-                                            <option>Other</option>
-                                            <option>Prefer not to say</option>
-                                        </select>
-                                        <!--when not editing, show a plaintext mirror -->
-                                        <div class="form-control-plaintext bg-light rounded px-3 py-2 mt-1"
-                                             hidden="@(Model.IsEditing ? "hidden" : null)">
-                                            @Model.Input.Gender
-                                        </div>
-                                        <span asp-validation-for="Input.Gender" class="text-danger small"></span>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Contact Information -->
-                    <div class="col-12 col-lg-6">
-                        <div class="card border h-100">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center gap-2 mb-3">
-                                    <div class="p-2 rounded bg-success bg-opacity-10 text-success">
-                                        <i class="bi bi-envelope-fill"></i>
-                                    </div>
-                                    <h3 class="h6 m-0">Contact Information</h3>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label asp-for="Input.Email" class="form-label">
-                                        Email <span class="text-danger">*</span>
-                                    </label>
-
-                                    <!-- edit control -->
-                                    <input asp-for="Input.Email" type="email"
-                                           class="form-control @(Model.IsEditing ? "" : "d-none")" />
-                                    <span asp-validation-for="Input.Email" class="text-danger small"></span>
-
-                                    <!-- view mirror -->
-                                    <p class="form-control-plaintext bg-light rounded px-3 py-2 @(Model.IsEditing ? "d-none" : "")">
-                                        @Model.Input.Email
-                                    </p>
-                                </div>
-
-                                <div>
-                                    <label asp-for="Input.Phone" class="form-label">
-                                        Phone <span class="text-danger">*</span>
-                                    </label>
-
-                                    <!-- edit control -->
-                                    <input asp-for="Input.Phone" type="tel" inputmode="tel"
-                                           class="form-control @(Model.IsEditing ? "" : "d-none")" />
-                                    <span asp-validation-for="Input.Phone" class="text-danger small"></span>
-
-                                    <!-- view mirror -->
-                                    <p class="form-control-plaintext bg-light rounded px-3 py-2 @(Model.IsEditing ? "d-none" : "")">
-                                        @Model.Input.Phone
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Address -->
-                    <div class="col-12 col-lg-6">
-                        <div class="card border h-100">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center gap-2 mb-3">
-                                    <div class="p-2 rounded bg-purple bg-opacity-10 text-primary">
-                                        <i class="bi bi-geo-alt-fill"></i>
-                                    </div>
-                                    <h3 class="h6 m-0">Address</h3>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label asp-for="Input.Address" class="form-label">
-                                        Street Address <span class="text-danger">*</span>
-                                    </label>
-
-                                    <!-- edit control -->
-                                    <input asp-for="Input.Address"
-                                           class="form-control @(Model.IsEditing ? "" : "d-none")" />
-                                    <span asp-validation-for="Input.Address" class="text-danger small"></span>
-
-                                    <!-- view mirror -->
-                                    <p class="form-control-plaintext bg-light rounded px-3 py-2 @(Model.IsEditing ? "d-none" : "")">
-                                        @Model.Input.Address
-                                    </p>
-                                </div>
-
-                                <div class="row g-3">
-                                    <div class="col-md-6">
-                                        <label asp-for="Input.City" class="form-label">
-                                            City <span class="text-danger">*</span>
-                                        </label>
-
-                                        <input asp-for="Input.City"
-                                               class="form-control @(Model.IsEditing ? "" : "d-none")" />
-                                        <span asp-validation-for="Input.City" class="text-danger small"></span>
-
-                                        <p class="form-control-plaintext bg-light rounded px-3 py-2 @(Model.IsEditing ? "d-none" : "")">
-                                            @Model.Input.City
-                                        </p>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <label asp-for="Input.State" class="form-label">
-                                            State <span class="text-danger">*</span>
-                                        </label>
-
-                                        <input asp-for="Input.State"
-                                               class="form-control @(Model.IsEditing ? "" : "d-none")" />
-                                        <span asp-validation-for="Input.State" class="text-danger small"></span>
-
-                                        <p class="form-control-plaintext bg-light rounded px-3 py-2 @(Model.IsEditing ? "d-none" : "")">
-                                            @Model.Input.State
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="mt-3">
-                                    <label asp-for="Input.ZipCode" class="form-label"> ZIP Code <span class="text-danger">*</span></label>
-                                    <input asp-for="Input.ZipCode" class="form-control @(Model.IsEditing ? "" : "d-none")" />
-                                    <span asp-validation-for="Input.ZipCode" class="text-danger small"></span>
-
-                                    <p class="form-control-plaintext bg-light rounded px-3 py-2 @(Model.IsEditing ? "d-none" : "")">
-                                        @Model.Input.ZipCode
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Emergency Contact -->
-                    <div class="col-12 col-lg-6">
-                        <div class="card border h-100">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center gap-2 mb-3">
-                                    <div class="p-2 rounded bg-danger bg-opacity-10 text-danger">
-                                        <i class="bi bi-telephone-fill"></i>
-                                    </div>
-                                    <h3 class="h6 m-0">Emergency Contact</h3>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label asp-for="Input.EmergencyContact" class="form-label">
-                                        Contact Name <span class="text-danger">*</span>
-                                    </label>
-
-                                    <input asp-for="Input.EmergencyContact"
-                                           class="form-control @(Model.IsEditing ? "" : "d-none")" />
-                                    <span asp-validation-for="Input.EmergencyContact" class="text-danger small"></span>
-
-                                    <p class="form-control-plaintext bg-light rounded px-3 py-2 @(Model.IsEditing ? "d-none" : "")">
-                                        @Model.Input.EmergencyContact
-                                    </p>
-                                </div>
-
-                                <div>
-                                    <label asp-for="Input.EmergencyPhone" class="form-label">
-                                        Contact Phone <span class="text-danger">*</span>
-                                    </label>
-
-                                    <input asp-for="Input.EmergencyPhone"
-                                           class="form-control @(Model.IsEditing ? "" : "d-none")" />
-                                    <span asp-validation-for="Input.EmergencyPhone" class="text-danger small"></span>
-
-                                    <p class="form-control-plaintext bg-light rounded px-3 py-2 @(Model.IsEditing ? "d-none" : "")">
-                                        @Model.Input.EmergencyPhone
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Insurance -->
-                    <div class="col-12 col-lg-6">
-                        <div class="card border h-100">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center gap-2 mb-3">
-                                    <div class="p-2 rounded bg-info bg-opacity-10 text-info">
-                                        <i class="bi bi-shield-check"></i>
-                                    </div>
-                                    <h3 class="h6 m-0">Insurance</h3>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label asp-for="Input.Insurance" class="form-label">Provider</label>
-
-                                    <input asp-for="Input.Insurance"
-                                           class="form-control @(Model.IsEditing ? "" : "d-none")" />
-
-                                    <p class="form-control-plaintext bg-light rounded px-3 py-2 @(Model.IsEditing ? "d-none" : "")">
-                                        @Model.Input.Insurance
-                                    </p>
-                                </div>
-
-                                <div>
-                                    <label asp-for="Input.PolicyNumber" class="form-label">Policy Number</label>
-
-                                    <input asp-for="Input.PolicyNumber"
-                                           class="form-control @(Model.IsEditing ? "" : "d-none")" />
-
-                                    <p class="form-control-plaintext bg-light rounded px-3 py-2 @(Model.IsEditing ? "d-none" : "")">
-                                        @Model.Input.PolicyNumber
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Medical Information -->
-                    <div class="col-12">
-                        <div class="card border">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center gap-2 mb-3">
-                                    <div class="p-2 rounded bg-pink bg-opacity-10" style="color:#d63384;">
-                                        <i class="bi bi-heart-fill"></i>
-                                    </div>
-                                    <h3 class="h6 m-0">Medical Information</h3>
-                                </div>
-
-                                <div class="row g-3">
-                                    <div class="col-md-4">
-                                        <label asp-for="Input.BloodType" class="form-label">Blood Type</label>
-
-                                        <input asp-for="Input.BloodType"
-                                               class="form-control @(Model.IsEditing ? "" : "d-none")" />
-
-                                        <p class="form-control-plaintext bg-light rounded px-3 py-2 @(Model.IsEditing ? "d-none" : "")">
-                                            @Model.Input.BloodType
-                                        </p>
-                                    </div>
-                                    
-                                    <div class="col-md-8">
-                                        <label asp-for="Input.PrimaryPhysician" class="form-label">Primary Physician</label>
-
-                                        <input asp-for="Input.PrimaryPhysician"
-                                               class="form-control @(Model.IsEditing ? "" : "d-none")" />
-
-                                        <p class="form-control-plaintext bg-light rounded px-3 py-2 @(Model.IsEditing ? "d-none" : "")">
-                                            @Model.Input.PrimaryPhysician
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="mt-3">
-                                    <label asp-for="Input.Allergies" class="form-label">Known Allergies</label>
-
-                                    <!-- textarea in edit -->
-                                    <textarea asp-for="Input.Allergies" rows="3"
-                                              class="form-control @(Model.IsEditing ? "" : "d-none")"></textarea>
-
-                                    <!-- plaintext in view -->
-                                    <p class="form-control-plaintext bg-light rounded px-3 py-2 @(Model.IsEditing ? "d-none" : "")">
-                                        @Model.Input.Allergies
-                                    </p>
-                                </div>
-
-                                <div class="mt-3">
-                                    <label asp-for="Input.Medications" class="form-label">Current Medications</label>
-
-                                    <textarea asp-for="Input.Medications" rows="3"
-                                              class="form-control @(Model.IsEditing ? "" : "d-none")"></textarea>
-
-                                    <p class="form-control-plaintext bg-light rounded px-3 py-2 @(Model.IsEditing ? "d-none" : "")">
-                                        @Model.Input.Medications
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Save/Cancel buttons (always rendered; disabled when not editing) -->
-                <div class="d-flex justify-content-end gap-2 mt-4">
-                    <button formaction="?handler=Cancel"
-                            class="btn btn-outline-secondary"
-                            disabled="@(Model.IsEditing ? null : "disabled")">
-                        Cancel
-                    </button>
-                    <button formaction="?handler=Save"
-                            class="btn btn-primary"
-                            disabled="@(Model.IsEditing ? null : "disabled")">
-                        Save Changes
-                    </button>
-                </div>
-            </form>
-
-                                        <div class="mt-4 text-center text-muted small">
-                                            Last updated: @Model.LastUpdated?.ToString("yyyy-MM-dd") · Keep your information current to ensure the best care.
-                                        </div>
-                                    </div>
-                                    </section> *@
-                            </div>
-                        </div>
-                    </div>
-                </main>
-
+                @* </main> *@
                 <!-- End Hero-->
             </section>
             <!-- End Hero-->
@@ -631,7 +270,7 @@
     <script src="/js/send_email.js"></script>
     <!-- End JavaScripts-->
 </body>
-
+</html>
 
 
 @* <!DOCTYPE html>
