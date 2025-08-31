@@ -134,7 +134,7 @@
         </ul>
         @if (User.Identity.IsAuthenticated)
         {
-            <form asp-page="/Logout" method="post">
+            <form method="post" asp-page-handler="Logout" class="d-inline">
                 <button type="submit" class="nav-link btn btn-link">Logout</button>
             </form>
         }

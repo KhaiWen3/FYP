@@ -20,6 +20,22 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.SlidingExpiration = true;
     });
 
+// (Optional) If you also use Session anywhere:
+//builder.Services.AddDistributedMemoryCache();
+//builder.Services.AddSession(o => {
+//    o.IdleTimeout = TimeSpan.FromHours(8);
+//    o.Cookie.HttpOnly = true;
+//    o.Cookie.IsEssential = true;
+//});
+
+builder.Services.AddAuthentication("PatientCookie")
+    .AddCookie("PatientCookie", options =>
+    {
+        options.LoginPath = "/PatientLogin";
+        options.AccessDeniedPath = "/AccessDenied";
+        options.Cookie.Name = "Patient.Auth";
+    });
+
 //1. PatientDetails.cs
 builder.Services.AddDbContext<PatientDbContext>(options =>
 {
@@ -67,7 +83,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseSession();
+app.UseSession(); //must before UseEndPoint/MapRazorPage
 
 app.MapDefaultControllerRoute();
 app.MapRazorPages();

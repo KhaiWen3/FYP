@@ -4,98 +4,135 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using PatientAppointmentSchedulingSystem.Pages.Data;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Security.Claims;
-using static System.Reflection.Metadata.BlobBuilder;
 
 namespace PatientAppointmentSchedulingSystem.Pages
 {
-    //[Authorize(AuthenticationSchemes = "DoctorCookie")]
+    //[Authorize(Roles = "Doctor")] // optional but recommended
     public class DoctorAddAvailableSlotModel : PageModel
     {
+        // inject your ef core context so you can query/insert AvailabilitySlots
         private readonly AvailabilitySlotDbContext _context;
-
-        [BindProperty(SupportsGet = true)]
-        public int? DoctorId { get; set; }
-
-        public string DoctorName { get; set; }
-        public string DoctorSpecialty { get; set; }
-        public string DoctorMedicalService { get; set; }
-
         public DoctorAddAvailableSlotModel(AvailabilitySlotDbContext context)
         {
             _context = context;
         }
 
+
+        [BindProperty]
+        public int? DoctorId { get; set; }
+
+        public string? DoctorName { get; set; }
+        public string? DoctorSpecialty { get; set; }
+        public string? DoctorMedicalService { get; set; }
+
+        //AvailableSlots is what will display on the page
         public List<AvailabilitySlots> AvailableSlots { get; set; }
 
         [BindProperty]
-        public AvailabilitySlots Input {  get; set; }
+        public AvailabilitySlots Input { get; set; }
 
-        
+        //Use a view-model without DoctorId so validation passes
+        public class SlotInput
+        {
+            [Required]
+            public DateTime AppointmentDate { get; set; }
+
+            [Required]
+            public TimeSpan AptStartTime { get; set; }
+
+            [Required]
+            public TimeSpan AptEndTime { get; set; }
+
+            [Required]
+            public string AppointmentType { get; set; } = "Video";
+        }
+
+        //[BindProperty]
+        //public SlotInput Input { get; set; } = new();
+
+        //idClaim stores DoctorId from session so you can show it in the page.
+        public int? idClaim { get; set; }
+
 
         public async Task<IActionResult> OnPostAsync()
         {
-            //1. check model state valdiation
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            // reload list for redisplay on validation errors
+            OnGet();
 
-            // 2. add custom time validation
-            if (Input.EndTime <= Input.StartTime)
-            {
-                ModelState.AddModelError("Input.EndTime", "End time must be after start time");
-                return Page();
-            }
+            //Server-side validation: if the bound Input has required fields missing/invalid, redisplay the page.
+            if (!ModelState.IsValid) return Page();
 
-            //3. Get doctor id from sesion
-            //var doctorId = DoctorId ?? HttpContext.Session.GetInt32("DoctorId");
-            var doctorIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-
+            //Fetch doctor id from Session (not from cookies/claims)
+            //If the session does not have it/expired, send the user to the doctor login page
             int doctorId = 0;
-            Console.WriteLine("DoctorId: " + doctorIdClaim.Value);
-            if (doctorIdClaim == null)
+            idClaim = HttpContext.Session.GetInt32("DoctorId");
+            if (idClaim == null)
             {
+                Console.WriteLine("Doctor Id Not Found");
                 return RedirectToPage("/DoctorLogin");
             }
             else
             {
-                doctorId = int.Parse(doctorIdClaim.Value);
+                doctorId = (int)idClaim;
             }
+
+            Console.WriteLine("Testing");
+
+            var date = Input.AppointmentDate.Date;
+            var start = new DateTime(
+                date.Year, date.Month, date.Day,
+                Input.AptStartTime.Hour, Input.AptStartTime.Minute, Input.AptStartTime.Second);
+
+            var end = new DateTime(
+                date.Year, date.Month, date.Day,
+                Input.AptEndTime.Hour, Input.AptEndTime.Minute, Input.AptEndTime.Second);
+
+            // 2. add custom time validation
+            if (end <= start)
+            {
+                ModelState.AddModelError("Input.AptEndTime", "End time must be after start time");
+                return Page();
+            }
+
+            //3.Get doctor id from sesion
+            //var doctorId = doctorId ?? HttpContext.Session.GetInt32("DoctorId");
+            //var doctorIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+
+            //int doctorId = 0;
+            //Console.WriteLine("DoctorId: " + doctorIdClaim.Value);
+            //if (doctorIdClaim == null)
+            //{
+            //    return RedirectToPage("/DoctorLogin");
+            //}
+            //else
+            //{
+            //    doctorId = int.Parse(doctorIdClaim.Value);
+            //}
 
             //4. using entity framework to create and save the slot
             var slot = new AvailabilitySlots
                 {
                     AppointmentDate = Input.AppointmentDate,
-                    StartTime = Input.StartTime,
-                    EndTime = Input.EndTime,
+                    AptStartTime = start,
+                    AptEndTime = end,
                     AppointmentType = Input.AppointmentType,
                     DoctorId = doctorId,
                     PatientId = null,
                     AppointmentStatus = 0 //0 = available
                 };
-
+    
             try
             {
                 _context.AvailabilitySlots.Add(slot);
                 await _context.SaveChangesAsync();
 
-                if (DoctorId.HasValue)
-                {
-                    // Populate the available slots for this doctor
-                    AvailableSlots = _context.AvailabilitySlots
-                        .Where(s => s.DoctorId == DoctorId.Value)
-                        .OrderBy(s => s.AppointmentDate)
-                        .ThenBy(s => s.StartTime)
-                        .ToList();
-                }
-                else
-                {
-                    AvailableSlots = new List<AvailabilitySlots>(); // prevent null reference
-                }
-
-                // Redirect back to DoctorDetails with the DoctorId
-                return RedirectToPage("/DoctorAddAvailableSlot", new { id = doctorId });
+                // Redirect with the correct query key so your property binds:
+                //return RedirectToPage("/DoctorAddAvailableSlot", new { DoctorId = doctorId });
+                return RedirectToPage("/DoctorAddAvailableSlot");
             }
             catch (Exception ex)
             {
@@ -105,33 +142,56 @@ namespace PatientAppointmentSchedulingSystem.Pages
                 return Page();
             }
         }
-
-        public void OnGet()
+        public IActionResult OnGet()
         {
             // Get doctor ID from claims
-            var doctorIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-            if (doctorIdClaim != null)
+            idClaim = HttpContext.Session.GetInt32("DoctorId");
+            int doctorId = 0;
+            // So now u login as doctor right? so u just get it from the session !! but session will die which means if the user open the page so long time session will die then need to restart
+            // if session no die do this V
+
+            if(idClaim != null) //here is to check the session la
             {
-                DoctorId = int.Parse(doctorIdClaim.Value);
+                doctorId = (int)idClaim;    // for this because to store the session of doctor id but possible is null because of die, so u need to use (int) casting to cast from int? to int
+                // perform the data retrieve from here
+                AvailableSlots = _context.AvailabilitySlots
+                    .Where(s => s.DoctorId == doctorId)
+                    .OrderBy(s => s.AppointmentDate)
+                    .ThenBy(s => s.AptStartTime)
+                    .ToList();
+
+                return Page();
+            }
+            else //this else mean session die so ask them go back login page
+            {
+                Console.WriteLine("Doctor Id Is NuLL");
+                // later u add here back to login page 
+                //if the session die
+                return RedirectToPage("/DoctorLogin");
             }
 
-            DoctorName = User.FindFirstValue(ClaimTypes.Name);
-            DoctorSpecialty = User.FindFirstValue("Specialization");
-            DoctorMedicalService = User.FindFirstValue("MedicalService");
+            //if (User.Identity?.IsAuthenticated == true)
+            //{
+            //    var idClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            //    if (idClaim != null && int.TryParse(idClaim.Value, out var idFromClaim))
+            //    {
+            //        DoctorId ??= idFromClaim;
+            //    }
+            //}
+
+            //DoctorName = User.FindFirstValue(ClaimTypes.Name);
+            //DoctorSpecialty = User.FindFirstValue("Specialization");
+            //DoctorMedicalService = User.FindFirstValue("MedicalService");
 
             // Load the slots for the doctor
-            if (DoctorId.HasValue)
-            {
-                AvailableSlots = _context.AvailabilitySlots
-                    .Where(s => s.DoctorId == DoctorId.Value)
-                    .OrderBy(s => s.AppointmentDate)
-                    .ThenBy(s => s.StartTime)
-                    .ToList();
-            }
-            else
-            {
-                AvailableSlots = new List<AvailabilitySlots>();
-            }
+            //if (DoctorId.HasValue)
+            //{
+            //    AvailableSlots = _context.AvailabilitySlots
+            //        .Where(s => s.DoctorId == DoctorId.Value)
+            //        .OrderBy(s => s.AppointmentDate)
+            //        .ThenBy(s => s.AptStartTime)
+            //        .ToList();
+            //}
 
         }
     }

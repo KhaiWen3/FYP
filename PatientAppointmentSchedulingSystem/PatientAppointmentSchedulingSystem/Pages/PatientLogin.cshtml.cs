@@ -46,54 +46,114 @@ namespace PatientAppointmentSchedulingSystem.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            if (!ModelState.IsValid) return Page();
 
-            // Retrieve the student based on the email
-            var patient = await _context.Patients.FirstOrDefaultAsync(p => p.PatientEmail == Input.Email);
+            // 1) Find patient by email
+            var patient = await _context.Patients
+                .FirstOrDefaultAsync(p => p.PatientEmail == Input.Email);
 
             if (patient == null)
             {
-                ErrorMessage = "Invalid login attempt.";
+                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                 return Page();
             }
 
+            // 2) Verify BCrypt password (DB must store a BCrypt hash)
             var passwordMatch = BCrypt.Net.BCrypt.Verify(Input.Password, patient.PatientPassword);
-
             if (!passwordMatch)
             {
-                ModelState.AddModelError(string.Empty, "Invalid Login Attempt.");
+                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                 return Page();
             }
 
+            // 3) Build claims
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, patient.PatientId.ToString()),
+                new Claim(ClaimTypes.Email, patient.PatientEmail),
+                new Claim(ClaimTypes.Name, $"{patient.PatientFirstName} {patient.PatientLastName}"),
+                new Claim(ClaimTypes.GivenName, patient.PatientFirstName),
+                new Claim(ClaimTypes.Surname, patient.PatientLastName),
+                new Claim(ClaimTypes.Role, "Patient")
+            };
+
+            // 4) Sign in with cookie auth (make sure this scheme exists in Program.cs)
+            var identity = new ClaimsIdentity(claims, "PatientCookie");
+            var principal = new ClaimsPrincipal(identity);
+
+            await HttpContext.SignInAsync(
+                "PatientCookie",
+                principal,
+                new AuthenticationProperties
+                {
+                    IsPersistent = true,                 // remember me behavior
+                    ExpiresUtc = DateTimeOffset.UtcNow.AddHours(8)
+                });
+
+            // 5) (Optional) keep your existing session keys if other pages still depend on them
             HttpContext.Session.SetInt32("PatientId", patient.PatientId);
             HttpContext.Session.SetString("PatientFirstName", patient.PatientFirstName);
             HttpContext.Session.SetString("PatientLastName", patient.PatientLastName);
             HttpContext.Session.SetString("PatientEmail", patient.PatientEmail);
-            HttpContext.Session.SetString("PatientFullName", patient.PatientFirstName + " " + patient.PatientLastName);
+            HttpContext.Session.SetString("PatientFullName", $"{patient.PatientFirstName} {patient.PatientLastName}");
 
-
-            // Optional: Debug
-            System.Diagnostics.Debug.WriteLine("Logged in PatientId: " + patient.PatientId);
-
-            return RedirectToPage("/PatientHomePage"); // Redirect to doctor dashboard
-
-            // Verify the provided password against the stored hashed password
-            //var passwordMatch = BCrypt.Net.BCrypt.Verify(Input.Password, patient.PatientPassword);
-
-            //if (!passwordMatch)
-            //{
-            //    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-            //    return Page();
-            //}
-
-            //// Redirect to the homepage or another page upon successful login
-            //PatientSession.PatientId = patient.PatientId;
-            //System.Diagnostics.Debug.WriteLine("Current User : " + PatientSession.PatientId);
-            //return RedirectToPage("/PatientHomePage");
+            // 6) Go to patient home/profile
+            return RedirectToPage("/PatientHomePage");
         }
+
+
+
+
+        //public async Task<IActionResult> OnPostAsync()
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return Page();
+        //    }
+
+        //    // Retrieve the student based on the email
+        //    var patient = await _context.Patients.FirstOrDefaultAsync(p => p.PatientEmail == Input.Email);
+
+        //    if (patient == null)
+        //    {
+        //        ErrorMessage = "Invalid login attempt.";
+        //        return Page();
+        //    }
+
+        //    var passwordMatch = BCrypt.Net.BCrypt.Verify(Input.Password, patient.PatientPassword);
+
+        //    if (!passwordMatch)
+        //    {
+        //        ModelState.AddModelError(string.Empty, "Invalid Login Attempt.");
+        //        return Page();
+        //    }
+
+        //    HttpContext.Session.SetInt32("PatientId", patient.PatientId);
+        //    HttpContext.Session.SetString("PatientFirstName", patient.PatientFirstName);
+        //    HttpContext.Session.SetString("PatientLastName", patient.PatientLastName);
+        //    HttpContext.Session.SetString("PatientEmail", patient.PatientEmail);
+        //    HttpContext.Session.SetString("PatientFullName", patient.PatientFirstName + " " + patient.PatientLastName);
+
+
+        //    // Optional: Debug
+        //    System.Diagnostics.Debug.WriteLine("Logged in PatientId: " + patient.PatientId);
+
+        //    return RedirectToPage("/PatientHomePage"); // Redirect to doctor dashboard
+
+        //    // Verify the provided password against the stored hashed password
+        //    //var passwordMatch = BCrypt.Net.BCrypt.Verify(Input.Password, patient.PatientPassword);
+
+        //    //if (!passwordMatch)
+        //    //{
+        //    //    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+        //    //    return Page();
+        //    //}
+
+        //    //// Redirect to the homepage or another page upon successful login
+        //    //PatientSession.PatientId = patient.PatientId;
+        //    //System.Diagnostics.Debug.WriteLine("Current User : " + PatientSession.PatientId);
+        //    //return RedirectToPage("/PatientHomePage");
+        //}
 
         // A method to verify password (assuming hashed password)
         private bool VerifyPassword(string hashedPassword, string providedPassword)

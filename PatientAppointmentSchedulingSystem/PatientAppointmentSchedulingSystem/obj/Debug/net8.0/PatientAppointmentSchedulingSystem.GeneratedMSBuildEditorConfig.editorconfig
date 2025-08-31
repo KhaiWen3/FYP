@@ -68,6 +68,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGF0aWVudE1ha2VBcHBvaW50bWVudC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/wen/Documents/FYP_Code/FYP/PatientAppointmentSchedulingSystem/PatientAppointmentSchedulingSystem/Pages/PatientProfile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGF0aWVudFByb2ZpbGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/wen/Documents/FYP_Code/FYP/PatientAppointmentSchedulingSystem/PatientAppointmentSchedulingSystem/Pages/PatientProfilecshtml.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGF0aWVudFByb2ZpbGVjc2h0bWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

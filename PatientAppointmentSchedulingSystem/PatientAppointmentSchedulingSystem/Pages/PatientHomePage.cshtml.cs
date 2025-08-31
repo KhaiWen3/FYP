@@ -50,7 +50,7 @@ namespace PatientAppointmentSchedulingSystem.Pages
                     .Where(slot => doctorIds.Contains(slot.DoctorId))
                     .Include(slot => slot.Doctor)
                     .OrderBy(s => s.AppointmentDate)
-                    .ThenBy(s => s.StartTime)
+                    .ThenBy(s => s.AptStartTime)
                     .ToList();
             }
         }

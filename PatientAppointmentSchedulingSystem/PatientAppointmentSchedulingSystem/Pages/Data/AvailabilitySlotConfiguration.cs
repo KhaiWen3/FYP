@@ -1,20 +1,24 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace PatientAppointmentSchedulingSystem.Pages.Data
 {
-    public class AvailabilitySlotConfiguration
+    public class AvailabilitySlotConfiguration : IEntityTypeConfiguration<AvailabilitySlots>
     {
         public void Configure(EntityTypeBuilder<AvailabilitySlots> builder)
         {
             builder.HasData(new List<AvailabilitySlots> {
-                //new AvailabilitySlots
-                //{
-                //    SlotId = 1,
-                //    StartTime = '01-12-2024 09:00:00',
-                //    EndTime = '2023-12-01 09:30:00',
-                //    IsBooked = 1,
-                //    AppointmentType = "In-person Visit"
-                //}
+                new AvailabilitySlots
+                {
+                    SlotId = 1,
+                    DoctorId = 1,
+                    AppointmentDate = new DateTime(2024, 12, 1),
+                    AptStartTime = new DateTime(2024, 12, 1, 9, 0, 0),
+                    AptEndTime = new DateTime(2024, 12, 1, 9, 30, 0),
+                    AppointmentStatus = 0,
+                    AppointmentType = "In-person",
+                    PatientId = null
+                }
             });
         }
     }

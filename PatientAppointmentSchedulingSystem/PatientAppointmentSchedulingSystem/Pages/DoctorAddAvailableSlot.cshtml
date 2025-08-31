@@ -798,7 +798,7 @@
                 <!--Display Slots Added-->
                 @if (Model.AvailableSlots != null && Model.AvailableSlots.Any())
                 {
-                    @foreach (var dayGroup in Model.AvailableSlots.GroupBy(s => s.AppointmentDate))
+                    @foreach (var dayGroup in Model.AvailableSlots.GroupBy(s => s.AppointmentDate.Date))
                     {
                         <div class="slots-container">
                             <div class="day-header">
@@ -812,7 +812,8 @@
 
                                     <div class="time-slot @slotClass">
                                         <div class="slot-time">
-                                            @slot.StartTime.ToString(@"hh\:mm") - @slot.EndTime.ToString(@"hh\:mm")
+                                            @slot.AptStartTime.ToString("HH:mm tt") - @slot.AptEndTime.ToString("HH:mm tt")
+
                                         </div>
                                         <div class="slot-type">
                                             @if (slot.AppointmentStatus == 1)
@@ -850,12 +851,14 @@
     <!-- Add Time Slot Modal -->
     <div class="modal" id="addSlotModal" style="display: none;">
         <div class="modal-content">
-            <form method="post">
+            <form method="post" asp-antiforgery="true">
                 <div class="modal-header">
                     <div class="modal-title">Add Time Slots</div>
                     <div class="modal-close" id="closeModalBtn">&times;</div>
                 </div>
                 <div class="modal-body">
+                    <div asp-validation-summary="All" class="text-danger mb-2"></div>
+                    
                     <!--hidden doctorid field-->
                     <div class="form-group">
                         <input type="hidden" asp-for="DoctorId"/>
@@ -870,11 +873,11 @@
                     <div class="time-inputs">
                         <div class="form-group">
                             <label for="Input.StartTime">Start Time</label>
-                            <input asp-for="Input.StartTime" type="time" class="form-control">
+                            <input asp-for="Input.AptStartTime" type="time" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="Input.EndTime">End Time</label>
-                            <input asp-for="Input.EndTime" type="time" class="form-control">
+                            <input asp-for="Input.AptEndTime" type="time" class="form-control">
                         </div>
                     </div>
                      
@@ -960,6 +963,9 @@
 //     });
 // }
 </script>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
 
 
 </html>

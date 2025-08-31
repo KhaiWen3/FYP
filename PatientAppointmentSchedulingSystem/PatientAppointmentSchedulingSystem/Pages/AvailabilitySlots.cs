@@ -10,10 +10,10 @@ namespace PatientAppointmentSchedulingSystem.Pages
         public int SlotId { get; set; }
 
         [Required]
-        public DateTime StartTime { get; set; }
+        public DateTime AptStartTime { get; set; }
 
         [Required]
-        public DateTime EndTime { get; set; }
+        public DateTime AptEndTime { get; set; }
 
         [Required]
         public DateTime AppointmentDate { get; set; }
@@ -24,12 +24,11 @@ namespace PatientAppointmentSchedulingSystem.Pages
         [Required]
         public int AppointmentStatus { get; set; } = 0;
 
-        // Foreign key for Doctor
+        // FK for Doctor
         [Required]
         public int DoctorId { get; set; }
 
         [ValidateNever]
-        //[ForeignKey("DoctorId")]
         public DoctorDetails Doctor { get; set; }
 
         //[ForeignKey(nameof(DoctorId))]
