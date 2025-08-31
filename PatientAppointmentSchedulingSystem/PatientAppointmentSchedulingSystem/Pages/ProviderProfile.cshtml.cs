@@ -1,30 +1,25 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using PatientAppointmentSchedulingSystem.Pages.Data;
 
 namespace PatientAppointmentSchedulingSystem.Pages
 {
-    public class ProviderHomePageModel : PageModel
+    public class ProviderProfileModel : PageModel
     {
-        public string Name { get; set; } = "Provider";
         public string ProviderName { get; set; }
 
         [BindProperty]
         public ProviderDetails ProviderDetails { get; set; }
 
         private readonly ProviderDbContext _context;
-        public ProviderHomePageModel(ProviderDbContext context)
+        public ProviderProfileModel(ProviderDbContext context)
         {
             _context = context;
         }
 
         public async Task<IActionResult> OnGet()
         {
-            /*// Replace with your actual provider name source (claims/session/db)
-            if (User?.Identity?.IsAuthenticated == true)
-                Name = User.Identity?.Name ?? "Provider";
-*/
-            //check the session if null then go back login page
             int? providerIdFromSession = HttpContext.Session.GetInt32("ProviderId");
 
             if (providerIdFromSession == null)//session die
@@ -44,6 +39,23 @@ namespace PatientAppointmentSchedulingSystem.Pages
                 }
                 else
                 {
+                    //required data, Provider type, Provider Name, Ownership type, street address, state, phone number,  available specialties
+                    //optional Hospital description, Logo, number of beds,
+
+                    if (ProviderDetails.Description == null)
+                    {
+                        ProviderDetails.Description = "No Description.";
+                    }
+
+                    if (ProviderDetails.Logo == null)
+                    {
+                        ProviderDetails.Logo = "Default Image";
+                    }
+
+                    if (ProviderDetails.BedCount == 0 || ProviderDetails.BedCount == null)
+                    {
+                        ProviderDetails.BedCount = 0;
+                    }
                     return Page(); //success data get
                 }
             }

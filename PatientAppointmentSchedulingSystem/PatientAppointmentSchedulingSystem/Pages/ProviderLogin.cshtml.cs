@@ -51,20 +51,29 @@ namespace PatientAppointmentSchedulingSystem.Pages
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                 return Page();
             }
-
-            // Verify the provided password against the stored hashed password
-            var passwordMatch = BCrypt.Net.BCrypt.Verify(Input.Password, provider.Password);
-
-            if (!passwordMatch)
+            else
             {
-                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                return Page();
+                var passwordMatch = BCrypt.Net.BCrypt.Verify(Input.Password, provider.Password);
+
+                if (!passwordMatch)
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    return Page();
+                }
+                else
+                {
+                    HttpContext.Session.SetInt32("ProviderId", provider.ProviderId);
+                    return RedirectToPage("/ProviderHomePage");
+                }
             }
 
+            // Verify the provided password against the stored hashed password
+            
+
             // Redirect to the homepage or another page upon successful login
-            ProviderSession.ProviderId = provider.ProviderId;
-            System.Diagnostics.Debug.WriteLine("Current User : " + ProviderSession.ProviderId);
-            return RedirectToPage("/ProviderHomePage");
+            //ProviderSession.ProviderId = provider.ProviderId;
+            //System.Diagnostics.Debug.WriteLine("Current User : " + ProviderSession.ProviderId);
+           
         }
 
         // A method to verify password (assuming hashed password)

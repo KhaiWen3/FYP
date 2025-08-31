@@ -1,0 +1,45 @@
+﻿@page
+@model PatientAppointmentSchedulingSystem.Pages.ProviderProfileModel
+@{
+    Layout = "_ProviderLayout";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome to MediBook</title>
+
+    <!-- ======= Google Font =======-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet">
+    <!-- End Google Font-->
+    <!-- ======= Styles =======-->
+    <link href="/vendors/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="/vendors/glightbox/glightbox.min.css" rel="stylesheet">
+    <link href="/vendors/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="/vendors/aos/aos.css" rel="stylesheet">
+    <!-- End Styles-->
+    <!-- ======= Theme Style =======-->
+    <link href="/css/provider.css" rel="stylesheet">
+    <!-- End Theme Style-->
+    <!-- ======= Apply theme =======-->
+    <script>
+        // Apply the theme as early as possible to avoid flicker
+        (function () {
+            const storedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-bs-theme', storedTheme);
+        })();
+    </script>
+</head>
+<body>
+    <!-- Content-->
+    <div>
+        <h3>Provider Name: @Model.ProviderDetails.Name</h3>
+        <h3>Provider Type: @Model.ProviderDetails.ProviderType</h3>
+        <h3>Provider Ownership: @Model.ProviderDetails.OwnershipType</h3>
+    </div>
+</body>
+</html>
