@@ -8,7 +8,7 @@ namespace PatientAppointmentSchedulingSystem.Pages.Data
 
         public DbSet<DoctorDetails> Doctor { get; set; }
         public DbSet<ProviderDetails> Provider => Set<ProviderDetails>();
-        public DbSet<Specialty> Specialty => Set<Specialty>();
+        public DbSet<Specialty> Specialty {get; set; }
         public DbSet<ProviderSpecialty> ProviderSpecialties => Set<ProviderSpecialty>();
         public DbSet<AvailabilitySlots> AvailabilitySlots => Set<AvailabilitySlots>();
 
@@ -16,6 +16,8 @@ namespace PatientAppointmentSchedulingSystem.Pages.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<DoctorDetails>().ToTable("Doctor").HasKey(d => d.DoctorId);
+            modelBuilder.Entity<ProviderSpecialty>().ToTable("ProviderSpecialty");
+            modelBuilder.Entity<Specialty>().ToTable("Specialty");
 
             modelBuilder.Entity<ProviderDetails>()
                 .HasKey(h => h.ProviderId); //Ensure define a primary key
