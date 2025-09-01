@@ -17,124 +17,122 @@ namespace PatientAppointmentSchedulingSystem.Pages
         }
 
         [BindProperty]
-        public PatientDetails Patient { get; set; } //use this
+        public PatientDetails PatientDetails { get; set; } //use this
 
         //toggle edit mode via query: /PatientProfile?edit=true
-        [BindProperty]
-        public bool IsEditing { get; set; }
+        //[BindProperty]
+        //public bool IsEditing { get; set; }
 
         //display purpose
-        public DateTime? LastUpdated { get; set; }
-        public string? ErrorMessage { get; set; }
+        //public DateTime? LastUpdated { get; set; }
+        //public string? ErrorMessage { get; set; }
 
         //view-modal that matches UI fields
-        public class PatientProfileInput // this is created because in my db table dont have this info that it let me separate outok understand
-        {
-            // ——— Personal ———
-            [Required] 
-            public string FirstName { get; set; } = string.Empty;
-            [Required] 
-            public string LastName { get; set; } = string.Empty;
-            public int? Age { get; set; }
-            public DateTime? DateOfBirth { get; set; }// Not in DB; used to compute Age on save
-            public string? Gender { get; set; } // Not in DB now — keep optional unless you plan to store it somewhere
-
-            // ——— Contact ———
-            [Required, EmailAddress] 
-            public string Email { get; set; } = string.Empty;
-            [Required] 
-            public string Phone { get; set; } = string.Empty;
-
-
-            // The rest are UI-only for now (not saved yet)
-            public string? Address { get; set; }
-            public string? City { get; set; }
-            public string? State { get; set; }
-            public string? ZipCode { get; set; }
-            public string? EmergencyContact { get; set; }
-            public string? EmergencyPhone { get; set; }
-            public string? Insurance { get; set; }
-            public string? PolicyNumber { get; set; }
-            public string? BloodType { get; set; }
-            public string? PrimaryPhysician { get; set; }
-            public string? Allergies { get; set; }
-            public string? Medications { get; set; }
-        }
-        [BindProperty]
-        public PatientProfileInput Input { get; set; }
+        
+        //[BindProperty]
+        //public PatientProfileInput Input { get; set; }
 
         public int? idPatientSession { get; set; }
 
 
         //GET: load the patient (by ?id= OR Session) and populate Input
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGet()
         {
-            idPatientSession = HttpContext.Session.GetInt32("PatientId");
-            int patientId = 0;
-            IsEditing = false;
+            int? idPatientSession = HttpContext.Session.GetInt32("PatientId");
+
 
             //here is to check the session
-            if (idPatientSession != null) //this benlai is =! but 
+            if (idPatientSession == null) //session die
             {
-                patientId = (int)idPatientSession;
-
-                //perform data retrieve from here
-                Patient =  await _context.Patients.FindAsync(patientId);
-                //i think can ignore this warning, because we make sure patient id is there! wahah
-                
-                return Page();
-                    //.OrderBy(p => p.PatientLastName)
-                    //.ThenBy(p => p.AptStartTime) here i dk how to change
-                    //.ToList();
-                    //this error is need return value
-                //return RedirectToPage("/PatientLogin");
-            }
-            //else
-            //{
-            //    //not null retrieve data from ur session adn store into the Patient object thenc an call at frontend
-            //    Patient = (PatientDetails)_context.Patients
-            //        .Where(p => p.PatientId == patientId);
-
-            //    LastUpdated = DateTime.UtcNow;
-            //    return Page();
-            //}
-            else //this else mean session die so ask them go back login page
-            {
-                Console.WriteLine("Patient Id Is NuLL");
-                //i planned to add the alert ok
-                // later u add here back to login page 
-                //if the session die
+                //alert -> session dies
                 return RedirectToPage("/PatientLogin");
             }
+            else
+            {
+                //not null retrieve data from ur session adn store into the Patient object thenc an call at frontend
+                PatientDetails = await _context.Patients.FindAsync((int)idPatientSession);
+
+                if (PatientDetails == null)
+                {
+                    //return to login page
+                    //record not found
+                    return RedirectToPage("/PatientLogin");
+                }
+                else
+                {
+                    //required data, PatientFirstName, PatientLastName, PatientPhoneNum, PatientAge, PatientEmail, PatientPassword
+                    //optional data, DateOfBirth, Gender, Adrdress, State, EmergencyContact, EmergencyPhone, InsuranceProvider, PolicyNumber, BloodType, Allergies, Medications
+
+                    if (PatientDetails.DateOfBirth == null)
+                    {
+                        PatientDetails.DateOfBirth = "1900-01-01";
+                    }
+
+                    if (PatientDetails.Gender == null)
+                    {
+                        PatientDetails.Gender = "No Gender";
+                    }
+                    if (PatientDetails.Adrdress == null)
+                    {
+                        PatientDetails.Adrdress = "No Address";
+                    }
+                    if (PatientDetails.State == null)
+                    {
+                        PatientDetails.State = "No State";
+                    }
+                    if (PatientDetails.EmergencyContact == null)
+                    {
+                        PatientDetails.EmergencyContact = "No Contact Person";
+                    }
+                    if (PatientDetails.EmergencyPhone == null)
+                    {
+                        PatientDetails.EmergencyPhone = "No Contact Number";
+                    }
+                    if (PatientDetails.InsuranceProvider == null)
+                    {
+                        PatientDetails.InsuranceProvider = "No Contact Number";
+                    }
+                    //if (PatientDetails.PolicyNumber == null)
+                    //{
+                    //    PatientDetails.PolicyNumber = "No Contact Number";
+                    //}
+                    if (PatientDetails.BloodType == null)
+                    {
+                        PatientDetails.BloodType = "No Contact Number";
+                    }
+                    if (PatientDetails.Allergies == null)
+                    {
+                        PatientDetails.Allergies = "No Contact Number";
+                    }
+                    return Page(); //success data get
+
+                }
 
 
-            //try
-            //{
-            //    _context.Patients.Add(patient);
-            //    await _context.SaveChangesAsync();
+                //try
+                //{
+                //    _context.Patients.Add(patient);
+                //    await _context.SaveChangesAsync();
 
-            //    // Redirect with the correct query key so your property binds:
-            //    //return RedirectToPage("/DoctorAddAvailableSlot", new { DoctorId = doctorId });
-            //    return RedirectToPage("/Doctor");
-            //}
-            //catch (Exception ex)
-            //{
-            //    ModelState.AddModelError("", "Error saving slot: " + ex.Message);
-            //    // Log the exception
-            //    Console.WriteLine(ex.StackTrace);
-            //    return Page();
-            //}
+                //    // Redirect with the correct query key so your property binds:
+                //    //return RedirectToPage("/DoctorAddAvailableSlot", new { DoctorId = doctorId });
+                //    return RedirectToPage("/Doctor");
+                //}
+                //catch (Exception ex)
+                //{
+                //    ModelState.AddModelError("", "Error saving slot: " + ex.Message);
+                //    // Log the exception
+                //    Console.WriteLine(ex.StackTrace);
+                //    return Page();
+                //}
 
-
-
-            //var id = HttpContext.Session.GetInt32("PatientId");
-            //Input = await _context.Patients.FindAsync(id);
+            }
         }
 
         // POST: Save button
         public async Task<IActionResult> OnPostSaveAsync()
         {
-            OnGetAsync();
+            OnGet;
 
             if (!ModelState.IsValid)
             {

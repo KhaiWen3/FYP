@@ -62,17 +62,17 @@
                                                         <i class="bi bi-person text-white fs-3"></i>
                                                     </div>
                                                     <div>
-                                                        <h1 class="h4 mb-1">@Model.Patient.PatientFirstName @Model.Patient.PatientLastName</h1>
-                                                        <div class="text-muted small">@Model.Patient ID: Patient.PatientId</div>
+                                                        <h1 class="h4 mb-1">@Model.PatientDetails.PatientFirstName @Model.PatientDetails.PatientLastName</h1>
+                                                        <div class="text-muted small">Patient ID: @Model PatientDetails.PatientId</div>
                                                     </div>
                                                 </div>
-                                                <div class="text-muted small">Last updated: @Model.LastUpdated?.ToString("yyyy-MM-dd")</div>
+                                                @* <div class="text-muted small">Last updated: @Model.LastUpdated?.ToString("yyyy-MM-dd")</div> *@
                                             </div>
                                         </div>
 
                                         <form method="post">
                                             <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
-                                            <input type="hidden" asp-for="Patient.PatientId" />
+                                            <input type="hidden" asp-for="PatientDetails.PatientId" />
 
                                             <div class="row g-4">
                                                 <!-- Personal -->
