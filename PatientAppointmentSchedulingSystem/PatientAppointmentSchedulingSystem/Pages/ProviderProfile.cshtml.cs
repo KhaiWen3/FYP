@@ -35,6 +35,7 @@ namespace PatientAppointmentSchedulingSystem.Pages
             if (providerIdFromSession == null)//session die
             {
                 //alert -> session die
+                TempData["AlertMsg"] = "Session Ended, Please Login.";
                 return RedirectToPage("/ProviderLogin");
             }
             else
@@ -48,6 +49,7 @@ namespace PatientAppointmentSchedulingSystem.Pages
                 {
                     //return to login page
                     //record not found
+                    TempData["AlertMsg"] = "Provider Not Found.";
                     return RedirectToPage("/ProviderLogin");
                 }
                 else

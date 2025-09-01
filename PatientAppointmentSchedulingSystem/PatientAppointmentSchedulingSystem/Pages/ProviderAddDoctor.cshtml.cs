@@ -106,7 +106,8 @@ namespace PatientAppointmentSchedulingSystem.Pages
             }
 
             // ?? resolve ProviderId from claims or from email -> DB
-            var providerId = await GetProviderIdForCurrentUserAsync();
+            //var providerId = await GetProviderIdForCurrentUserAsync();
+            var providerId = HttpContext.Session.GetInt32("ProviderId");
             if (providerId == null)
             {
                 ModelState.AddModelError("", "You must be signed in as a provider.");
@@ -117,7 +118,7 @@ namespace PatientAppointmentSchedulingSystem.Pages
             await _context.Database.ExecuteSqlRawAsync(@"
 				IF NOT EXISTS (SELECT 1 FROM dbo.ProviderSpecialty WHERE ProviderId=@pid AND SpecialtyId=@sid)
 					INSERT INTO dbo.ProviderSpecialty (ProviderId, SpecialtyId) VALUES (@pid, @sid);",
-                new SqlParameter("@pid", providerId),
+                new SqlParameter("@pid", (int)providerId),
                 new SqlParameter("@sid", Input.SpecialtyId));
 
             // set ProviderId + hash password, then save

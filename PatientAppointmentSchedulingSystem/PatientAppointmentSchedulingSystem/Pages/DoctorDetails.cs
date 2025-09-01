@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PatientAppointmentSchedulingSystem.Pages
 {
@@ -39,6 +40,9 @@ namespace PatientAppointmentSchedulingSystem.Pages
 
         //public List<AvailabilitySlots> AvailabilitySlots { get; set; }
         public ICollection<AvailabilitySlots> AvailabilitySlots { get; set; } = new List<AvailabilitySlots>();
+
+        [NotMapped]
+        public string DoctorSpecialtyName {  get; set; }
 
     }
 }
