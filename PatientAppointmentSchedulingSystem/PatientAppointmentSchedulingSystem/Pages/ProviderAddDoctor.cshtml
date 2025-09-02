@@ -38,6 +38,12 @@
 <body>
     <section class="py-4" style="background:#f4f6f9;">
         <div class="container">
+            @if (TempData["AlertMsg"] != null)
+            {
+                <script>
+                    alert("@TempData["AlertMsg"]");
+                </script>
+            }
             <div class="registration-container" style="max-width: 960px;">
                 <div class="registration-header">
                     <h2>Add Doctor</h2>
