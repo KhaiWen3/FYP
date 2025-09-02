@@ -1,0 +1,119 @@
+﻿@page
+@model PatientAppointmentSchedulingSystem.Pages.DoctorProviderPathModel
+@{
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediBook - Select Your Role</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f4f6f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .role-container {
+            text-align: center;
+            max-width: 800px;
+            padding: 30px;
+        }
+
+        .role-title {
+            color: #0056b3;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+
+        .role-boxes {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .role-box {
+            flex: 1;
+            padding: 40px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+            .role-box:hover {
+                transform: scale(1.05);
+                box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+            }
+
+            .role-box h2 {
+                margin-top: 15px;
+                color: white;
+            }
+
+        .role-icon {
+            font-size: 4rem;
+            color: white;
+        }
+
+        .patient-box {
+            background-color: #5e9ca0;
+        }
+
+        .doctor-box {
+            background-color: #f4a261;
+        }
+
+        .admin-box {
+            background-color: #e76f51;
+        }
+    </style>
+</head>
+<body>
+    <div class="role-container">
+        <h1 class="role-title">You Are...</h1>
+        <div class="role-boxes">
+            @* <div class="role-box patient-box" onclick="selectRole('patient')">
+                <i class="role-icon">👥</i>
+                <h2>Patient</h2>
+                <p class="text-white">Access personal health information</p>
+            </div> *@
+            <div class="role-box doctor-box" onclick="selectRole('doctor')">
+                <i class="role-icon">🏥</i>
+                <h2>Doctor</h2>
+                <p class="text-white">Manage patient care</p>
+            </div>
+            <div class="role-box admin-box" onclick="selectRole('admin')">
+                <i class="role-icon">🔧</i>
+                <h2>Provider</h2>
+                <p class="text-white">System management</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function selectRole(role) {
+            // You would typically handle role selection here
+            // For example, redirect to the appropriate dashboard
+            switch (role) {
+                case 'doctor':
+                    window.location.href = '/DoctorLogin';
+                    break;
+                case 'admin':
+                    window.location.href = '/ProviderLogin';
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>

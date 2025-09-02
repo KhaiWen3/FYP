@@ -11,6 +11,7 @@ namespace PatientAppointmentSchedulingSystem.Pages.Data
         protected override void OnModelCreating (ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<PatientDetails>()
+                .ToTable("Patients")
                 .HasKey(p => p.PatientId); //Ensure define a primary key
         }
     }

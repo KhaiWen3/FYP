@@ -1248,3 +1248,7 @@ h6 {
 .pt-nav {
     padding-top: var(--nav-height);
 }
+
+    .margin-left-20 {
+        margin-left: 20px;
+    }

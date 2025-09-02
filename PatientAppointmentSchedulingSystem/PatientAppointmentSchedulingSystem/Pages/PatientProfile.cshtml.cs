@@ -19,20 +19,6 @@ namespace PatientAppointmentSchedulingSystem.Pages
         [BindProperty]
         public PatientDetails PatientDetails { get; set; } //use this
 
-        //toggle edit mode via query: /PatientProfile?edit=true
-        //[BindProperty]
-        //public bool IsEditing { get; set; }
-
-        //display purpose
-        //public DateTime? LastUpdated { get; set; }
-        //public string? ErrorMessage { get; set; }
-
-        //view-modal that matches UI fields
-        
-        //[BindProperty]
-        //public PatientProfileInput Input { get; set; }
-
-        public int? idPatientSession { get; set; }
 
 
         //GET: load the patient (by ?id= OR Session) and populate Input
@@ -56,6 +42,7 @@ namespace PatientAppointmentSchedulingSystem.Pages
                 {
                     //return to login page
                     //record not found
+                    TempData["AlertMsg"] = "Patient Not Found.";
                     return RedirectToPage("/PatientLogin");
                 }
                 else
@@ -65,16 +52,17 @@ namespace PatientAppointmentSchedulingSystem.Pages
 
                     if (PatientDetails.DateOfBirth == null)
                     {
-                        PatientDetails.DateOfBirth = "1900-01-01";
+                        //PatientDetails.DateOfBirth = null;
+                        PatientDetails.DateOfBirth = new DateOnly(1900, 1, 1);
                     }
 
                     if (PatientDetails.Gender == null)
                     {
                         PatientDetails.Gender = "No Gender";
                     }
-                    if (PatientDetails.Adrdress == null)
+                    if (PatientDetails.Address == null)
                     {
-                        PatientDetails.Adrdress = "No Address";
+                        PatientDetails.Address = "No Address";
                     }
                     if (PatientDetails.State == null)
                     {
@@ -108,98 +96,93 @@ namespace PatientAppointmentSchedulingSystem.Pages
 
                 }
 
-
-                //try
-                //{
-                //    _context.Patients.Add(patient);
-                //    await _context.SaveChangesAsync();
-
-                //    // Redirect with the correct query key so your property binds:
-                //    //return RedirectToPage("/DoctorAddAvailableSlot", new { DoctorId = doctorId });
-                //    return RedirectToPage("/Doctor");
-                //}
-                //catch (Exception ex)
-                //{
-                //    ModelState.AddModelError("", "Error saving slot: " + ex.Message);
-                //    // Log the exception
-                //    Console.WriteLine(ex.StackTrace);
-                //    return Page();
-                //}
-
             }
         }
 
         // POST: Save button
-        public async Task<IActionResult> OnPostSaveAsync()
+        public async Task<IActionResult> OnPostAsync()
         {
-            OnGet;
+            int? idPatientSession = HttpContext.Session.GetInt32("PatientId");
 
-            if (!ModelState.IsValid)
+            if(idPatientSession == null) //session die
             {
-                // stay on page with validation messages
-                IsEditing = true;
-                return Page();
-            }
-
-            //Fetch patient id from session
-            int patientId = 0;
-            idPatientSession = HttpContext.Session.GetInt32("PatientId");
-            if(idPatientSession == null)
-            {
-                Console.WriteLine("Patient Id Not Found");
+                TempData["AlertMsg"] = "Session Ended, Please Login.";
                 return RedirectToPage("/PatientLogin");
             }
             else
             {
-                patientId = (int)idPatientSession;
+                // check is that the email is same?
+                // then only check is exist? if not same
+                PatientDetails PatientD = await _context.Patients.FindAsync(idPatientSession);
+                if (!string.Equals(PatientD.PatientEmail, PatientDetails.PatientEmail, StringComparison.OrdinalIgnoreCase))
+                {
+                    bool checkExistOrNot = await _context.Patients.AnyAsync(p => p.PatientEmail.ToLower() == PatientDetails.PatientEmail.ToLower());
+
+                    if (checkExistOrNot == true)
+                    {
+                        //exist
+                        TempData["AlertMsg"] = "Email Exist.";
+                        return Page();
+                    }
+                    else
+                    {
+                        //continue the process
+                        try
+                        {
+                            PatientDetails.PatientId = (int)idPatientSession;
+                            PatientDetails.PatientPassword = PatientD.PatientPassword;
+                            _context.Entry(PatientD).State = EntityState.Detached;
+                            _context.Patients.Update(PatientDetails);
+
+                            await _context.SaveChangesAsync();
+                            TempData["AlertMsg"] = "Update Patient Successfully.";
+                        }
+                        catch(DbUpdateException ex)
+                        {
+                            Console.WriteLine("Inner Msg: " + ex.InnerException?.Message ?? ex.Message);
+                            TempData["AlertMsg"] = "DB UPDATE ERROR";
+                        }
+                        catch (Exception ex)
+                        {
+                            //Errror
+                            TempData["AlertMsg"] = "Invalid Update Patient. Error Message : " + ex.Message;
+                        }
+
+                        PatientDetails = await _context.Patients.FindAsync((int)idPatientSession);
+
+                        return Page();
+                    }
+
+                }
+                else
+                {
+                    //continue the process
+                    try
+                    {
+                        PatientDetails.PatientId = (int)idPatientSession;
+                        PatientDetails.PatientPassword = PatientD.PatientPassword;
+                        _context.Entry(PatientD).State = EntityState.Detached;
+                        _context.Patients.Update(PatientDetails);
+
+                        await _context.SaveChangesAsync();
+                        TempData["AlertMsg"] = "Update Patient Successfully.";
+                    }
+                    catch (DbUpdateException ex)
+                    {
+                        Console.WriteLine("Inner Msg: " + ex.InnerException?.Message ?? ex.Message);
+                        TempData["AlertMsg"] = "DB UPDATE ERROR";
+                    }
+                    catch (Exception ex)
+                    {
+                        //Errror
+                        TempData["AlertMsg"] = "Invalid Update Patient. Error Message : " + ex.Message;
+                    }
+
+                    PatientDetails = await _context.Patients.FindAsync((int)idPatientSession);
+
+                    return Page();
+                }
             }
-
-            // Map DB entity -> view-model
-            //var patient = new PatientProfileInput
-            //{
-            //    //for here u want get from session? im not sure need or not i compare with besidde one
-            //    //what usage for this -> i think is no need for adding just only need
-            //    //
-            //    FirstName = PatientDetails.PatientFirstName,
-            //    LastName = PatientDetails.PatientLastName,
-            //    Email = PatientDetails.PatientEmail,
-            //    Phone = PatientDetails.PatientPhoneNum,
-            //    //DateOfBirth = Input.Age,
-
-            //    // UI-only fields (not stored yet) can be left null or populated from
-            //    // another table if you add one later.
-            //    // DateOfBirth is not in DB; if you later add a column/table, load it here.
-            //};
-
-            //idPatientSession= ResolvePatientId();
-            //if (patientId == null) return RedirectToPage("/PatientLogin");
-
-            //Id = patientId;
-
-            //var patient = await _context.Patients
-            //    .FirstOrDefaultAsync(p => p.PatientId == patientId.Value);
-
-            //if (patient == null) return NotFound();
-
-            // Map Input -> DB (only the columns your table actually has)
-            //patient.PatientFirstName = Input.FirstName?.Trim() ?? patient.PatientFirstName;
-            //patient.PatientLastName = Input.LastName?.Trim() ?? patient.PatientLastName;
-            //patient.PatientEmail = Input.Email?.Trim() ?? patient.PatientEmail;
-            //patient.PatientPhoneNum = Input.Phone?.Trim() ?? patient.PatientPhoneNum;
-
-            // Your table has Age (int). If DateOfBirth is provided, compute it.
-            if (Input.DateOfBirth != null)
-            {
-                //patient.PatientAge = CalculateAge(Input.DateOfBirth.Value, DateTime.Today);
-            }
-
-            await _context.SaveChangesAsync();
-
-            // end edit mode
-            IsEditing = false;
-
-            // reload page to show saved values
-            return RedirectToPage();
         }
 
         // POST: Cancel button — discard edits and reload

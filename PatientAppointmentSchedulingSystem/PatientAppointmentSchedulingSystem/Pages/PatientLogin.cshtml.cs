@@ -1,14 +1,8 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using PatientAppointmentSchedulingSystem.Pages.Data;
 using System.ComponentModel.DataAnnotations;
-using BCrypt.Net;
-using System.Numerics;
-using System.Security.Claims;
-using Microsoft.Extensions.Logging;
 
 
 namespace PatientAppointmentSchedulingSystem.Pages
@@ -16,13 +10,11 @@ namespace PatientAppointmentSchedulingSystem.Pages
     public class PatientLoginModel : PageModel
     {
         private readonly PatientDbContext _context;
-        //private readonly ILogger<PatientLoginModel> _logger;
         public string ErrorMessage { get; set; }
 
         public PatientLoginModel(PatientDbContext context)
         {
             _context = context;
-            //_logger = logger; //initialize logger
         }
 
         [BindProperty]
@@ -48,57 +40,72 @@ namespace PatientAppointmentSchedulingSystem.Pages
         {
             if (!ModelState.IsValid) return Page();
 
-            // 1) Find patient by email
+            // retrieve the patient based on the email
             var patient = await _context.Patients
                 .FirstOrDefaultAsync(p => p.PatientEmail == Input.Email);
 
             if (patient == null)
             {
-                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                ModelState.AddModelError(string.Empty, "Invalid email or password.");
                 return Page();
+            }
+            else
+            {
+                var passwordMatch = BCrypt.Net.BCrypt.Verify(Input.Password, patient.PatientPassword);
+
+                if (!passwordMatch)
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    return Page();
+                }
+                else
+                {
+                    HttpContext.Session.SetInt32("PatientId", patient.PatientId);
+                    return RedirectToPage("/PatientHomePage");
+                }
             }
 
             // 2) Verify BCrypt password (DB must store a BCrypt hash)
-            var passwordMatch = BCrypt.Net.BCrypt.Verify(Input.Password, patient.PatientPassword);
-            if (!passwordMatch)
-            {
-                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                return Page();
-            }
+            //var passwordMatch = BCrypt.Net.BCrypt.Verify(Input.Password, patient.PatientPassword);
+            //if (!passwordMatch)
+            //{
+            //    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            //    return Page();
+            //}
 
-            // 3) Build claims
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, patient.PatientId.ToString()),
-                new Claim(ClaimTypes.Email, patient.PatientEmail),
-                new Claim(ClaimTypes.Name, $"{patient.PatientFirstName} {patient.PatientLastName}"),
-                new Claim(ClaimTypes.GivenName, patient.PatientFirstName),
-                new Claim(ClaimTypes.Surname, patient.PatientLastName),
-                new Claim(ClaimTypes.Role, "Patient")
-            };
+            //// 3) Build claims
+            //var claims = new List<Claim>
+            //{
+            //    new Claim(ClaimTypes.NameIdentifier, patient.PatientId.ToString()),
+            //    new Claim(ClaimTypes.Email, patient.PatientEmail),
+            //    new Claim(ClaimTypes.Name, $"{patient.PatientFirstName} {patient.PatientLastName}"),
+            //    new Claim(ClaimTypes.GivenName, patient.PatientFirstName),
+            //    new Claim(ClaimTypes.Surname, patient.PatientLastName),
+            //    new Claim(ClaimTypes.Role, "Patient")
+            //};
 
             // 4) Sign in with cookie auth (make sure this scheme exists in Program.cs)
-            var identity = new ClaimsIdentity(claims, "PatientCookie");
-            var principal = new ClaimsPrincipal(identity);
+            //var identity = new ClaimsIdentity(claims, "PatientCookie");
+            //var principal = new ClaimsPrincipal(identity);
 
-            await HttpContext.SignInAsync(
-                "PatientCookie",
-                principal,
-                new AuthenticationProperties
-                {
-                    IsPersistent = true,                 // remember me behavior
-                    ExpiresUtc = DateTimeOffset.UtcNow.AddHours(8)
-                });
+            //await HttpContext.SignInAsync(
+            //    "PatientCookie",
+            //    principal,
+            //    new AuthenticationProperties
+            //    {
+            //        IsPersistent = true,                 // remember me behavior
+            //        ExpiresUtc = DateTimeOffset.UtcNow.AddHours(8)
+            //    });
 
-            // 5) (Optional) keep your existing session keys if other pages still depend on them
-            HttpContext.Session.SetInt32("PatientId", patient.PatientId);
-            HttpContext.Session.SetString("PatientFirstName", patient.PatientFirstName);
-            HttpContext.Session.SetString("PatientLastName", patient.PatientLastName);
-            HttpContext.Session.SetString("PatientEmail", patient.PatientEmail);
-            HttpContext.Session.SetString("PatientFullName", $"{patient.PatientFirstName} {patient.PatientLastName}");
+            //// 5) (Optional) keep your existing session keys if other pages still depend on them
+            //HttpContext.Session.SetInt32("PatientId", patient.PatientId);
+            //HttpContext.Session.SetString("PatientFirstName", patient.PatientFirstName);
+            //HttpContext.Session.SetString("PatientLastName", patient.PatientLastName);
+            //HttpContext.Session.SetString("PatientEmail", patient.PatientEmail);
+            //HttpContext.Session.SetString("PatientFullName", $"{patient.PatientFirstName} {patient.PatientLastName}");
 
-            // 6) Go to patient home/profile
-            return RedirectToPage("/PatientHomePage");
+            //// 6) Go to patient home/profile
+            //return RedirectToPage("/PatientHomePage");
         }
 
 
@@ -156,10 +163,10 @@ namespace PatientAppointmentSchedulingSystem.Pages
         //}
 
         // A method to verify password (assuming hashed password)
-        private bool VerifyPassword(string hashedPassword, string providedPassword)
-        {
-            return BCrypt.Net.BCrypt.Verify(providedPassword, hashedPassword);
-        }
+        //private bool VerifyPassword(string hashedPassword, string providedPassword)
+        //{
+        //    return BCrypt.Net.BCrypt.Verify(providedPassword, hashedPassword);
+        //}
        
 
 
