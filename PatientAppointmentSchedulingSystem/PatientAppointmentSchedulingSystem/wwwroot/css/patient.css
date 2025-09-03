@@ -9,10 +9,10 @@ Buy Pro
 [data-bs-theme=light] {
     --bs-body-bg: #ffffff;
     --bs-body-color: #494B5B;
-    --bs-primary: #0056b3;
-    --bs-primary-rgb: 0, 86, 179;
-    --bs-primary-hover: #003d82;
-    --bs-primary-hover-rgb: 0, 61, 130;
+    --bs-primary: #215C5C;
+    --bs-primary-rgb: 33, 92, 92;
+    --bs-primary-hover: #144B4B;
+    --bs-primary-hover-rgb: 20, 75, 75;
     --bs-secondary: #CCE8C9;
     --bs-secondary-rgb: 204, 232, 201;
     --bs-heading-color: #16181B;
@@ -27,6 +27,7 @@ Buy Pro
     --dropdown-hover-bg: #f7f7f7;
     --nav-inverse: #000000;
     --nav-inverse-alt: #ffffff;
+    --nav-height: 72px;
 }
 
 body {
@@ -93,6 +94,7 @@ h6 {
 @media (min-width: 992px) {
     .section.first-section {
         padding-top: 130px;
+        --nav-height: 80px;
     }
 }
 
@@ -1386,4 +1388,12 @@ h6 {
         bottom: 20px;
         opacity: 1;
         visibility: visible;
+    }
+
+.pt-nav {
+    padding-top: var(--nav-height);
+}
+
+    .margin-left-20 {
+        margin-left: 20px;
     }

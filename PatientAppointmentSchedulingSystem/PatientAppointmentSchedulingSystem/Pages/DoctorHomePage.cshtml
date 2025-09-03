@@ -3,3 +3,82 @@
 @{
     Layout = "_DoctorLayout";
 }
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome to MediBook</title>
+
+    <!-- ======= Google Font =======-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet">
+    <!-- End Google Font-->
+    <!-- ======= Styles =======-->
+    <link href="/vendors/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="/vendors/glightbox/glightbox.min.css" rel="stylesheet">
+    <link href="/vendors/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="/vendors/aos/aos.css" rel="stylesheet">
+    <!-- End Styles-->
+    <!-- ======= Theme Style =======-->
+    <link href="/css/provider.css" rel="stylesheet">
+    <!-- End Theme Style-->
+    <!-- ======= Apply theme =======-->
+    <script>
+        // Apply the theme as early as possible to avoid flicker
+        (function() {
+        const storedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-bs-theme', storedTheme);
+        })();
+    </script>
+</head>
+    <body>
+    <!-- Hero -->
+    <section class="py-5">
+        <div class="container">
+            <div class="registration-container" style="max-width: 1000px;">
+                <div class="registration-header">
+                    <h2>Welcome, @Model.DoctorDetails.DoctorFullName</h2>
+                    <p>What would you like to do today?</p>
+                </div>
+
+                <div class="row g-4">
+                    <!-- Add Doctor -->
+                    <div class="col-12 col-md-6">
+                        <a class="text-decoration-none" asp-page="/ProviderAddDoctor">
+                            <div class="form-section h-100 position-relative" style="background:#fff;">
+                                <h3 class="d-flex align-items-center mb-2">
+                                    <span class="me-2" aria-hidden="true">👩‍⚕️</span>
+                                    Add Doctor
+                                </h3>
+                                <p class="text-muted mb-3">Create a new doctor profile and set availability slots.</p>
+                                <span class="btn btn-primary stretched-link">Add Doctor</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Manage / View Patient Information -->
+                    <div class="col-12 col-md-6">
+                        <a class="text-decoration-none" asp-page="/Patients/Index">
+                            <div class="form-section h-100" style="background:#fff;">
+                                <h3 class="d-flex align-items-center mb-2">
+                                    <span class="me-2" aria-hidden="true">🧑‍🦽</span>
+                                    Manage / View Patient Information
+                                </h3>
+                                <p class="text-muted mb-3">
+                                    Search, view, and update patient records and appointments.
+                                </p>
+                                <button type="button" class="btn btn-outline-secondary">Open Patients</button>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    </body>
+</html>
