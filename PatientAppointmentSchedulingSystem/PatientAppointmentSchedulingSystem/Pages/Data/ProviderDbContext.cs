@@ -11,6 +11,7 @@ namespace PatientAppointmentSchedulingSystem.Pages.Data
         public DbSet<Specialty> Specialty {get; set; }
         public DbSet<ProviderSpecialty> ProviderSpecialties => Set<ProviderSpecialty>();
         public DbSet<AvailabilitySlots> AvailabilitySlots => Set<AvailabilitySlots>();
+        public DbSet<PatientDetails> PatientDetails => Set<PatientDetails>();
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -18,6 +19,8 @@ namespace PatientAppointmentSchedulingSystem.Pages.Data
             modelBuilder.Entity<DoctorDetails>().ToTable("Doctor").HasKey(d => d.DoctorId);
             modelBuilder.Entity<ProviderSpecialty>().ToTable("ProviderSpecialty");
             modelBuilder.Entity<Specialty>().ToTable("Specialty");
+            modelBuilder.Entity<AvailabilitySlots>().ToTable("AvailabilitySlots");
+            modelBuilder.Entity<PatientDetails>().ToTable("Patients");
 
             modelBuilder.Entity<ProviderDetails>()
                 .HasKey(h => h.ProviderId); //Ensure define a primary key

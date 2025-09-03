@@ -31,6 +31,9 @@ namespace PatientAppointmentSchedulingSystem.Pages
         [ValidateNever]
         public DoctorDetails Doctor { get; set; }
 
+        [ValidateNever]
+        public PatientDetails Patient { get; set; }
+
         //[ForeignKey(nameof(DoctorId))]
         //public DoctorDetails Doctor { get; set; }
 
