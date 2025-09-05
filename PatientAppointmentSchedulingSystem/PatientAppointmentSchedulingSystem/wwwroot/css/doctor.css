@@ -1,9 +1,9 @@
 :root, [data-bs-theme=light] {
-    --primary-color: #e76f51; /* Changed from #5E9CA0 to #e76f51 */
-    --secondary-color: #F4A261; /*slightly light abit*/
+    --primary-color: #0056b3; /* Changed from #5E9CA0 to #e76f51 */
+    --secondary-color: #003d82;
     --light-color: #ffffff;
     --dark-color: #333333;
-    --hover-color: #e05d3d; /* Changed hover color to be slightly darker than primary */
+    --hover-color: #003d82; /* Changed hover color to be slightly darker than primary */
     --transition-speed: 0.3s;
     --border-radius: 10px;
     /*public page*/
@@ -116,8 +116,8 @@ body {
 }
 
     .btn-primary:hover {
-        background-color: #e8914c;
-        border-color: #e8914c;
+        background-color: #003d82;
+        border-color: #003d82;
         transform: translateY(-2px);
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         border: 1px solid !important;
