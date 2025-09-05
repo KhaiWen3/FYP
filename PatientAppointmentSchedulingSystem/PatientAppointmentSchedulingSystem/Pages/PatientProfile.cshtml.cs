@@ -58,27 +58,27 @@ namespace PatientAppointmentSchedulingSystem.Pages
 
                     if (PatientDetails.Gender == null)
                     {
-                        PatientDetails.Gender = "No Gender";
+                        PatientDetails.Gender = "Not Specified";
                     }
                     if (PatientDetails.Address == null)
                     {
-                        PatientDetails.Address = "No Address";
+                        PatientDetails.Address = "Address Not Provided";
                     }
                     if (PatientDetails.State == null)
                     {
-                        PatientDetails.State = "No State";
+                        PatientDetails.State = "State Not Provided";
                     }
                     if (PatientDetails.EmergencyContact == null)
                     {
-                        PatientDetails.EmergencyContact = "No Contact Person";
+                        PatientDetails.EmergencyContact = "No Emergency Contact Person";
                     }
                     if (PatientDetails.EmergencyPhone == null)
                     {
-                        PatientDetails.EmergencyPhone = "No Contact Number";
+                        PatientDetails.EmergencyPhone = "No Emergency Contact Number";
                     }
                     if (PatientDetails.InsuranceProvider == null)
                     {
-                        PatientDetails.InsuranceProvider = "No Contact Number";
+                        PatientDetails.InsuranceProvider = "No Insurance Provider";
                     }
                     //if (PatientDetails.PolicyNumber == null)
                     //{
@@ -86,11 +86,11 @@ namespace PatientAppointmentSchedulingSystem.Pages
                     //}
                     if (PatientDetails.BloodType == null)
                     {
-                        PatientDetails.BloodType = "No Contact Number";
+                        PatientDetails.BloodType = "Unknown";
                     }
                     if (PatientDetails.Allergies == null)
                     {
-                        PatientDetails.Allergies = "No Contact Number";
+                        PatientDetails.Allergies = "No Known Allergies";
                     }
                     return Page(); //success data get
 

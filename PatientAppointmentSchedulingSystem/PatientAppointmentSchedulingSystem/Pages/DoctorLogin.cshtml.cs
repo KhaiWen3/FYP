@@ -48,10 +48,25 @@ namespace PatientAppointmentSchedulingSystem.Pages
             var doctor = _context.Doctor
                 .FirstOrDefault(d => d.DoctorEmail == Input.Email);
 
-            if (doctor == null || !BCrypt.Net.BCrypt.Verify(Input.Password, doctor.DoctorPassword))
+            if (doctor == null)
             {
                 ModelState.AddModelError(string.Empty, "Invalid email or password.");
                 return Page();
+            }
+            else
+            {
+                var passwordMatch = BCrypt.Net.BCrypt.Verify(Input.Password, doctor.DoctorPassword);
+
+                if (!passwordMatch)
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    return Page();
+                }
+                else
+                {
+                    HttpContext.Session.SetInt32("DoctorId", doctor.DoctorId);
+                    return RedirectToPage("/DoctorHomePage");
+                }
             }
             //else
             //{
@@ -61,15 +76,15 @@ namespace PatientAppointmentSchedulingSystem.Pages
             //}
 
             // 2) Store everything you need in Session (not claims)
-            HttpContext.Session.SetInt32("DoctorId", doctor.DoctorId);
-            HttpContext.Session.SetString("DoctorEmail", doctor.DoctorEmail);
-            HttpContext.Session.SetString("DoctorName", doctor.DoctorFullName);
-            HttpContext.Session.SetString("DoctorRole", "Doctor");
+            //HttpContext.Session.SetInt32("DoctorId", doctor.DoctorId);
+            //HttpContext.Session.SetString("DoctorEmail", doctor.DoctorEmail);
+            //HttpContext.Session.SetString("DoctorName", doctor.DoctorFullName);
+            //HttpContext.Session.SetString("DoctorRole", "Doctor");
 
             // 3) (Optional) Sign in with an empty identity so [Authorize] works
             //    No user data in claims — you will read from Session everywhere.
-            var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-            var principal = new ClaimsPrincipal(identity);
+            //var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+            //var principal = new ClaimsPrincipal(identity);
 
             // Create claims so the Add Slots page knows who the doctor is
             //var claims = new List<Claim>
@@ -91,20 +106,20 @@ namespace PatientAppointmentSchedulingSystem.Pages
             //};
 
             // Important - Sign in the doctor
-            await HttpContext.SignInAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                principal,  
-                new AuthenticationProperties { IsPersistent = true });
+            //await HttpContext.SignInAsync(
+            //    CookieAuthenticationDefaults.AuthenticationScheme,
+            //    principal,  
+            //    new AuthenticationProperties { IsPersistent = true });
 
 
-            return RedirectToPage("/DoctorHomePage"); // Redirect to doctor dashboard
+            //return RedirectToPage("/DoctorHomePage"); // Redirect to doctor dashboard
         }
 
-        private bool VerifyPassword(string enteredPassword, string storedHash)
-        {
-            // Implement your password verification logic here
-            // This is a simple example - use proper password hashing in production
-            return enteredPassword == storedHash; // Replace with proper hashing
-        }
+        //private bool VerifyPassword(string enteredPassword, string storedHash)
+        //{
+        //    // Implement your password verification logic here
+        //    // This is a simple example - use proper password hashing in production
+        //    return enteredPassword == storedHash; // Replace with proper hashing
+        //}
     }
 }

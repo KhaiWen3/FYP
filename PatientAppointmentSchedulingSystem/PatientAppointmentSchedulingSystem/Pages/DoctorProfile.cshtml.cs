@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace PatientAppointmentSchedulingSystem.Pages
 {
-    public class PatientProfilecshtmlModel : PageModel
+    public class DoctorProfilecshtmlModel : PageModel
     {
         public void OnGet()
         {

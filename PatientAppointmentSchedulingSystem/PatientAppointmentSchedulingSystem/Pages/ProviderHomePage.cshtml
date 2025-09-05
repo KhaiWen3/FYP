@@ -34,50 +34,58 @@
         })();
     </script>
 </head>
-    <body>
-    <!-- Hero -->
-    <section class="py-5">
-        <div class="container">
-            <div class="registration-container" style="max-width: 1000px;">
-                <div class="registration-header">
-                    <h2>Welcome, @Model.ProviderDetails.Name</h2>
-                    <p>What would you like to do today?</p>
-                </div>
-
-                <div class="row g-4">
-                    <!-- Add Doctor -->
-                    <div class="col-12 col-md-6">
-                        <a class="text-decoration-none" asp-page="/ProviderAddDoctor">
-                            <div class="form-section h-100 position-relative" style="background:#fff;">
-                                <h3 class="d-flex align-items-center mb-2">
-                                    <span class="me-2" aria-hidden="true">👩‍⚕️</span>
-                                    Add Doctor
-                                </h3>
-                                <p class="text-muted mb-3">Create a new doctor profile and set availability slots.</p>
-                                <span class="btn btn-primary stretched-link">Add Doctor</span>
+<body>
+    <!-- ======= Site Wrap =======-->
+    <div class="site-wrap">
+        <!-- ======= Main =======-->
+        <main>
+            <!-- Hero -->
+            <section class="hero__v6 section" id="home" style="padding:100px 0 0 0 !important">
+                
+                @* <section class="py-5"> *@
+                    <div class="container">
+                        <div class="registration-container" style="max-width: 1000px;">
+                            <div class="registration-header">
+                                <h2>Welcome, @Model.ProviderDetails.Name</h2>
+                                <p>What would you like to do today?</p>
                             </div>
-                        </a>
-                    </div>
 
-                    <!-- Manage / View Patient Information -->
-                    <div class="col-12 col-md-6">
-                        <a class="text-decoration-none" asp-page="/Patients/Index">
-                            <div class="form-section h-100" style="background:#fff;">
-                                <h3 class="d-flex align-items-center mb-2">
-                                    <span class="me-2" aria-hidden="true">🧑‍🦽</span>
-                                    Manage / View Patient Information
-                                </h3>
-                                <p class="text-muted mb-3">
-                                    Search, view, and update patient records and appointments.
-                                </p>
-                                <button type="button" class="btn btn-outline-secondary">Open Patients</button>
+                            <div class="row g-4">
+                                <!-- Add Doctor -->
+                                <div class="col-12 col-md-6">
+                                    <a class="text-decoration-none" asp-page="/ProviderAddDoctor">
+                                        <div class="form-section h-100 position-relative" style="background:#fff;">
+                                            <h3 class="d-flex align-items-center mb-2">
+                                                <span class="me-2" aria-hidden="true">👩‍⚕️</span>
+                                            Onboard a Physician
+                                            </h3>
+                                        <p class="text-muted mb-3">Seamlessly add new doctors to your team. Establish their credentials, specialties, and clinical availability.</p>
+                                        <span class="btn btn-primary stretched-link">New Physician</span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <!-- Manage / View Patient Information -->
+                                <div class="col-12 col-md-6">
+                                    <a class="text-decoration-none" asp-page="/ProviderPatientList">
+                                        <div class="form-section h-100" style="background:#fff;">
+                                            <h3 class="d-flex align-items-center mb-2">
+                                                <span class="me-2" aria-hidden="true">🧑‍🦽</span>
+                                            Patient Records & Management
+                                            </h3>
+                                            <p class="text-muted mb-3">
+                                            A complete, searchable directory to find patient information, medical history, and appointments.
+                                            </p>
+                                        <button type="button" class="btn btn-outline-secondary">View Patients</button>
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
-                        </a>
-                    </div>
-                </div>
 
-            </div>
-        </div>
-    </section>
+                        </div>
+                    </div>
+                @* </section> *@
+            </section>
+        </main>
     </body>
 </html>
