@@ -38,6 +38,10 @@ namespace PatientAppointmentSchedulingSystem.Pages
         public string? BloodType { get; set; }
         public string? Allergies { get; set; }
 
+        //FK
+        public int InsuranceProviderId { get; set; }
+        public InsuranceProvider InsuranceProviders { get; set; }
+
 
     }
 }
