@@ -44,6 +44,14 @@
             .btn-primary:hover {
                 background-color: #144B4B;
             }
+
+        select:invalid {
+            color: #6c757d; /* Bootstrap's placeholder color */
+        }
+
+        option[value=""] {
+            color: #6c757d; /* gray placeholder color */
+        }
     </style>
 </head>
 <body>
@@ -82,6 +90,16 @@
                     <span asp-validation-for="Input.PatientPhoneNum" class="text-danger"></span>
                 </div>
 
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="InsuranceProviderId" class="form-label required">Insurance Provider</label>
+                        <select asp-for="Input.InsuranceProviderId" asp-items="Model.InsuranceProviderList" class="form-select" style="width:340px;" required>
+                            <option value="">-- Select --</option>
+                        </select>
+                        <span asp-validation-for="Input.InsuranceProviderId" class="text-danger"></span>
+                    </div>
+                </div>
+
                 <div class="mb-3">
                     <label for="PatientEmail" class="form-label">Email</label>
                     <input asp-for="Input.PatientEmail" class="form-control" placeholder="Enter your email">
@@ -107,6 +125,8 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary w-100">Create Account</button>
+
+                <partial name="_ValidationScriptsPartial" />
             </form>
 
         </div>

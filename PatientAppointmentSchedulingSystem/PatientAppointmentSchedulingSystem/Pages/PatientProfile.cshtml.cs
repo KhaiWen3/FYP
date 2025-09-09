@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PatientAppointmentSchedulingSystem.Pages.Data;
 using System.ComponentModel.DataAnnotations;
@@ -19,13 +20,23 @@ namespace PatientAppointmentSchedulingSystem.Pages
         [BindProperty]
         public PatientDetails PatientDetails { get; set; } //use this
 
-
+        [BindProperty]
+        public int InsuranceProviderId { get; set; } //selected value
+        public IEnumerable<SelectListItem> InsuranceProviderList { get; set; } //for asp-items
 
         //GET: load the patient (by ?id= OR Session) and populate Input
         public async Task<IActionResult> OnGet()
         {
             int? idPatientSession = HttpContext.Session.GetInt32("PatientId");
 
+            InsuranceProviderList = await _context.InsuranceProvider
+                .OrderBy(ip => ip.InsuranceProviderName)
+                .Select(ip => new SelectListItem
+                {
+                    Value = ip.InsuranceProviderId.ToString(),
+                    Text = ip.InsuranceProviderName
+                })
+                .ToListAsync();
 
             //here is to check the session
             if (idPatientSession == null) //session die
@@ -76,10 +87,10 @@ namespace PatientAppointmentSchedulingSystem.Pages
                     {
                         PatientDetails.EmergencyPhone = "No Emergency Contact Number";
                     }
-                    if (PatientDetails.InsuranceProvider == null)
-                    {
-                        PatientDetails.InsuranceProvider = "No Insurance Provider";
-                    }
+                    //if (PatientDetails.InsuranceProvider == null)
+                    //{
+                    //    PatientDetails.InsuranceProvider = "No Insurance Provider";
+                    //}
                     //if (PatientDetails.PolicyNumber == null)
                     //{
                     //    PatientDetails.PolicyNumber = "No Contact Number";

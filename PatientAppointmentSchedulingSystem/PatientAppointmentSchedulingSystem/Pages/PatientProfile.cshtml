@@ -197,9 +197,16 @@
                                                         <div class="card-body">
                                                             <h3 class="h6 mb-3"><i class="bi bi-shield-check me-2"></i>Insurance</h3>
                                                             <div class="mb-3">
-                                                            <label asp-for="PatientDetails.InsuranceProvider" class="form-label" style="font-weight:bold">Insurance Provider <span class="text-danger field-input d-none">*</span></label>
+                                                            @* <label asp-for="PatientDetails.InsuranceProvider" class="form-label" style="font-weight:bold">Insurance Provider <span class="text-danger field-input d-none">*</span></label>
                                                                 <h6 asp-for="PatientDetails.InsuranceProvider" class="form-label field-label margin-left-20">@Model.PatientDetails.InsuranceProvider</h6>
-                                                                <input asp-for="PatientDetails.InsuranceProvider" class="form-control field-input d-none" />
+                                                                <input asp-for="PatientDetails.InsuranceProvider" class="form-control field-input d-none" /> *@
+
+                                                            <label asp-for="PatientDetails.InsuranceProviders" class="form-label" style="font-weight:bold">Insurance Provider <span class="text-danger field-input d-none">*</span></label>
+                                                            <h6 asp-for="PatientDetails.InsuranceProvider" class="form-label field-label margin-left-20">@Model.PatientDetails.InsuranceProviders</h6>
+                                                            <select asp-for="PatientDetails.InsuranceProviders" class="form-select field-input d-none">
+                                                                <option value="">-- Select --</option>
+                                                            </select>
+                                                            <span asp-validation-for="PatientDetails.InsuranceProviderId" class="text-danger"></span>
                                                             </div>
                                                         </div>
                                                     </div>

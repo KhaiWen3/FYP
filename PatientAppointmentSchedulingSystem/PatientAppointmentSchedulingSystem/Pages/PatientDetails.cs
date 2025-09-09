@@ -14,6 +14,7 @@ namespace PatientAppointmentSchedulingSystem.Pages
         public string PatientLastName {  get; set; }
 
         [Required]
+        [RegularExpression(@"^\+?[0-9]{9,15}$", ErrorMessage = "Phone number must be between 9 and 15 digits and can start with +")]
         public string PatientPhoneNum { get; set; }
 
         [Required]
@@ -24,6 +25,10 @@ namespace PatientAppointmentSchedulingSystem.Pages
 
         [Required]
         public string PatientPassword { get; set; }
+        
+        //FK
+        [Required]
+        public int InsuranceProviderId { get; set; }
 
         public string? PatientAppointment {  get; set; }
 
@@ -34,14 +39,13 @@ namespace PatientAppointmentSchedulingSystem.Pages
         public string? State { get; set; }
         public string? EmergencyContact { get; set; }
         public string? EmergencyPhone { get; set; }
-        public string? InsuranceProvider { get; set; }
+        //public string? InsuranceProvider { get; set; }
         public string? BloodType { get; set; }
         public string? Allergies { get; set; }
 
-        //FK
-        public int InsuranceProviderId { get; set; }
-        public InsuranceProvider InsuranceProviders { get; set; }
+        //One patient → one provider; one provider → many patients
+        public InsuranceProvider? InsuranceProviders { get; set; }
 
-
+        //public ICollection<InsuranceProvider> InsuranceProviders { get; set; } = new List<InsuranceProvider>();
     }
 }
