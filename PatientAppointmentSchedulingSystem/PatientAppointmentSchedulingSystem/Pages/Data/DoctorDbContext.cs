@@ -13,10 +13,18 @@ namespace PatientAppointmentSchedulingSystem.Pages.Data
 
         public DbSet<AvailabilitySlots> AvailabilitySlots { get; set; }
 
+        public DbSet<ProviderDetails> ProviderDetails { get; set; }
+        
+        public DbSet<Specialty> SpecialtyDetails {  get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ProviderDetails>().ToTable("Provider");
+            modelBuilder.Entity<Specialty>().ToTable("Specialty");
+
             modelBuilder.Entity<DoctorDetails>()
                 .HasKey(d => d.DoctorId); //HasKey specify DoctorId as primary key in DoctorDetails table.
+
 
             //modelBuilder.Entity<AvailabilitySlots>()
             //.HasOne(a => a.Doctor)

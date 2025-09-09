@@ -4,6 +4,7 @@ namespace PatientAppointmentSchedulingSystem.Pages
 {
     public class ProviderDetails
     {
+        [Key]
         public int ProviderId { get; set; }
         [Required]
         public string ProviderType { get; set; }

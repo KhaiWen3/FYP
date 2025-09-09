@@ -8,7 +8,7 @@ namespace PatientAppointmentSchedulingSystem.Pages
         [Key]
         public int DoctorId { get; set; }
 
-        //FK    
+        //FK
         public int ProviderId { get; set; }
         public int SpecialtyId { get; set; }
 
@@ -43,6 +43,8 @@ namespace PatientAppointmentSchedulingSystem.Pages
 
         [NotMapped]
         public string DoctorSpecialtyName {  get; set; }
-
+        
+        [NotMapped]
+        public string DoctorProviderName { get; set; }
     }
 }
