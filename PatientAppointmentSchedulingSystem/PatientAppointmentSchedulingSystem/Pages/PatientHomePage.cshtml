@@ -170,6 +170,10 @@
     <link href="/vendors/glightbox/glightbox.min.css" rel="stylesheet">
     <link href="/vendors/swiper/swiper-bundle.min.css" rel="stylesheet">
     <link href="/vendors/aos/aos.css" rel="stylesheet">
+    <!-- Bootstrap & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
     <!-- End Styles-->
     <!-- ======= Theme Style =======-->
     <link href="/css/patient.css" rel="stylesheet">
@@ -185,19 +189,6 @@
 
     <style>
         .search-title {
-            /* background: rgba(var(--bs-secondary-rgb), 0.3);
-            text-align: center;
-            background: color-mix(in srgb, var(--bs-secondary), transparent 70%);
-            color: var(--bs-primary);
-            display: inline-block;
-            padding: 5px 12px;
-            border-radius: 7px;
-            font-weight: 600;
-            font-size: 48px;
-            /* margin-bottom: 10px; */
-            /*margin: 20px 0;
-            max-width: 1200px; */
-
             display: block; /* block so width works */
             width: 100%; /* fill available space */
             max-width: 1200px; /* but cap at 1200px */
@@ -229,52 +220,129 @@
             <section class="hero__v6 section" id="home" style="padding:100px 0 0 0 !important">
 
                 <div class="container">
-                     <!--Search Doctor by Doctor Name / Doctor Specialty-->
-                    @* <span class="search-title text-uppercase" data-aos="fade-up" data-aos-delay="0">Welcome to MediBook</span> *@
-                    @* <h1 class="page-title">Search Doctor, Make an Appointment</h1> *@
-                    @* <p style="text-align:center">Discover the best doctors, clinic and hospital the city nearest to you.</p> *@ 
-
                     <div class="search-title" data-aos="fade-up" data-aos-delay="0">
                         <span class="text-uppercase">Welcome to MediBook</span>
+                        <span>, @($"{Model.PatientDetails?.PatientLastName}".Trim().ToUpper())</span>
                         <p class="search-sub">Discover the best doctors, clinic and hospital the city nearest to you.</p>
-                    </div>
 
-
-                    <div class="content-wrapper">
-                        <!-- Sidebar -->
-                        <div class="sidebar">
-                            <div class="profile-section">
-                                @* <img src="/api/placeholder/120/120" alt="Profile Picture" class="profile-pic"> *@
-                                @* <h4 class="mt-3">@Model.PatientFullName</h4>  *@
-                                <div class="doctor-info">
-                                    <div class="patient-name">@Model.PatientFullName</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Main Content -->
+                        <!-- Search Available Doctor -->
                         <section class="section services__v3" id="search">
                             <div class="container">
                                 <form method="get">
                                     <div class="filter-section mb-3">
-                                        <div class="row align-items-center">
-                                            <div class="col-md-10 col-9 pe-0">
-                                                <input type="text" name="Search" class="form-control" value="@Model.Search" placeholder="Search by a speciality or service..." />
+                                        <div class="row g-2 align-items-center">
+                                            <!-- Search by Doctor Name-->
+                                            <div class="col-md-6 col-6">
+                                                <input type="text" 
+                                                    name="SearchDoctorName" 
+                                                    class="form-control" 
+                                                    value="@Model.SearchDoctorName" 
+                                                    placeholder="Search by a Doctor's Name ..." />
                                             </div>
-                                            <div class="col-md-2 col-3 text-end">
-                                                <button type="submit" class="btn btn-outline-primary">Search</button>
+                                            <!--Specialty Dropdown-->
+                                            <div class="col-md-4 col-4">
+                                                <select class="form-select" asp-for="SpecialtyId" asp-items="Model.SpecialtyOptions">
+                                                    <option value="">All specialties</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-2 col-2">
+                                                <button type="submit" class="btn btn-outline-primary w-100 d-flex align-items-center justify-content-center py-0">
+                                                    Search
+                                                </button>
                                                 @* <button type="submit" id="cancelSearch" class="btn btn-outline-secondary">Cancel</button> *@
                                             </div>
                                         </div>
                                     </div>
                                 </form>
 
+                                @if (!string.IsNullOrWhiteSpace(Model.SearchDoctorName) || Model.SpecialtyId.HasValue)
+                                {
+                                    if (Model.Doctors?.Any() == true)
+                                    {
+                                        <h6 class="mb-3">Available Doctors</h6>
 
-                                @if (!string.IsNullOrEmpty(Model.Search))
+                                        <!-- 1 row, 3 columns on lg+; stacks on small -->
+                                        <div class="row g-4 row-cols-1 row-cols-lg-3">
+                                            @foreach (var doctor in Model.Doctors)
+                                            {
+                                                <div class="col">
+                                                    <div class="doctor-card h-100 p-4">
+                                                        <div class="d-flex gap-3">
+                                                            <!-- Photo (placeholder if you don't have one) -->
+                                                            <img src="~/images/doctor-placeholder.png"
+                                                                 alt="@doctor.DoctorFullName"
+                                                                 class="doc-avatar" />
+
+                                                            <div class="flex-grow-1">
+                                                                <h5 class="mb-1 fw-semibold">@doctor.DoctorFullName</h5>
+                                                                <div>
+                                                                    <!--change to specialty-->
+                                                                    <span class="text-primary text-decoration-none">
+                                                                        @doctor.DoctorSpecialtyName
+                                                                    </span>
+                                                                </div>
+
+                                                                @* Optional: show rating / reviews if your model has them
+                                                                    <div class="d-flex flex-wrap align-items-center gap-3 mt-2">
+                                                                        <div class="text-warning">
+                                                                            <i class="bi bi-star-fill"></i>
+                                                                            <strong class="text-dark ms-1">@d.Rating</strong>
+                                                                            <span class="text-muted">(@d.ReviewsCount reviews)</span>
+                                                                        </div>
+                                                                        <div class="text-muted">
+                                                                            <i class="bi bi-award muted-icon me-1"></i>@d.YearsExperience years experience
+                                                                        </div>
+                                                                    </div>
+                                                                    *@
+
+                                                                @* Optional: location if present *@
+                                                                @if (!string.IsNullOrWhiteSpace(doctor.DoctorProviderName))
+                                                                {
+                                                                    <div class="text-muted mt-2">
+                                                                        <i class="bi bi-geo-alt muted-icon me-1"></i>@doctor.DoctorProviderName
+                                                                    </div>
+                                                                }
+
+
+                                                                @* Optional: languages if you store a comma-separated string *@
+                                                                @if (!string.IsNullOrWhiteSpace(doctor.DoctorLanguageSpoken))
+                                                                {
+                                                                    var langs = doctor.DoctorLanguageSpoken.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+                                                                    <div class="mt-2">
+                                                                        @foreach (var language in langs)
+                                                                        {
+                                                                            <span class="lang-chip">@language</span>
+                                                                        }
+                                                                    </div>
+                                                                }
+
+                                                                <div class="mt-3">
+                                                                    <!-- Change href to asp-page/asp-route when your profile page is ready -->
+                                                                    <a href="#"
+                                                                       class="btn btn-book px-4 py-2 rounded-3 w-100">
+                                                                        View Profile &amp; Book Appointment
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <h6>No matching doctors found.</h6>
+                                    }
+                                }
+
+                                @* @if (!string.IsNullOrEmpty(Model.Search)) *@
+                                @* @if(!string.IsNullOrWhiteSpace(Model.SearchDoctorName) || Model.SpecialtyId.HasValue)
                                 {
                                     if (Model.Doctors != null && Model.Doctors.Any())
                                     {
-                                        //Here might be shoe detailed profile of doctor -- Proceed in FYP2
+                                        //Here might be show detailed profile of doctor -- Proceed in FYP2
                                         <h6>Available Doctors</h6>
                                         <div class="doctors-list mb-4">
                                             @foreach (var doctor in Model.Doctors)
@@ -289,9 +357,9 @@
                                     else
                                     {
                                         <h6>No matching doctors found.</h6>
-                                    }
+                                    } *@
 
-                                    @if (Model.AppointmentSlots != null && Model.AppointmentSlots.Any())
+                                    @* @if (Model.AppointmentSlots != null && Model.AppointmentSlots.Any())
                                     {
                                         <h6>Available Slots</h6>
 
@@ -347,47 +415,19 @@
                                     else
                                     {
                                         <h6>No slots available.</h6>
-                                    }
-                                }
+                                    } *@
+                                @* } *@
 
 
                             </div>
                         </section>
+                    </div>
+
+
+                    <div class="content-wrapper">
 
                     </div>
                 </div>
-
-                <!-- ======= Hero =======-->
-                @* <div class="container">
-                    <div class="row">
-                        <div class="col-lg-6 mb-4 mb-lg-0">
-                            <div class="row">
-                                <div class="col-lg-11">
-                                    <span class="hero-subtitle text-uppercase" data-aos="fade-up" data-aos-delay="0">Welcome to MediBook</span>
-                                    <h1 class="hero-title mb-3" data-aos="fade-up" data-aos-delay="100">Skip the Wait. Schedule Your Doctor — Anytime, Anywhere.</h1>
-                                    <p class="hero-description mb-4 mb-lg-5" data-aos="fade-up" data-aos-delay="200">Instantly book, change or cancel appointments 24/7 from any device. Our smart and secure platform syncs with your clinic’s calendar in real time and sends automatic reminders, so you never miss—or wait for—care again.</p>
-                                    <div class="cta d-flex gap-2 mb-4 mb-lg-5" data-aos="fade-up" data-aos-delay="300">
-                                        @* <a class="btn" href="#">Get Start Now</a><a class="btn btn-white-outline" href="#">
-                                            Learn More
-                                            <svg class="lucide lucide-arrow-up-right" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M7 7h10v10"></path>
-                                                <path d="M7 17 17 7"></path>
-                                            </svg>
-                                        </a> *@
-                                    @* </div> *@
-                    @*                 <div class="logos mb-4" data-aos="fade-up" data-aos-delay="400">
-                                        <span class="logos-title text-uppercase mb-4 d-block">Trusted by major hospitals and clinics</span>
-                                        <!-- the image maybe can change to sliding image -->
-                                        <div class="logos-images d-flex gap-4 align-items-center"><img class="img-fluid js-img-to-inline-svg" src="/images/logo/actual-size/logo-air-bnb__black.svg" alt="Company 1" style="width: 110px;"><img class="img-fluid js-img-to-inline-svg" src="/images/logo/actual-size/logo-ibm__black.svg" alt="Company 2" style="width: 80px;"><img class="img-fluid js-img-to-inline-svg" src="/images/logo/actual-size/logo-google__black.svg" alt="Company 3" style="width: 110px;"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> *@
-                @* </div> *@
-                <!-- End Hero-->
-
-            
 
                 <!-- ======= Feature 4: Categorized Popular Medical Services =======-->
                 <section class="section services__v3" id="services">

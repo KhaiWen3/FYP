@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PatientAppointmentSchedulingSystem.Pages.Data;
 
@@ -15,38 +16,87 @@ namespace PatientAppointmentSchedulingSystem.Pages
         }
 
         [BindProperty(SupportsGet = true)]
-        public string Search { get; set; }
+        public string? SearchDoctorName { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public int? SpecialtyId { get; set; }
+
+        
+        
+        public SelectList SpecialtyOptions => new SelectList(Specialties, "SpecialtyId", "SpecialtyName", SpecialtyId);
+
+        [BindProperty]
+        public PatientDetails PatientDetails { get; set; }
+        [BindProperty]
+        public ProviderDetails ProviderDetails { get; set; }
 
         public List<DoctorDetails> Doctors { get; set; } = new List<DoctorDetails>();
         public List<AvailabilitySlots> AppointmentSlots { get; set; } = new List<AvailabilitySlots>();
+        public List<Specialty> Specialties { get; set; } = new();
 
-        public string PatientFullName { get; set; }
+
         public void OnGet()
         {
-            PatientFullName = HttpContext.Session.GetString("PatientFullName");
+            // Load specialties for dropdown
+            Specialties = _context.SpecialtyDetails
+                .AsNoTracking()
+                .OrderBy(s => s.SpecialtyName)
+                .ToList();
 
-            //step 1
-            var doctorQuery = _context.Doctor.AsQueryable(); // don't ToList() yet
-
-            //step 2 apply search filter
-            if (!string.IsNullOrEmpty(Search))
+            //load patient for header name
+            var patientId = HttpContext.Session.GetInt32("PatientId");
+            if (patientId != null)
             {
-                doctorQuery = doctorQuery
-                    .Where(d => d.DoctorMedicalService.ToLower().Contains(Search.ToLower()) ||
-                           d.DoctorFullName.ToLower().Contains(Search.ToLower())); //||
-                           //d.DoctorSpeciality.ToLower().Contains(Search.ToLower())
+                // Ensure this matches your DbSet name: _context.Patients or _context.PatientDetails
+                PatientDetails = _context.PatientDetails
+                    .AsNoTracking()
+                    .FirstOrDefault(p => p.PatientId == patientId.Value); // <-- use correct property name
             }
 
-            //step 3 fetch filtered doctors
-            Doctors = doctorQuery.ToList();
+            //base doctor query
+            var doctorQuery = _context.Doctor
+                .AsNoTracking()
+                .Include(d => d.Provider)   // <= this line loads Provider for each Doctor
+                .AsQueryable();
 
-            // Step 4: Get their IDs
+            Doctors = doctorQuery
+                .Select(d => new DoctorDetails
+                {
+                    DoctorId = d.DoctorId,
+                    DoctorFullName = d.DoctorFullName,
+                    DoctorMedicalService = d.DoctorMedicalService,
+
+                    // uses the navigation loaded above
+                    DoctorProviderName = d.Provider != null ? d.Provider.Name : null
+                })
+                .ToList();
+
+
+            //search by doctor name
+            if (!string.IsNullOrWhiteSpace(SearchDoctorName))
+            {
+                var q = SearchDoctorName.Trim();
+                doctorQuery = doctorQuery.Where(d =>
+                    d.DoctorFullName.ToLower().Contains(q.ToLower())
+                    // || d.DoctorMedicalService.ToLower().Contains(q.ToLower())
+                    // || d.DoctorSpeciality.ToLower().Contains(q.ToLower())
+                );
+            }
+
+            // Specialty filter
+            if (SpecialtyId.HasValue)
+            {
+                // === Option A: if you have a many-to-many nav:
+                doctorQuery = doctorQuery.Where(d => d.ProviderSpecialties.Any(ps => ps.SpecialtyId == SpecialtyId.Value));
+                doctorQuery = doctorQuery.Distinct(); // avoid duplicates
+            }
+
+            // LOAD SLOTS
             var doctorIds = Doctors.Select(d => d.DoctorId).ToList();
-
-
-            if (doctorIds.Any())
+            if (doctorIds.Count > 0)
             {
                 AppointmentSlots = _context.AvailabilitySlots
+                    .AsNoTracking()
                     .Where(slot => doctorIds.Contains(slot.DoctorId))
                     .Include(slot => slot.Doctor)
                     .OrderBy(s => s.AppointmentDate)

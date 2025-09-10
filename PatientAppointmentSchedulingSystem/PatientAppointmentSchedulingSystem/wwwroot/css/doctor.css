@@ -370,8 +370,13 @@ h6 {
     color: var(--bs-heading-color);
 }
 
-.container {
+/*.container {
     max-width: 1140px;
+}*/
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
 }
 
 .section {
@@ -1693,6 +1698,7 @@ h6 {
     padding-top: var(--nav-height);
 }
 
-.margin-left-20 {
-    margin-left: 20px;
-}
+    .margin-left-20 {
+        margin-left: 20px;
+    }
+

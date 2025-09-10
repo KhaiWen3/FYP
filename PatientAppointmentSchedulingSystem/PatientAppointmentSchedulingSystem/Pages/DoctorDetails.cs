@@ -9,7 +9,9 @@ namespace PatientAppointmentSchedulingSystem.Pages
         public int DoctorId { get; set; }
 
         //FK
-        public int ProviderId { get; set; }
+        public int? ProviderId { get; set; }
+        public ProviderDetails? Provider { get; set; }
+
         public int SpecialtyId { get; set; }
 
         [Required]
@@ -40,6 +42,8 @@ namespace PatientAppointmentSchedulingSystem.Pages
 
         //public List<AvailabilitySlots> AvailabilitySlots { get; set; }
         public ICollection<AvailabilitySlots> AvailabilitySlots { get; set; } = new List<AvailabilitySlots>();
+        public ICollection<ProviderSpecialty> ProviderSpecialties { get; set; }
+        
 
         [NotMapped]
         public string DoctorSpecialtyName {  get; set; }

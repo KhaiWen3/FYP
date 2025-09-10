@@ -40,6 +40,8 @@ namespace PatientAppointmentSchedulingSystem.Pages
         public int? BedCount {  get; set; }
 
         public ICollection<ProviderSpecialty> ProviderSpecialties { get; set; } = new List<ProviderSpecialty>();
+        public ICollection<DoctorDetails> Doctors { get; set; } = new List<DoctorDetails>();
+
 
     }
 }
