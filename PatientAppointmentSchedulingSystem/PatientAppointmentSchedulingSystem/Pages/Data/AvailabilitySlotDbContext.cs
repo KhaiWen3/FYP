@@ -8,12 +8,16 @@ namespace PatientAppointmentSchedulingSystem.Pages.Data
 
         public DbSet<AvailabilitySlots> AvailabilitySlots { get; set; }
 
-        //public DbSet<PatientDetails> PatientDetails { get; set; }
+        public DbSet<PatientDetails> PatientDetails { get; set; }
+
         public DbSet<DoctorDetails> Doctor { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<PatientDetails>().ToTable("Patients");
+
             //map doctor to the existing table
             modelBuilder.Entity<DoctorDetails>()
                 .ToTable("Doctor")

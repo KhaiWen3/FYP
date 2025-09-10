@@ -194,5 +194,34 @@ namespace PatientAppointmentSchedulingSystem.Pages
             //}
 
         }
+
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> OnPostDeleteAsync(int id)
+        {
+            // check doctor session
+            var doctorId = HttpContext.Session.GetInt32("DoctorId");
+            if (doctorId == null)
+            {
+                return RedirectToPage("/DoctorLogin");
+            }
+
+            var slot = await _context.AvailabilitySlots
+                .FirstOrDefaultAsync(s => s.SlotId == id && s.DoctorId == doctorId);
+
+            if (slot == null)
+            {
+                return NotFound(new { success = false, message = "Slot not found" });
+            }
+
+            _context.AvailabilitySlots.Remove(slot);
+            await _context.SaveChangesAsync();
+
+            // If you're using AJAX (fetch)
+            return new JsonResult(new { success = true, message = "Slot deleted successfully" });
+
+            // If you want to refresh page instead:
+            // return RedirectToPage("/DoctorAddAvailableSlot");
+        }
+
     }
 }

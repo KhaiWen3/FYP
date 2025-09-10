@@ -379,6 +379,7 @@
         gap: 10px;
         justify-content: flex-end; /* This aligns children to the right */
         margin-left: auto; /* Alternative method that also works */
+        margin-bottom: 15px;
         }
 
         .slots-container {
@@ -397,7 +398,7 @@
 
         .slots-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        grid-template-columns: repeat(3,1fr);
         gap: 15px;
         margin-top: 15px;
         }
@@ -734,7 +735,30 @@
         }
 
         .slots-grid {
-        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        grid-template-columns: repeat(3, 1fr);
+        }
+
+        .time-slot {
+            position: relative;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fff;
+        }
+
+        .delete-icon {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: transparent;
+            border: none;
+            color: #dc3545;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .delete-icon:hover {
+            color: #a71d2a;
         }
     </style>
 </head>
@@ -810,7 +834,10 @@
                                 {
                                     string slotClass = slot.AppointmentStatus == 1 ? "isbooked" : (slot.AppointmentType == "Video" ? "video" : "in-person");
 
-                                    <div class="time-slot @slotClass">
+                                    <div class="time-slot @slotClass" data-slot-id="@slot.SlotId">
+                                        <button class="delete-icon" onclick="confirmDelete('@slot.SlotId')">
+                                            <i class="fas fa-times"></i>
+                                        </button>
                                         <div class="slot-time">
                                             @slot.AptStartTime.ToString("HH:mm tt") - @slot.AptEndTime.ToString("HH:mm tt")
 
@@ -850,8 +877,9 @@
 
     <!-- Add Time Slot Modal -->
     <div class="modal" id="addSlotModal" style="display: none;">
-        <div class="modal-content">
+        <div class="modal-content" style="margin:auto; margin-top:150px !important;">
             <form method="post" asp-antiforgery="true">
+                @Html.AntiForgeryToken()
                 <div class="modal-header">
                     <div class="modal-title">Add Time Slots</div>
                     <div class="modal-close" id="closeModalBtn">&times;</div>
@@ -919,6 +947,31 @@
             modal.style.display = "none";
         }
     });
+
+    function confirmDelete(slotId) {
+        if (confirm("Are you sure you want to delete this slot?")) {
+            deleteSlot(slotId);
+        }
+    }
+
+    function deleteSlot(slotId) {
+        fetch('?handler=Delete&id=' + slotId, {
+            method: 'POST',
+            headers: {
+                'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+            }
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    alert(result.message);
+                    location.reload();
+                } else {
+                    alert(result.message || "Delete failed");
+                }
+            })
+            .catch(err => console.error("Error deleting slot:", err));
+    }
 
 //     function confirmDeleteAll() {
 //     Show confirmation dialog
