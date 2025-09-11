@@ -56,51 +56,73 @@ namespace PatientAppointmentSchedulingSystem.Pages
             //base doctor query
             var doctorQuery = _context.Doctor
                 .AsNoTracking()
-                .Include(d => d.Provider)   // <= this line loads Provider for each Doctor
+                .Include(d => d.Provider)
+                    .ThenInclude(p => p.ProviderSpecialties)
+                        .ThenInclude(ps => ps.Specialty)   // only if you want SpecialtyName later
                 .AsQueryable();
 
+            // 4) Apply filters BEFORE materializing -------------------------
+            if (!string.IsNullOrWhiteSpace(SearchDoctorName))
+            {
+                var q = SearchDoctorName.Trim();
+                doctorQuery = doctorQuery.Where(d => EF.Functions.Like(d.DoctorFullName, $"%{q}%"));
+            }
+            //if (!string.IsNullOrWhiteSpace(SearchDoctorName))
+            //{
+            //    var q = SearchDoctorName.Trim();
+            //    doctorQuery = doctorQuery.Where(d =>
+            //        d.DoctorFullName.ToLower().Contains(q.ToLower())
+            //    // || d.DoctorMedicalService.ToLower().Contains(q.ToLower())
+            //    // || d.DoctorSpeciality.ToLower().Contains(q.ToLower())
+            //    );
+            //}
+
+            // Specialty filter
+            if (SpecialtyId.HasValue)
+            {
+                int sid = SpecialtyId.Value;
+                doctorQuery = doctorQuery.Where(d => d.SpecialtyId == sid);
+
+                //int sid = SpecialtyId.Value;
+
+                // Option A: via Provider navigation (if Provider has ProviderSpecialties nav)
+                //doctorQuery = doctorQuery.Where(d =>
+                  //  d.Provider != null &&
+                    //_context.ProviderSpecialties.Any(ps =>
+                      //  ps.ProviderId == d.ProviderId && ps.SpecialtyId == sid));
+                // === Option A: if you have a many-to-many nav:
+                //doctorQuery = doctorQuery.Where(d => d.ProviderSpecialties.Any(ps => ps.SpecialtyId == SpecialtyId.Value));
+            }
+
+            //materialize doctors (filtered)
             Doctors = doctorQuery
                 .Select(d => new DoctorDetails
                 {
                     DoctorId = d.DoctorId,
                     DoctorFullName = d.DoctorFullName,
                     DoctorMedicalService = d.DoctorMedicalService,
-
                     // uses the navigation loaded above
                     DoctorProviderName = d.Provider != null ? d.Provider.Name : null
                 })
                 .ToList();
 
-
-            //search by doctor name
-            if (!string.IsNullOrWhiteSpace(SearchDoctorName))
-            {
-                var q = SearchDoctorName.Trim();
-                doctorQuery = doctorQuery.Where(d =>
-                    d.DoctorFullName.ToLower().Contains(q.ToLower())
-                    // || d.DoctorMedicalService.ToLower().Contains(q.ToLower())
-                    // || d.DoctorSpeciality.ToLower().Contains(q.ToLower())
-                );
-            }
-
-            // Specialty filter
-            if (SpecialtyId.HasValue)
-            {
-                // === Option A: if you have a many-to-many nav:
-                doctorQuery = doctorQuery.Where(d => d.ProviderSpecialties.Any(ps => ps.SpecialtyId == SpecialtyId.Value));
-                doctorQuery = doctorQuery.Distinct(); // avoid duplicates
-            }
-
-            // LOAD SLOTS
+            // LOAD SLOTS ONLY FOR FILTERED DOCTORS
             var doctorIds = Doctors.Select(d => d.DoctorId).ToList();
             if (doctorIds.Count > 0)
             {
                 AppointmentSlots = _context.AvailabilitySlots
                     .AsNoTracking()
                     .Where(slot => doctorIds.Contains(slot.DoctorId))
-                    .Include(slot => slot.Doctor)
+                    //.Include(slot => slot.Doctor)
                     .OrderBy(s => s.AppointmentDate)
                     .ThenBy(s => s.AptStartTime)
+                    .ToList();
+            }
+
+            foreach (var doctor in Doctors)
+            {
+                doctor.AvailabilitySlots = AppointmentSlots
+                    .Where(slot => slot.DoctorId == doctor.DoctorId)
                     .ToList();
             }
         }

@@ -36,100 +36,109 @@
 </head>
 
 <body>
-    <section class="py-4" style="background:#f4f6f9;">
-        <div class="container">
-            @if (TempData["AlertMsg"] != null)
-            {
-                <script>
-                    alert("@TempData["AlertMsg"]");
-                </script>
-            }
-            <div class="registration-container" style="max-width: 960px;">
-                <div class="registration-header">
-                    <h2>Add Doctor</h2>
-                    <p class="mb-0">Fill in all required details and assign a specialty.</p>
-                </div>
-
-                <form method="post">
-                    <div class="form-section">
-                        <h3>Doctor Info</h3>
-
-                        <div class="row g-3">
-                            <div class="col-12 col-md-6">
-                                <label class="form-label required" for="DoctorFullName">Full name</label>
-                                <input asp-for="Input.DoctorFullName" class="form-control" id="DoctorFullName" />
-                                <span asp-validation-for="Input.DoctorFullName" class="text-danger"></span>
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <label class="form-label required" for="SpecialtyId">Specialty</label>
-                                <select asp-for="Input.SpecialtyId" class="form-select" id="SpecialtyId">
-                                    <option value="">-- Select --</option>
-                                    @foreach (var s in Model.Specialties)
-                                    {
-                                        <option value="@s.SpecialtyId">@s.SpecialtyName</option>
-                                    }
-                                </select>
-                                <span asp-validation-for="Input.SpecialtyId" class="text-danger"></span>
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <label class="form-label required" for="DoctorPhoneNum">Phone</label>
-                                <input asp-for="Input.DoctorPhoneNum" class="form-control" id="DoctorPhoneNum" />
-                                <span asp-validation-for="Input.DoctorPhoneNum" class="text-danger"></span>
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <label class="form-label required" for="DoctorEmail">Email</label>
-                                <input asp-for="Input.DoctorEmail" type="email" class="form-control" id="DoctorEmail" />
-                                <span asp-validation-for="Input.DoctorEmail" class="text-danger"></span>
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <label class="form-label required" for="DoctorPassword">Password</label>
-                                <input asp-for="Input.DoctorPassword" type="password" class="form-control" id="DoctorPassword" />
-                                <span asp-validation-for="Input.DoctorPassword" class="text-danger"></span>
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <label class="form-label required" for="DoctorRoomNum">Room No.</label>
-                                <input asp-for="Input.DoctorRoomNum" class="form-control" id="DoctorRoomNum" />
-                                <span asp-validation-for="Input.DoctorRoomNum" class="text-danger"></span>
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <label class="form-label required" for="DoctorLanguageSpoken">Languages (comma-separated)</label>
-                                <input asp-for="Input.DoctorLanguageSpoken" class="form-control" id="DoctorLanguageSpoken" placeholder="English, Bahasa, Mandarin" />
-                                <span asp-validation-for="Input.DoctorLanguageSpoken" class="text-danger"></span>
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <label class="form-label required" for="DoctorMedicalService">Medical Service</label>
-                                <input asp-for="Input.DoctorMedicalService" class="form-control" id="DoctorMedicalService" placeholder="e.g., General Consultation" />
-                                <span asp-validation-for="Input.DoctorMedicalService" class="text-danger"></span>
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                <label class="form-label" for="DoctorPhoto">Photo URL / filename</label>
-                                <input asp-for="Input.DoctorPhoto" class="form-control" id="DoctorPhoto" placeholder="/images/doctors/dr_ali.jpg" />
-                                <span asp-validation-for="Input.DoctorPhoto" class="text-danger"></span>
-                            </div>
+    <!-- ======= Site Wrap =======-->
+    <div class="site-wrap">
+        <!-- ======= Main =======-->
+        <main>
+            <!-- Hero -->
+            <section class="hero__v6 section" id="home" style="padding:100px 0 0 0 !important">
+                @* <section class="py-4" style="background:#f4f6f9;"> *@
+                <div class="container">
+                    @if (TempData["AlertMsg"] != null)
+                    {
+                        <script>
+                            alert("@TempData["AlertMsg"]");
+                            window.location.href = "/ProviderHomePage";
+                        </script>
+                    }
+                    <div class="registration-container" style="max-width: 960px;">
+                        <div class="registration-header">
+                            <h2>Add Doctor</h2>
+                            <p class="mb-0">Fill in all required details and assign a specialty.</p>
                         </div>
-                    </div>
 
-                    <div class="d-flex gap-2">
-                        <button type="submit" class="btn btn-primary">Save Doctor</button>
-                        <a asp-page="/provider/dashboard" class="btn btn-outline-secondary">Back</a>
-                    </div>
-                </form>
+                        <form method="post">
+                            <div class="form-section">
+                                <h3>Doctor Info</h3>
 
-                @if (!string.IsNullOrWhiteSpace(Model.SuccessMessage))
-                {
-                    <div class="alert alert-info mt-3">@Model.SuccessMessage</div>
-                }
-            </div>
-        </div>
-    </section>
+                                <div class="row g-3">
+                                    <div class="col-12 col-md-6">
+                                        <label class="form-label required" for="DoctorFullName">Full name</label>
+                                        <input asp-for="Input.DoctorFullName" class="form-control" id="DoctorFullName" />
+                                        <span asp-validation-for="Input.DoctorFullName" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-12 col-md-6">
+                                        <label class="form-label required" for="SpecialtyId">Specialty</label>
+                                        <select asp-for="Input.SpecialtyId" class="form-select" id="SpecialtyId">
+                                            <option value="">-- Select --</option>
+                                            @foreach (var s in Model.Specialties)
+                                            {
+                                                <option value="@s.SpecialtyId">@s.SpecialtyName</option>
+                                            }
+                                        </select>
+                                        <span asp-validation-for="Input.SpecialtyId" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-12 col-md-6">
+                                        <label class="form-label required" for="DoctorPhoneNum">Phone</label>
+                                        <input asp-for="Input.DoctorPhoneNum" class="form-control" id="DoctorPhoneNum" />
+                                        <span asp-validation-for="Input.DoctorPhoneNum" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-12 col-md-6">
+                                        <label class="form-label required" for="DoctorEmail">Email</label>
+                                        <input asp-for="Input.DoctorEmail" type="email" class="form-control" id="DoctorEmail" />
+                                        <span asp-validation-for="Input.DoctorEmail" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-12 col-md-6">
+                                        <label class="form-label required" for="DoctorPassword">Password</label>
+                                        <input asp-for="Input.DoctorPassword" type="password" class="form-control" id="DoctorPassword" />
+                                        <span asp-validation-for="Input.DoctorPassword" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-12 col-md-6">
+                                        <label class="form-label required" for="DoctorRoomNum">Room No.</label>
+                                        <input asp-for="Input.DoctorRoomNum" class="form-control" id="DoctorRoomNum" />
+                                        <span asp-validation-for="Input.DoctorRoomNum" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-12 col-md-6">
+                                        <label class="form-label required" for="DoctorLanguageSpoken">Languages (comma-separated)</label>
+                                        <input asp-for="Input.DoctorLanguageSpoken" class="form-control" id="DoctorLanguageSpoken" placeholder="English, Bahasa, Mandarin" />
+                                        <span asp-validation-for="Input.DoctorLanguageSpoken" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-12 col-md-6">
+                                        <label class="form-label required" for="DoctorMedicalService">Medical Service</label>
+                                        <input asp-for="Input.DoctorMedicalService" class="form-control" id="DoctorMedicalService" placeholder="e.g., General Consultation" />
+                                        <span asp-validation-for="Input.DoctorMedicalService" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-12 col-md-6">
+                                        <label class="form-label" for="DoctorPhoto">Photo URL / filename</label>
+                                        <input asp-for="Input.DoctorPhoto" class="form-control" id="DoctorPhoto" placeholder="/images/doctors/dr_ali.jpg" />
+                                        <span asp-validation-for="Input.DoctorPhoto" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-primary">Save Doctor</button>
+                                <a asp-page="/provider/dashboard" class="btn btn-outline-secondary">Back</a>
+                            </div>
+                        </form>
+
+                        @if (!string.IsNullOrWhiteSpace(Model.SuccessMessage))
+                        {
+                            <div class="alert alert-info mt-3">@Model.SuccessMessage</div>
+                        }
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
 
     @section Scripts{
         <partial name="_ValidationScriptsPartial" />

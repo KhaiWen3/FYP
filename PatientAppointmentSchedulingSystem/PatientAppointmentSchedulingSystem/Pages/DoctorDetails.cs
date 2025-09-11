@@ -13,6 +13,7 @@ namespace PatientAppointmentSchedulingSystem.Pages
         public ProviderDetails? Provider { get; set; }
 
         public int SpecialtyId { get; set; }
+        public Specialty Specialty { get; set; } = null!;
 
         [Required]
         public string DoctorFullName { get; set; }
@@ -42,7 +43,7 @@ namespace PatientAppointmentSchedulingSystem.Pages
 
         //public List<AvailabilitySlots> AvailabilitySlots { get; set; }
         public ICollection<AvailabilitySlots> AvailabilitySlots { get; set; } = new List<AvailabilitySlots>();
-        public ICollection<ProviderSpecialty> ProviderSpecialties { get; set; }
+        //public ICollection<ProviderSpecialty> ProviderSpecialties { get; set; }
         
 
         [NotMapped]

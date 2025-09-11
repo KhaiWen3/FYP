@@ -21,159 +21,9 @@
     <link href="/vendors/glightbox/glightbox.min.css" rel="stylesheet">
     <link href="/vendors/swiper/swiper-bundle.min.css" rel="stylesheet">
     <link href="/vendors/aos/aos.css" rel="stylesheet">
-    <!-- End Styles-->
-    <!-- ======= Theme Style =======-->
-    <link href="/css/patient.css" rel="stylesheet">
-    <!-- End Theme Style-->
-    <!-- ======= Apply theme =======-->
-    <script>
-        // Apply the theme as early as possible to avoid flicker
-        (function() {
-        const storedTheme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-bs-theme', storedTheme);
-        })();
-    </script>
-
-    @*  <style>
-        :root {
-            --primary-color: #5e9ca0; /* Updated theme color */
-            --secondary-color: #0056aa40;
-            --accent-color: #2a9df4;
-            --light-color: #ffffff;
-            --dark-color: #333333;
-            --video-color: #4CAF50;
-            --inperson-color: #9C27B0;
-            --isbooked-color: #FF0000;
-            --hover-color: #f08c41; /* Darker version of primary for hover effects */
-            --transition-speed: 0.3s;
-            --border-radius: 10px;
-            --gray-bg: #f4f6f9;
-            --gray-light: #e9ecef;
-            --gray-medium: #adb5bd;
-        }
-
-        .body {
-            background-color: var(--gray-bg);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        .sidebar {
-            width: 100%;
-            background-color: white;
-            border-radius: var(--border-radius);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 0px;
-            margin-right: 0px;
-            margin-bottom: 20px;
-        }
-
-        .profile-section {
-            background-color: var(--primary-color);
-            padding: 20px 0;
-            text-align: center;
-            color: white;
-            position: relative;
-            border-radius: var(--border-radius);
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><g fill="rgba(255,255,255,0.1)"><path d="M30 40c0 5.5 4.5 10 10 10s10-4.5 10-10-4.5-10-10-10-10 4.5-10 10zm10 15c-8.3 0-15 6.7-15 15v5h30v-5c0-8.3-6.7-15-15-15z"/><path d="M70 45c5.5 0 10-4.5 10-10s-4.5-10-10-10-10 4.5-10 10 4.5 10 10 10zm0 5c-8.3 0-15 6.7-15 15v5h30v-5c0-8.3-6.7-15-15-15z"/><path d="M40 80c0 5.5 4.5 10 10 10s10-4.5 10-10-4.5-10-10-10-10 4.5-10 10z"/><path d="M15 30c5.5 0 10-4.5 10-10s-4.5-10-10-10-10 4.5-10 10 4.5 10 10 10zm0 5c-8.3 0-15 6.7-15 15v5h30v-5c0-8.3-6.7-15-15-15z"/></g></svg>');
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-
-        .doctor-profile {
-            display: flex;
-            text-align: center;
-            padding: 15px;
-        }
-
-        .patient-name {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 5px;
-            text-align: center;
-        }
-
-            .patient-name .text-muted {
-                text-align: center;
-            }
-
-        .doctor-info {
-            flex: 1;
-        }
-
-        .profile-pic {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #0d6efd;
-        }
-
-        .sidebar-nav .nav-link {
-            color: #6c757d;
-            padding: 10px 15px;
-        }
-
-            .sidebar-nav .nav-link:hover {
-                background-color: #f8f9fa;
-            }
-
-        .appointments-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .appointment-status {
-            display: flex;
-            gap: 10px;
-        }
-
-            .appointment-status .badge {
-                padding: 5px 10px;
-            }
-
-        .appointment-card {
-            background-color: white;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            padding: 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .appointment-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .action-icon {
-            background-color: #f8f9fa;
-            border-radius: 50%;
-            padding: 8px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-    </style> *@
-    
-    <!-- ======= Google Font =======-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet">
-    <!-- End Google Font-->
-    <!-- ======= Styles =======-->
-    <link href="/vendors/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <link href="/vendors/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="/vendors/glightbox/glightbox.min.css" rel="stylesheet">
-    <link href="/vendors/swiper/swiper-bundle.min.css" rel="stylesheet">
-    <link href="/vendors/aos/aos.css" rel="stylesheet">
     <!-- Bootstrap & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-
     <!-- End Styles-->
     <!-- ======= Theme Style =======-->
     <link href="/css/patient.css" rel="stylesheet">
@@ -186,6 +36,8 @@
         document.documentElement.setAttribute('data-bs-theme', storedTheme);
         })();
     </script>
+    <!-- Use Tailwind CSS for a clean, responsive design -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
         .search-title {
@@ -256,56 +108,82 @@
                                     </div>
                                 </form>
 
+                                <!--Display available doctor-->
+                                @* Results: show Tailwind cards per doctor using your UI design *@
                                 @if (!string.IsNullOrWhiteSpace(Model.SearchDoctorName) || Model.SpecialtyId.HasValue)
                                 {
                                     if (Model.Doctors?.Any() == true)
                                     {
                                         <h6 class="mb-3">Available Doctors</h6>
 
-                                        <!-- 1 row, 3 columns on lg+; stacks on small -->
-                                        <div class="row g-4 row-cols-1 row-cols-lg-3">
+                                        <!-- Responsive grid: 1 / 2 / 3 columns -->
+                                        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                                             @foreach (var doctor in Model.Doctors)
                                             {
-                                                <div class="col">
-                                                    <div class="doctor-card h-100 p-4">
-                                                        <div class="d-flex gap-3">
-                                                            <!-- Photo (placeholder if you don't have one) -->
-                                                            <img src="~/images/doctor-placeholder.png"
-                                                                 alt="@doctor.DoctorFullName"
-                                                                 class="doc-avatar" />
+                                                // Build initials for the avatar circle (e.g., "Emily Carter" -> "EC")
+                                                var initials = "";
+                                                if (!string.IsNullOrWhiteSpace(doctor.DoctorFullName))
+                                                {
+                                                    initials = string.Join("",
+                                                    doctor.DoctorFullName
+                                                    .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+                                                    .Take(2) // first + last (or first two words)
+                                                    .Select(w => char.ToUpperInvariant(w[0])));
+                                                }
 
-                                                            <div class="flex-grow-1">
-                                                                <h5 class="mb-1 fw-semibold">@doctor.DoctorFullName</h5>
-                                                                <div>
-                                                                    <!--change to specialty-->
-                                                                    <span class="text-primary text-decoration-none">
-                                                                        @doctor.DoctorSpecialtyName
-                                                                    </span>
-                                                                </div>
+                                                <div class="w-full max-w-sm mx-auto bg-white rounded-2xl shadow-xl overflow-hidden max-h-[500px] flex flex-col justify-between">
+                                                    <div class="p-6">
+                                                        <!-- Header -->
+                                                        <div class="flex items-start gap-x-4">
+                                                            <!-- Initials avatar (replace with real photo if you have it) -->
+                                                            <div class="h-16 w-16 bg-blue-100 rounded-full flex-shrink-0 flex items-center justify-center text-blue-500 font-bold text-xl border-2 border-blue-400">
+                                                                @initials
+                                                            </div>
+                                                            
+                                                            <div>
+                                                                <h3 class="text-2xl font-bold text-gray-800 text-left">@doctor.DoctorFullName</h3>
+                                                                <p class="text-sm text-indigo-600 font-semibold mt-1 text-left">@doctor.DoctorSpecialtyName</p>
 
-                                                                @* Optional: show rating / reviews if your model has them
-                                                                    <div class="d-flex flex-wrap align-items-center gap-3 mt-2">
-                                                                        <div class="text-warning">
-                                                                            <i class="bi bi-star-fill"></i>
-                                                                            <strong class="text-dark ms-1">@d.Rating</strong>
-                                                                            <span class="text-muted">(@d.ReviewsCount reviews)</span>
-                                                                        </div>
-                                                                        <div class="text-muted">
-                                                                            <i class="bi bi-award muted-icon me-1"></i>@d.YearsExperience years experience
-                                                                        </div>
-                                                                    </div>
-                                                                    *@
-
-                                                                @* Optional: location if present *@
                                                                 @if (!string.IsNullOrWhiteSpace(doctor.DoctorProviderName))
                                                                 {
-                                                                    <div class="text-muted mt-2">
-                                                                        <i class="bi bi-geo-alt muted-icon me-1"></i>@doctor.DoctorProviderName
-                                                                    </div>
+                                                                    <p class="text-sm text-gray-500 text-left">@doctor.DoctorProviderName</p>
                                                                 }
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="border-t border-gray-200 pt-3">
+                                                            <p class="text-sm font-medium text-gray-400 uppercase tracking-wide">Available Appointment Type</p>
+
+                                                            <!-- Available visit types FIRST -->
+                                                            @if (doctor.AvailabilitySlots != null && doctor.AvailabilitySlots.Any())
+                                                            {
+                                                                var types = doctor.AvailabilitySlots
+                                                                .Select(s => s.AppointmentType)
+                                                                .Distinct()
+                                                                .ToList();
+
+                                                                <div class="mt-2 flex flex-wrap gap-4">
+                                                                    @foreach (var apttype in types)
+                                                                    {
+                                                                        var typeClass = apttype.Contains("Video") ? "video-color" :
+                                                                        apttype.Contains("In-Person") ? "inperson-color" :
+                                                                        "isbooked-color";
+
+                                                                        <div class="flex items-center gap-2 legend-item">
+                                                                            <div class="legend-color @typeClass"></div>
+                                                                            <span class="font-medium text-black">@apttype</span>
+                                                                        </div>
+                                                                    }
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="mt-2 text-base text-gray-500">No available slot right now.</div>
+                                                            }
 
 
-                                                                @* Optional: languages if you store a comma-separated string *@
+
+                                                            <div class="mt-2 text-gray-600">
                                                                 @if (!string.IsNullOrWhiteSpace(doctor.DoctorLanguageSpoken))
                                                                 {
                                                                     var langs = doctor.DoctorLanguageSpoken.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
@@ -316,15 +194,20 @@
                                                                         }
                                                                     </div>
                                                                 }
-
-                                                                <div class="mt-3">
-                                                                    <!-- Change href to asp-page/asp-route when your profile page is ready -->
-                                                                    <a href="#"
-                                                                       class="btn btn-book px-4 py-2 rounded-3 w-100">
-                                                                        View Profile &amp; Book Appointment
-                                                                    </a>
-                                                                </div>
                                                             </div>
+                                                        </div>
+                                                                                                      
+
+                                                        <!-- Actions : will display doctor profile in popup method-->
+                                                        <div class="mt-8 flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-3">
+                                                            <button type="submit" class="btn btn-primary py-2">
+                                                                View More to Make Appointment
+                                                            </button>
+                                                            @* <a asp-page="/DoctorProfile"
+                                                               asp-route-id="@doctor.DoctorId"
+                                                               class="w-full px-6 py-3 text-sm text-center font-medium text-blue-700 bg-blue-100 rounded-lg transition-colors duration-200 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 shadow-md">
+                                                                View Doctor Profile & Make Appointemnt
+                                                            </a> *@
                                                         </div>
                                                     </div>
                                                 </div>
@@ -336,89 +219,6 @@
                                         <h6>No matching doctors found.</h6>
                                     }
                                 }
-
-                                @* @if (!string.IsNullOrEmpty(Model.Search)) *@
-                                @* @if(!string.IsNullOrWhiteSpace(Model.SearchDoctorName) || Model.SpecialtyId.HasValue)
-                                {
-                                    if (Model.Doctors != null && Model.Doctors.Any())
-                                    {
-                                        //Here might be show detailed profile of doctor -- Proceed in FYP2
-                                        <h6>Available Doctors</h6>
-                                        <div class="doctors-list mb-4">
-                                            @foreach (var doctor in Model.Doctors)
-                                            {
-                                                <div class="doctor-card mb-3 p-3 border rounded">
-                                                    <h5>@doctor.DoctorFullName</h5>
-                                                    <p class="text-muted">@doctor.DoctorMedicalService</p>
-                                                </div>
-                                            }
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <h6>No matching doctors found.</h6>
-                                    } *@
-
-                                    @* @if (Model.AppointmentSlots != null && Model.AppointmentSlots.Any())
-                                    {
-                                        <h6>Available Slots</h6>
-
-                                        @foreach (var dayGroup in Model.AppointmentSlots.GroupBy(s => s.AppointmentDate))
-                                        {
-                                            <div class="slots-container">
-                                                <div class="day-header">
-                                                    <div class="day-name">@dayGroup.Key.ToString("dddd, dd MMM yyyy")</div>
-                                                </div>
-
-                                                <div class="slots-grid">
-                                                    @foreach (var slot in dayGroup)
-                                                    {
-                                                        string slotClass = slot.AppointmentStatus == 1
-                                                        ? "isbooked"
-                                                        : (slot.AppointmentType == "Video" ? "video" : "in-person");
-
-                                                        <div class="time-slot @slotClass">
-                                                            <!-- Form for Booking the Slot -->
-                                                            <form method="post" asp-page-handler="BookAppointment" asp-route-slotId="@slot.SlotId" onsubmit="return confirm('Are you sure you want to book this slot?');">
-                                                                <button type="submit" class="slot-button" @(slot.AppointmentType == "booked" || slot.AppointmentStatus == 1 ? "disabled" : "")>
-                                                                    <div class="patient-name">
-                                                                        Doctor: @slot.Doctor.DoctorFullName
-                                                                    </div>
-                                                                    <div class="patient-name">
-                                                                        <p class="text-muted">@slot.Doctor.DoctorMedicalService</p>
-                                                                    </div>
-                                                                    <div class="slot-time">
-                                                                        @slot.AptStartTime.ToString("hh\\:mm") - @slot.AptEndTime.ToString("hh\\:mm")
-                                                                    </div>
-                                                                    <div class="slot-type">
-                                                                        @if (slot.AppointmentStatus == 1)
-                                                                        {
-                                                                            <p><i class="fas fa-check-circle"></i> Booked</p>
-                                                                        }
-                                                                        @if (slot.AppointmentType == "Video")
-                                                                        {
-                                                                            <p><i class="fas fa-video"></i> Video Visit</p>
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <p><i class="fas fa-user-md"></i> In-Person</p>
-                                                                        }
-                                                                    </div>
-                                                                </button>
-                                                            </form>
-                                                        </div>
-                                                    }
-                                                </div>
-                                            </div>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        <h6>No slots available.</h6>
-                                    } *@
-                                @* } *@
-
-
                             </div>
                         </section>
                     </div>
