@@ -33,9 +33,9 @@
     <!-- ======= Apply theme =======-->
     <script>
         // Apply the theme as early as possible to avoid flicker
-        (function() {
-        const storedTheme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-bs-theme', storedTheme);
+        (function () {
+            const storedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-bs-theme', storedTheme);
         })();
     </script>
     <!-- Use Tailwind CSS for a clean, responsive design -->
@@ -87,16 +87,16 @@
                                         <div class="row g-2 align-items-center">
                                             <!-- Search by Doctor Name-->
                                             <div class="col-md-6 col-6">
-                                                <input type="text" 
-                                                    name="SearchDoctorName" 
-                                                    class="form-control" 
-                                                    value="@Model.SearchDoctorName" 
-                                                    placeholder="Search by a Doctor's Name ..." />
+                                                <input type="text"
+                                                       name="SearchDoctorName"
+                                                       class="form-control"
+                                                       value="@Model.SearchDoctorName"
+                                                       placeholder="Search by a Doctor's Name ..." />
                                             </div>
                                             <!--Specialty Dropdown-->
                                             <div class="col-md-4 col-4">
                                                 @* <select class="form-select" asp-for="SpecialtyId" asp-items="Model.SpecialtyOptions">
-                                                    <option value="">All specialties</option>
+                                                <option value="">All specialties</option>
                                                 </select> *@
                                                 <select name="SpecialtyId" class="form-select">
                                                     <option value="0">All specialties</option>
@@ -143,6 +143,29 @@
                                                     .Select(w => char.ToUpperInvariant(w[0])));
                                                 }
 
+                                                <!-- Hidden data block -->
+                                                <div id="doctor-data-@doctor.DoctorId" class="hidden"
+                                                     data-doctorid="@doctor.DoctorId"
+                                                     data-name="@doctor.DoctorFullName"
+                                                     data-specialty="@doctor.DoctorSpecialtyName"
+                                                     data-provider="@doctor.DoctorProviderName">
+
+                                                    @foreach (var slot in doctor.AvailabilitySlots)
+                                                    {
+                                                        <button type="button" class="slot-btn" style="border:2px solid black; border-radius:6px;padding:10px;margin:5px 10px;background:#C8E4C6;"
+                                                                data-slotid="@slot.SlotId"
+                                                                data-date="@slot.AppointmentDate"
+                                                                data-start="@slot.AptStartTime.ToString("hh:mm tt")"
+                                                                data-end="@slot.AptEndTime.ToString("hh:mm tt")"
+                                                                data-type="@slot.AppointmentType"
+                                                        @(slot.AppointmentStatus != 0 ? "disabled" : "")>
+                                                            Date: @slot.AppointmentDate <br />
+                                                            Time: @slot.AptStartTime.ToString("hh:mm tt") - @slot.AptEndTime.ToString("hh:mm tt") <br />
+                                                            Type: @slot.AppointmentType
+                                                        </button>
+                                                    }
+                                                </div>
+
                                                 <div class="w-full max-w-sm mx-auto bg-white rounded-2xl shadow-xl overflow-hidden max-h-[500px] flex flex-col justify-between">
                                                     <div class="p-6">
                                                         <!-- Header -->
@@ -151,7 +174,7 @@
                                                             <div class="h-16 w-16 bg-blue-100 rounded-full flex-shrink-0 flex items-center justify-center text-blue-500 font-bold text-xl border-2 border-blue-400">
                                                                 @initials
                                                             </div>
-                                                            
+
                                                             <div>
                                                                 <h3 class="text-2xl font-bold text-gray-800 text-left">@doctor.DoctorFullName</h3>
                                                                 @* <p class="text-sm text-indigo-600 font-semibold mt-1 text-left">@doctor.DoctorSpecialtyName</p> *@
@@ -184,9 +207,7 @@
                                                                 <div class="mt-2 flex flex-wrap gap-4">
                                                                     @foreach (var apttype in types)
                                                                     {
-                                                                        var typeClass = apttype.Contains("Video") ? "video-color" :
-                                                                        apttype.Contains("In-Person") ? "inperson-color" :
-                                                                        "isbooked-color";
+                                                                        var typeClass = apttype.Contains("Video") ? "video-color" : "inperson-color";
 
                                                                         <div class="flex items-center gap-2 legend-item">
                                                                             <div class="legend-color @typeClass"></div>
@@ -215,164 +236,22 @@
                                                                 }
                                                             </div>
                                                         </div>
-                                                                                                      
+
 
                                                         <!-- Actions : will display doctor profile in popup method-->
                                                         <div class="action-buttons" class="mt-8 flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-3">
-                                                            <button id="openModalBtn" class="btn btn-primary py-2">Book Appointment  <i class="bi bi-box-arrow-up-right"></i></button>
+                                                            <button type="button"
+                                                                    class="openModalBtn btn btn-primary"
+                                                                    data-doctorid="@doctor.DoctorId">
+                                                                Book Appointment  <i class="bi bi-box-arrow-up-right"></i>
+                                                            </button>
                                                         </div>
 
-                                                        <!--Popup Container: View Doctor Profile & Make Appointment-->
-                                                        <div class="modal" id="addSlotModal" style="display: none;">
-                                                            <div class="modal-content" style="margin:auto; margin-top:150px !important;">
-                                                                <form method="post" asp-antiforgery="true">
-                                                                    @Html.AntiForgeryToken()
-                                                                    <div class="modal-header">
-                                                                        <div class="modal-close" id="closeModalBtn">&times;</div>
-                                                                    </div>
-
-                                                                    <div class="modal-body">
-                                                                        <div asp-validation-summary="All" class="text-danger mb-2"></div>
-
-                                                                        <!--hidden doctorid field-->
-                                                                        <div class="form-group">
-                                                                            <input type="hidden" asp-for="Input.DoctorId" />
-                                                                        </div>
-
-                                                                        @* <div class="form-group">
-                                                                            <label for="Input.AppointmentDate">Select Date</label>
-                                                                            <input asp-for="Input.AppointmentDate" type="date" class="form-control" />
-                                                                            <span asp-validation-for="Input.AppointmentDate" class="text-danger"></span>
-                                                                        </div>
-
-                                                                        <div class="time-inputs">
-                                                                            <div class="form-group">
-                                                                                <label for="Input.StartTime">Start Time</label>
-                                                                                <input asp-for="Input.AptStartTime" type="time" class="form-control">
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="Input.EndTime">End Time</label>
-                                                                                <input asp-for="Input.AptEndTime" type="time" class="form-control">
-                                                                            </div>
-                                                                        </div> *@
-
-                                                                        @* <div class="form-group">
-                                                                            <label>Appointment Type</label>
-                                                                            <div class="appointment-types">
-                                                                                <label class="type-option">
-                                                                                    <input asp-for="Input.AppointmentType" type="radio" value="Video" checked /> Video Visit
-                                                                                </label>
-                                                                                <label class="type-option">
-                                                                                    <input asp-for="Input.AppointmentType" type="radio" value="InPerson" /> In-Person Visit
-                                                                                </label>
-                                                                            </div>
-                                                                            <span asp-validation-for="Input.AppointmentType" class="text-danger"></span>
-                                                                        </div> *@
-
-                                                                        <div class="form-group">
-                                                                            <input type="submit" value="Add Slot" class="btn btn-primary" />
-                                                                        </div>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                        <!--this is the UI design for the popup container-->
-                                                        @* <div class="modal" id="viewDoctorProfile" style="display: none;">
-                                                                <div class="profile-card">
-                                                                    <div class="profile-header">
-                                                                        <div class="modal-close" id="closeModalBtn">&times;</div>
-
-                                                                        <div class="profile-image">
-                                                                            SJ
-                                                                        </div>
-
-                                                                        <h1 class="doctor-name">Dr. Sarah Johnson</h1>
-                                                                        <div class="specialty">Cardiology</div>
-
-                                                                        <div class="rating-section">
-                                                                            <div class="rating">
-                                                                                <span class="star">★</span>
-                                                                                <span>4.8</span>
-                                                                                <span class="rating-text">(156 reviews)</span>
-                                                                            </div>
-                                                                            <div class="experience">15 years experience</div>
-                                                                        </div>
-
-                                                                        <div class="contact-info">
-                                                                            <div>📍 Downtown Medical Center</div>
-                                                                            <div style="margin-left: 20px;">123 Health St, City Center</div>
-                                                                            <div>📞 (555) 123-4567</div>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="profile-content">
-                                                                        <div class="section">
-                                                                            <div class="section-title">
-                                                                                🎓 Education
-                                                                            </div>
-                                                                            <div class="section-content">
-                                                                                Harvard Medical School
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="section">
-                                                                            <div class="section-title">
-                                                                                🌐 Languages
-                                                                            </div>
-                                                                            <div class="tags">
-                                                                                <span class="tag">English</span>
-                                                                                <span class="tag">Spanish</span>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="section">
-                                                                            <div class="section-title">
-                                                                                Accepted Insurance
-                                                                            </div>
-                                                                            <div class="tags">
-                                                                                <span class="tag insurance-tag">Blue Cross</span>
-                                                                                <span class="tag insurance-tag">Aetna</span>
-                                                                                <span class="tag insurance-tag">Cigna</span>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="section">
-                                                                            <div class="section-title">
-                                                                                About Dr. Sarah
-                                                                            </div>
-                                                                            <div class="section-content">
-                                                                                Dr. Johnson is a board-certified cardiologist specializing in preventive cardiology and heart disease management. She has been practicing for over 15 years and is known for her patient-centered approach.
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="appointment-section">
-                                                                        <h2 class="appointment-title">Book an Appointment</h2>
-
-                                                                        <div class="date-selector">
-                                                                            <div class="date-label">Select Date</div>
-                                                                            <select class="date-dropdown">
-                                                                                <option>Fri, Sep 12</option>
-                                                                                <option>Mon, Sep 15</option>
-                                                                                <option>Tue, Sep 16</option>
-                                                                                <option>Wed, Sep 17</option>
-                                                                            </select>
-                                                                        </div>
-
-                                                                        <div class="time-slots-section">
-                                                                            <div class="date-label">Available Time Slots for Fri, Sep 12</div>
-                                                                            <div class="no-appointments">No appointments available on this date</div>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="footer-logo">
-                                                                        <strong>Acme Medical Institute</strong>
-                                                                    </div>
-                                                                </div>
-                                                            </div> *@
+                                                        
                                                     </div>
                                                 </div>
                                             }
+
                                         </div>
                                     }
                                     else
@@ -386,9 +265,42 @@
 
 
                     <div class="content-wrapper">
-
                     </div>
                 </div>
+
+                <!-- Popup Container: View Doctor Profile & Make Appointment -->
+                <div class="modal" id="doctorModal" style="display:none;">
+                    <div class="modal-content" style="margin:auto; margin-top:150px !important;">
+                        <form method="post" asp-antiforgery="true">
+                            @Html.AntiForgeryToken()
+                            <div class="modal-header">
+                                <div class="modal-close" id="closeModalBtn">&times;</div>
+                            </div>
+
+                            <div class="modal-body">
+                                <div asp-validation-summary="All" class="text-danger mb-2"></div>
+
+                                <!-- hidden doctorid field -->
+                                <div class="form-group">
+                                    <input type="hidden" asp-for="Input.DoctorId" id="modalDoctorId" />
+                                </div>
+
+                                <!-- doctor info -->
+                                <h2 id="modalDoctorName"></h2>
+                                <p id="modalSpecialty"></p>
+                                <p id="modalProvider" style="margin-bottom:0px !important"></p>
+
+                                <!-- slot buttons will be injected here -->
+                                <div class="slots-container" id="modalSlotsContainer" style="display:flex; justify-content:center;flex-wrap:wrap;"></div>
+
+                                <div class="form-group mt-3">
+                                    <input type="submit" value="Add Slot" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
 
                 <!-- ======= Feature 4: Categorized Popular Medical Services =======-->
                 <section class="section services__v3" id="services">
@@ -492,7 +404,6 @@
                     </div>
                 </section>
                 <!-- Services-->
-
                 <!-- ======= About =======-->
                 <section class="about__v4 section" id="about">
                     <div class="container">
@@ -535,7 +446,6 @@
                     </div>
                 </section>
                 <!-- End About-->
-
                 <!-- ======= How it works =======-->
                 <section class="section howitworks__v1" id="how-it-works">
                     <div class="container">
@@ -583,7 +493,6 @@
                     </div>
                 </section>
                 <!-- End How it works-->
-
                 <!-- ======= Stats =======-->
                 <section class="stats__v3 section">
                     <div class="container">
@@ -619,7 +528,6 @@
                     </div>
                 </section>
                 <!-- End Stats-->
-
                 <!-- ======= Testimonials =======-->
                 <section class="section testimonials__v2" id="testimonials">
                     <div class="container">
@@ -713,7 +621,6 @@
                     </div>
                 </section>
                 <!-- Testimonials-->
-
                 <!-- ======= FAQ =======-->
                 <section class="section faq__v2" id="faq">
                     <div class="container">
@@ -807,7 +714,7 @@
 
 <body>
 
-    
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 
     <script>
@@ -817,23 +724,51 @@
             }
         }
 
-            function viewDoctorProfile() {
-          const popup = document.getElementById('popup');
-          popup.classList.toggle('hidden');
+        function viewDoctorProfile() {
+            const popup = document.getElementById('popup');
+            popup.classList.toggle('hidden');
         }
-            document.getElementById("openModalBtn").addEventListener("click", function () {
-            document.getElementById("viewDoctorProfile").style.display = "block";
-        });
-            document.getElementById("closeModalBtn").addEventListener("click", function () {
-            document.getElementById("viewDoctorProfile").style.display = "none";
+
+        document.querySelectorAll(".openModalBtn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const id = btn.dataset.doctorid;
+                const dataBlock = document.getElementById("doctor-data-" + id);
+
+                // Fill hidden DoctorId for the form
+                document.getElementById("modalDoctorId").value = id;
+
+                // Fill doctor info
+                document.getElementById("modalDoctorName").textContent = dataBlock.dataset.name;
+                document.getElementById("modalSpecialty").textContent = dataBlock.dataset.specialty;
+                document.getElementById("modalProvider").textContent = dataBlock.dataset.provider;
+
+                // Fill slots (copy from hidden block)
+                const slotsContainer = document.getElementById("modalSlotsContainer");
+                slotsContainer.innerHTML = dataBlock.innerHTML;
+
+                // Show modal
+                document.getElementById("doctorModal").style.display = "block";
+            });
         });
 
-            window.addEventListener("click", function (event) {
-            const modal = document.getElementById("viewDoctorProfile");
-            if (event.target === modal) {
-                modal.style.display = "none";
-            }
+        // Close modal
+        document.getElementById("closeModalBtn").addEventListener("click", () => {
+            document.getElementById("doctorModal").style.display = "none";
         });
+
+        // document.getElementById("openModalBtn").addEventListener("click", function () {
+        //     document.getElementById("viewDoctorProfile").style.display = "block";
+        // });
+        // document.getElementById("closeModalBtn").addEventListener("click", function () {
+        //     document.getElementById("viewDoctorProfile").style.display = "none";
+        // });
+
+        // window.addEventListener("click", function (event) {
+        //     const modal = document.getElementById("viewDoctorProfile");
+        //     if (event.target === modal) {
+        //         modal.style.display = "none";
+        //     }
+        // });
     </script>
 </body>
 </html>

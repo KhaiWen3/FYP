@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -121,6 +122,7 @@ namespace PatientAppointmentSchedulingSystem.Pages
 
             //materialize doctors (filtered)
             Doctors = doctorQuery
+                .Where(d => d.AvailabilitySlots.Any(s => s.AppointmentStatus == 0))
                 .Select(d => new DoctorDetails
                 {
                     DoctorId = d.DoctorId,
@@ -128,12 +130,23 @@ namespace PatientAppointmentSchedulingSystem.Pages
                     DoctorMedicalService = d.DoctorMedicalService,
                     // uses the navigation loaded above
                     DoctorProviderName = d.Provider != null ? d.Provider.Name : null,
-                    DoctorSpecialtyName = d.Specialty != null ? d.Specialty.SpecialtyName : null
+                    DoctorSpecialtyName = d.Specialty != null ? d.Specialty.SpecialtyName : null,
+                    AvailabilitySlots = d.AvailabilitySlots
+                        .Select(s => new AvailabilitySlots
+                        {
+                            SlotId = s.SlotId,
+                            AptStartTime = s.AptStartTime,
+                            AppointmentStatus = s.AppointmentStatus,
+                            AptEndTime = s.AptEndTime,
+                            AppointmentType = s.AppointmentType,
+                            AppointmentDate = s.AppointmentDate
+                        }).ToList()
                 })
                 .ToList();
 
+
             // LOAD SLOTS ONLY FOR FILTERED DOCTORS
-            var doctorIds = Doctors.Select(d => d.DoctorId).ToList();
+            /*var doctorIds = Doctors.Select(d => d.DoctorId).ToList();
             if (doctorIds.Count > 0)
             {
                 AppointmentSlots = _context.AvailabilitySlots
@@ -150,7 +163,7 @@ namespace PatientAppointmentSchedulingSystem.Pages
                 doctor.AvailabilitySlots = AppointmentSlots
                     .Where(slot => slot.DoctorId == doctor.DoctorId)
                     .ToList();
-            }
+            }*/
         }
 
         public IActionResult OnPostBookAppointment(int slotId)
@@ -170,13 +183,41 @@ namespace PatientAppointmentSchedulingSystem.Pages
             }
 
             slot.PatientId = patientId.Value;
-            slot.AppointmentType = "booked";
+            //slot.AppointmentType = "booked";
             slot.AppointmentStatus = 1; // Booked
 
             _context.SaveChanges();
 
             // After booking, refresh the page
             return RedirectToPage(); // reloads PatientMakeAppointment page
+        }
+
+        [HttpGet]
+        public IActionResult GetDoctorWithSlots(int id)
+        {
+            var doctor = _context.Doctor
+                .Where(d => d.DoctorId == id)
+                .Select(d => new {
+                    doctorId = d.DoctorId,
+                    doctorFullName = d.DoctorFullName,
+                    specialtyName = d.Specialty.SpecialtyName,
+                    initials = d.DoctorFullName.Substring(0, 2),
+                    availabilitySlots = d.AvailabilitySlots
+                        .Select(s => new {
+                            slotId = s.SlotId,
+                            displayDate = s.AppointmentDate,
+                            type = s.AppointmentType,
+                            displayTime = s.AptStartTime.ToString("hh:mm tt") +" - " + s.AptEndTime.ToString("hh:mm tt"), // format as needed
+                            availableStatus = s.AppointmentStatus
+                        })
+                        .ToList()
+                })
+                .FirstOrDefault();
+
+            if (doctor == null)
+                return NotFound();
+
+            return new JsonResult(doctor);
         }
     }
 }
