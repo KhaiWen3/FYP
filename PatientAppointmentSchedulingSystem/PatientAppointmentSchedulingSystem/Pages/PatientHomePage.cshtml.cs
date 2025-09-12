@@ -29,6 +29,8 @@ namespace PatientAppointmentSchedulingSystem.Pages
         public PatientDetails PatientDetails { get; set; }
         [BindProperty]
         public ProviderDetails ProviderDetails { get; set; }
+        [BindProperty]
+        public DoctorDetails Input { get; set; }
 
         public List<DoctorDetails> Doctors { get; set; } = new List<DoctorDetails>();
         public List<AvailabilitySlots> AppointmentSlots { get; set; } = new List<AvailabilitySlots>();
@@ -61,38 +63,61 @@ namespace PatientAppointmentSchedulingSystem.Pages
                         .ThenInclude(ps => ps.Specialty)   // only if you want SpecialtyName later
                 .AsQueryable();
 
+
             // 4) Apply filters BEFORE materializing -------------------------
-            if (!string.IsNullOrWhiteSpace(SearchDoctorName))
-            {
-                var q = SearchDoctorName.Trim();
-                doctorQuery = doctorQuery.Where(d => EF.Functions.Like(d.DoctorFullName, $"%{q}%"));
-            }
             //if (!string.IsNullOrWhiteSpace(SearchDoctorName))
             //{
             //    var q = SearchDoctorName.Trim();
-            //    doctorQuery = doctorQuery.Where(d =>
-            //        d.DoctorFullName.ToLower().Contains(q.ToLower())
-            //    // || d.DoctorMedicalService.ToLower().Contains(q.ToLower())
-            //    // || d.DoctorSpeciality.ToLower().Contains(q.ToLower())
-            //    );
+            //    doctorQuery = doctorQuery.Where(d => EF.Functions.Like(d.DoctorFullName, $"%{q}%"));
             //}
+            if (!string.IsNullOrWhiteSpace(SearchDoctorName))
+            {
+                var q = SearchDoctorName.Trim();
+                doctorQuery = doctorQuery.Where(d =>
+                    d.DoctorFullName.ToLower().Contains(q) || d.DoctorMedicalService.ToLower().Contains(q)
+                // || d.DoctorSpeciality.ToLower().Contains(q.ToLower())
+                );
+            }
 
             // Specialty filter
-            if (SpecialtyId.HasValue)
+            //if (SpecialtyId.HasValue)
+            //{
+            //    int sid = SpecialtyId.Value;
+            //    doctorQuery = doctorQuery.Where(d => d.SpecialtyId == sid);
+
+            //    //int sid = SpecialtyId.Value;
+
+            //    // Option A: via Provider navigation (if Provider has ProviderSpecialties nav)
+            //    //doctorQuery = doctorQuery.Where(d =>
+            //    //  d.Provider != null &&
+            //    //_context.ProviderSpecialties.Any(ps =>
+            //    //  ps.ProviderId == d.ProviderId && ps.SpecialtyId == sid));
+
+            //    // === Option A: if you have a many-to-many nav:
+            //    //doctorQuery = doctorQuery.Where(d => d.ProviderSpecialties.Any(ps => ps.SpecialtyId == SpecialtyId.Value));
+            //}
+            if (SpecialtyId.GetValueOrDefault() > 0)
             {
-                int sid = SpecialtyId.Value;
-                doctorQuery = doctorQuery.Where(d => d.SpecialtyId == sid);
-
-                //int sid = SpecialtyId.Value;
-
-                // Option A: via Provider navigation (if Provider has ProviderSpecialties nav)
-                //doctorQuery = doctorQuery.Where(d =>
-                  //  d.Provider != null &&
-                    //_context.ProviderSpecialties.Any(ps =>
-                      //  ps.ProviderId == d.ProviderId && ps.SpecialtyId == sid));
-                // === Option A: if you have a many-to-many nav:
-                //doctorQuery = doctorQuery.Where(d => d.ProviderSpecialties.Any(ps => ps.SpecialtyId == SpecialtyId.Value));
+                doctorQuery = doctorQuery.Where(d => d.SpecialtyId == SpecialtyId!.Value);
             }
+
+            // 5) Apply specialty filter via the join table (robust)
+            //if (SpecialtyId.GetValueOrDefault() > 0)
+            //{
+            //    var sid = SpecialtyId!.Value;
+
+            //    doctorQuery =
+            //        from d in doctorQuery
+            //        join ps in _context.ProviderSpecialties.AsNoTracking()
+            //            on d.ProviderId equals ps.ProviderId
+            //        where ps.SpecialtyId == sid
+            //        select d;
+
+            //    // If a doctor’s provider has the same specialty multiple times (data issue),
+            //    // remove duplicates:
+            //    doctorQuery = doctorQuery.Distinct();
+            //}
+
 
             //materialize doctors (filtered)
             Doctors = doctorQuery
@@ -102,7 +127,8 @@ namespace PatientAppointmentSchedulingSystem.Pages
                     DoctorFullName = d.DoctorFullName,
                     DoctorMedicalService = d.DoctorMedicalService,
                     // uses the navigation loaded above
-                    DoctorProviderName = d.Provider != null ? d.Provider.Name : null
+                    DoctorProviderName = d.Provider != null ? d.Provider.Name : null,
+                    DoctorSpecialtyName = d.Specialty != null ? d.Specialty.SpecialtyName : null
                 })
                 .ToList();
 

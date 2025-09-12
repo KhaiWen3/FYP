@@ -12,8 +12,8 @@ namespace PatientAppointmentSchedulingSystem.Pages
         public int? ProviderId { get; set; }
         public ProviderDetails? Provider { get; set; }
 
-        public int SpecialtyId { get; set; }
-        public Specialty Specialty { get; set; } = null!;
+        public int? SpecialtyId { get; set; }
+        public Specialty? Specialty { get; set; } = null!;
 
         [Required]
         public string DoctorFullName { get; set; }

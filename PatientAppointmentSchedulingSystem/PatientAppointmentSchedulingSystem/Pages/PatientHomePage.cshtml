@@ -24,6 +24,8 @@
     <!-- Bootstrap & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
     <!-- End Styles-->
     <!-- ======= Theme Style =======-->
     <link href="/css/patient.css" rel="stylesheet">
@@ -93,8 +95,18 @@
                                             </div>
                                             <!--Specialty Dropdown-->
                                             <div class="col-md-4 col-4">
-                                                <select class="form-select" asp-for="SpecialtyId" asp-items="Model.SpecialtyOptions">
+                                                @* <select class="form-select" asp-for="SpecialtyId" asp-items="Model.SpecialtyOptions">
                                                     <option value="">All specialties</option>
+                                                </select> *@
+                                                <select name="SpecialtyId" class="form-select">
+                                                    <option value="0">All specialties</option>
+                                                    @foreach (var s in Model.Specialties)
+                                                    {
+                                                        <option value="@s.SpecialtyId"
+                                                                selected="@(Model.SpecialtyId == s.SpecialtyId ? "selected" : null)">
+                                                            @s.SpecialtyName
+                                                        </option>
+                                                    }
                                                 </select>
                                             </div>
 
@@ -142,8 +154,15 @@
                                                             
                                                             <div>
                                                                 <h3 class="text-2xl font-bold text-gray-800 text-left">@doctor.DoctorFullName</h3>
-                                                                <p class="text-sm text-indigo-600 font-semibold mt-1 text-left">@doctor.DoctorSpecialtyName</p>
-
+                                                                @* <p class="text-sm text-indigo-600 font-semibold mt-1 text-left">@doctor.DoctorSpecialtyName</p> *@
+                                                                @if (!string.IsNullOrWhiteSpace(doctor.DoctorSpecialtyName))
+                                                                {
+                                                                    <p class="text-sm text-indigo-600 font-semibold mt-1 text-left">@doctor.DoctorSpecialtyName</p>
+                                                                }
+                                                                @if (!string.IsNullOrWhiteSpace(doctor.DoctorMedicalService))
+                                                                {
+                                                                    <p class="text-sm text-indigo-600 font-semibold mt-1 text-left">@doctor.DoctorMedicalService</p>
+                                                                }
                                                                 @if (!string.IsNullOrWhiteSpace(doctor.DoctorProviderName))
                                                                 {
                                                                     <p class="text-sm text-gray-500 text-left">@doctor.DoctorProviderName</p>
@@ -199,16 +218,158 @@
                                                                                                       
 
                                                         <!-- Actions : will display doctor profile in popup method-->
-                                                        <div class="mt-8 flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-3">
-                                                            <button type="submit" class="btn btn-primary py-2">
-                                                                View More to Make Appointment
-                                                            </button>
-                                                            @* <a asp-page="/DoctorProfile"
-                                                               asp-route-id="@doctor.DoctorId"
-                                                               class="w-full px-6 py-3 text-sm text-center font-medium text-blue-700 bg-blue-100 rounded-lg transition-colors duration-200 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 shadow-md">
-                                                                View Doctor Profile & Make Appointemnt
-                                                            </a> *@
+                                                        <div class="action-buttons" class="mt-8 flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-3">
+                                                            <button id="openModalBtn" class="btn btn-primary py-2">Book Appointment  <i class="bi bi-box-arrow-up-right"></i></button>
                                                         </div>
+
+                                                        <!--Popup Container: View Doctor Profile & Make Appointment-->
+                                                        <div class="modal" id="addSlotModal" style="display: none;">
+                                                            <div class="modal-content" style="margin:auto; margin-top:150px !important;">
+                                                                <form method="post" asp-antiforgery="true">
+                                                                    @Html.AntiForgeryToken()
+                                                                    <div class="modal-header">
+                                                                        <div class="modal-close" id="closeModalBtn">&times;</div>
+                                                                    </div>
+
+                                                                    <div class="modal-body">
+                                                                        <div asp-validation-summary="All" class="text-danger mb-2"></div>
+
+                                                                        <!--hidden doctorid field-->
+                                                                        <div class="form-group">
+                                                                            <input type="hidden" asp-for="Input.DoctorId" />
+                                                                        </div>
+
+                                                                        @* <div class="form-group">
+                                                                            <label for="Input.AppointmentDate">Select Date</label>
+                                                                            <input asp-for="Input.AppointmentDate" type="date" class="form-control" />
+                                                                            <span asp-validation-for="Input.AppointmentDate" class="text-danger"></span>
+                                                                        </div>
+
+                                                                        <div class="time-inputs">
+                                                                            <div class="form-group">
+                                                                                <label for="Input.StartTime">Start Time</label>
+                                                                                <input asp-for="Input.AptStartTime" type="time" class="form-control">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="Input.EndTime">End Time</label>
+                                                                                <input asp-for="Input.AptEndTime" type="time" class="form-control">
+                                                                            </div>
+                                                                        </div> *@
+
+                                                                        @* <div class="form-group">
+                                                                            <label>Appointment Type</label>
+                                                                            <div class="appointment-types">
+                                                                                <label class="type-option">
+                                                                                    <input asp-for="Input.AppointmentType" type="radio" value="Video" checked /> Video Visit
+                                                                                </label>
+                                                                                <label class="type-option">
+                                                                                    <input asp-for="Input.AppointmentType" type="radio" value="InPerson" /> In-Person Visit
+                                                                                </label>
+                                                                            </div>
+                                                                            <span asp-validation-for="Input.AppointmentType" class="text-danger"></span>
+                                                                        </div> *@
+
+                                                                        <div class="form-group">
+                                                                            <input type="submit" value="Add Slot" class="btn btn-primary" />
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                        <!--this is the UI design for the popup container-->
+                                                        @* <div class="modal" id="viewDoctorProfile" style="display: none;">
+                                                                <div class="profile-card">
+                                                                    <div class="profile-header">
+                                                                        <div class="modal-close" id="closeModalBtn">&times;</div>
+
+                                                                        <div class="profile-image">
+                                                                            SJ
+                                                                        </div>
+
+                                                                        <h1 class="doctor-name">Dr. Sarah Johnson</h1>
+                                                                        <div class="specialty">Cardiology</div>
+
+                                                                        <div class="rating-section">
+                                                                            <div class="rating">
+                                                                                <span class="star">★</span>
+                                                                                <span>4.8</span>
+                                                                                <span class="rating-text">(156 reviews)</span>
+                                                                            </div>
+                                                                            <div class="experience">15 years experience</div>
+                                                                        </div>
+
+                                                                        <div class="contact-info">
+                                                                            <div>📍 Downtown Medical Center</div>
+                                                                            <div style="margin-left: 20px;">123 Health St, City Center</div>
+                                                                            <div>📞 (555) 123-4567</div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="profile-content">
+                                                                        <div class="section">
+                                                                            <div class="section-title">
+                                                                                🎓 Education
+                                                                            </div>
+                                                                            <div class="section-content">
+                                                                                Harvard Medical School
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="section">
+                                                                            <div class="section-title">
+                                                                                🌐 Languages
+                                                                            </div>
+                                                                            <div class="tags">
+                                                                                <span class="tag">English</span>
+                                                                                <span class="tag">Spanish</span>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="section">
+                                                                            <div class="section-title">
+                                                                                Accepted Insurance
+                                                                            </div>
+                                                                            <div class="tags">
+                                                                                <span class="tag insurance-tag">Blue Cross</span>
+                                                                                <span class="tag insurance-tag">Aetna</span>
+                                                                                <span class="tag insurance-tag">Cigna</span>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="section">
+                                                                            <div class="section-title">
+                                                                                About Dr. Sarah
+                                                                            </div>
+                                                                            <div class="section-content">
+                                                                                Dr. Johnson is a board-certified cardiologist specializing in preventive cardiology and heart disease management. She has been practicing for over 15 years and is known for her patient-centered approach.
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="appointment-section">
+                                                                        <h2 class="appointment-title">Book an Appointment</h2>
+
+                                                                        <div class="date-selector">
+                                                                            <div class="date-label">Select Date</div>
+                                                                            <select class="date-dropdown">
+                                                                                <option>Fri, Sep 12</option>
+                                                                                <option>Mon, Sep 15</option>
+                                                                                <option>Tue, Sep 16</option>
+                                                                                <option>Wed, Sep 17</option>
+                                                                            </select>
+                                                                        </div>
+
+                                                                        <div class="time-slots-section">
+                                                                            <div class="date-label">Available Time Slots for Fri, Sep 12</div>
+                                                                            <div class="no-appointments">No appointments available on this date</div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="footer-logo">
+                                                                        <strong>Acme Medical Institute</strong>
+                                                                    </div>
+                                                                </div>
+                                                            </div> *@
                                                     </div>
                                                 </div>
                                             }
@@ -655,6 +816,24 @@
                 window.location.href = '/Booking/Confirm?slotId=' + slotId;
             }
         }
+
+            function viewDoctorProfile() {
+          const popup = document.getElementById('popup');
+          popup.classList.toggle('hidden');
+        }
+            document.getElementById("openModalBtn").addEventListener("click", function () {
+            document.getElementById("viewDoctorProfile").style.display = "block";
+        });
+            document.getElementById("closeModalBtn").addEventListener("click", function () {
+            document.getElementById("viewDoctorProfile").style.display = "none";
+        });
+
+            window.addEventListener("click", function (event) {
+            const modal = document.getElementById("viewDoctorProfile");
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        });
     </script>
 </body>
 </html>

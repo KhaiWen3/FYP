@@ -9,7 +9,7 @@ namespace PatientAppointmentSchedulingSystem.Pages
         public int SpecialtyId { get; set; }
 
         // Navigation properties
-        public ProviderDetails Provider { get; set; } = default!;
-        public Specialty Specialty { get; set; } = default!;
+        public ProviderDetails Provider { get; set; } = null!;
+        public Specialty Specialty { get; set; } = null!;
     }
 }

@@ -38,10 +38,10 @@ namespace PatientAppointmentSchedulingSystem.Pages.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<DoctorDetails>()
-                .HasOne(d => d.Specialty)
-                .WithMany()
+                .HasOne(d => d.Specialty) // each Doctor has one (primary) Specialty
+                .WithMany(s => s.Doctors) // one Specialty is referenced by many Doctors
                 .HasForeignKey(d => d.SpecialtyId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.SetNull); // if Specialty deleted, set Doctor.SpecialtyId = null
 
 
             // === Provider ↔ ProviderSpecialty ↔ Specialty (the join) ===
@@ -54,11 +54,12 @@ namespace PatientAppointmentSchedulingSystem.Pages.Data
                 .HasForeignKey(ps => ps.ProviderId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            //modelBuilder.Entity<ProviderSpecialty>()
-            //    .HasOne(ps => ps.Specialty)
-            //    .WithMany(s => s.ProviderSpecialties)   // or .WithMany() if you don't need reverse nav
-            //    .HasForeignKey(ps => ps.SpecialtyId)
-            //    .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<ProviderSpecialty>()
+                .HasOne(ps => ps.Specialty)
+                .WithMany(s => s.ProviderSpecialties)   // or .WithMany() if you don't need reverse nav
+                .HasForeignKey(ps => ps.SpecialtyId)
+                .OnDelete(DeleteBehavior.Restrict);   // avoid multiple cascade paths
+                 //.OnDelete(DeleteBehavior.Cascade);
 
             //modelBuilder.Entity<AvailabilitySlots>()
             //.HasOne(a => a.Doctor)
