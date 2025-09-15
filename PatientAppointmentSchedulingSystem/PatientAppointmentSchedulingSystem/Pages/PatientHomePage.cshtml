@@ -152,7 +152,10 @@
 
                                                     @foreach (var slot in doctor.AvailabilitySlots)
                                                     {
-                                                        <button type="button" class="slot-btn" style="border:2px solid black; border-radius:6px;padding:10px;margin:5px 10px;background:#C8E4C6;"
+                                                        <form method="post" asp-page-handler="BookAppointment" style="margin:5px;">
+                                                           
+                                                            <input type="hidden" name="slotId" value="@slot.SlotId" />
+                                                        <button type="submit" class="slot-btn" style="border:2px solid black; border-radius:6px;padding:10px;margin:5px 10px;background:#C8E4C6;"
                                                                 data-slotid="@slot.SlotId"
                                                                 data-date="@slot.AppointmentDate"
                                                                 data-start="@slot.AptStartTime.ToString("hh:mm tt")"
@@ -163,6 +166,8 @@
                                                             Time: @slot.AptStartTime.ToString("hh:mm tt") - @slot.AptEndTime.ToString("hh:mm tt") <br />
                                                             Type: @slot.AppointmentType
                                                         </button>
+
+                                                        </form>
                                                     }
                                                 </div>
 
@@ -293,9 +298,6 @@
                                 <!-- slot buttons will be injected here -->
                                 <div class="slots-container" id="modalSlotsContainer" style="display:flex; justify-content:center;flex-wrap:wrap;"></div>
 
-                                <div class="form-group mt-3">
-                                    <input type="submit" value="Add Slot" class="btn btn-primary" />
-                                </div>
                             </div>
                         </form>
                     </div>
@@ -728,6 +730,8 @@
             const popup = document.getElementById('popup');
             popup.classList.toggle('hidden');
         }
+
+        var selectedSlotId = null;
 
         document.querySelectorAll(".openModalBtn").forEach(btn => {
             btn.addEventListener("click", () => {

@@ -166,32 +166,6 @@ namespace PatientAppointmentSchedulingSystem.Pages
             }*/
         }
 
-        public IActionResult OnPostBookAppointment(int slotId)
-        {
-            var patientId = HttpContext.Session.GetInt32("PatientId");
-
-            if (patientId == null)
-            {
-                return RedirectToPage("/PatientLogin"); // if not logged in
-            }
-
-            var slot = _context.AvailabilitySlots.FirstOrDefault(s => s.SlotId == slotId);
-
-            if (slot == null || slot.AppointmentStatus == 1)
-            {
-                return NotFound();
-            }
-
-            slot.PatientId = patientId.Value;
-            //slot.AppointmentType = "booked";
-            slot.AppointmentStatus = 1; // Booked
-
-            _context.SaveChanges();
-
-            // After booking, refresh the page
-            return RedirectToPage(); // reloads PatientMakeAppointment page
-        }
-
         [HttpGet]
         public IActionResult GetDoctorWithSlots(int id)
         {
@@ -218,6 +192,31 @@ namespace PatientAppointmentSchedulingSystem.Pages
                 return NotFound();
 
             return new JsonResult(doctor);
+        }
+
+        public IActionResult OnPostBookAppointment(int slotId)
+        {
+            var patientId = HttpContext.Session.GetInt32("PatientId");
+
+            if (patientId == null)
+            {
+                return RedirectToPage("/PatientLogin"); // if not logged in
+            }
+
+            var slot = _context.AvailabilitySlots.FirstOrDefault(s => s.SlotId == slotId);
+
+            if (slot == null || slot.AppointmentStatus == 1)
+            {
+                return NotFound();
+            }
+
+            slot.PatientId = patientId.Value;
+            slot.AppointmentStatus = 1; // Booked
+
+            _context.SaveChanges();
+
+            // After booking, refresh the page
+            return RedirectToPage(); // reloads current page
         }
     }
 }

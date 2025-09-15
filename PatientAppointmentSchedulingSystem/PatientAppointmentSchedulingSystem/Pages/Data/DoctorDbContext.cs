@@ -20,6 +20,8 @@ namespace PatientAppointmentSchedulingSystem.Pages.Data
         public DbSet<PatientDetails> PatientDetails { get; set; }
         public DbSet<ProviderSpecialty> ProviderSpecialties { get; set; }
 
+        public DbSet<InsuranceProvider> InsuranceProvider {  get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ProviderDetails>().ToTable("Provider");
@@ -27,6 +29,8 @@ namespace PatientAppointmentSchedulingSystem.Pages.Data
             modelBuilder.Entity<PatientDetails>().ToTable("Patients");
             modelBuilder.Entity<ProviderSpecialty>().ToTable("ProviderSpecialty");
             modelBuilder.Entity<DoctorDetails>().ToTable("Doctor");
+            modelBuilder.Entity<InsuranceProvider>().ToTable("InsuranceProvider");
+            modelBuilder.Entity<AvailabilitySlots>().ToTable("AvailabilitySlots");
 
             modelBuilder.Entity<DoctorDetails>()
                 .HasKey(d => d.DoctorId); //HasKey specify DoctorId as primary key in DoctorDetails table.
@@ -59,12 +63,12 @@ namespace PatientAppointmentSchedulingSystem.Pages.Data
                 .WithMany(s => s.ProviderSpecialties)   // or .WithMany() if you don't need reverse nav
                 .HasForeignKey(ps => ps.SpecialtyId)
                 .OnDelete(DeleteBehavior.Restrict);   // avoid multiple cascade paths
-                 //.OnDelete(DeleteBehavior.Cascade);
+                                                      //.OnDelete(DeleteBehavior.Cascade);
 
             //modelBuilder.Entity<AvailabilitySlots>()
-            //.HasOne(a => a.Doctor)
-            //.WithMany()
-            //.HasForeignKey(a => a.DoctorId);
+            // .HasOne(a => a.Doctor)
+            // .WithMany()
+            // .HasForeignKey(a => a.DoctorId);
         }
     }
 }
