@@ -149,25 +149,21 @@
                                                      data-name="@doctor.DoctorFullName"
                                                      data-specialty="@doctor.DoctorSpecialtyName"
                                                      data-provider="@doctor.DoctorProviderName">
-
-                                                    @foreach (var slot in doctor.AvailabilitySlots)
+                                                    
+                                                    @foreach (var slot in doctor.AvailabilitySlots.Where(s => s.AppointmentStatus == 0))
                                                     {
-                                                        <form method="post" asp-page-handler="BookAppointment" style="margin:5px;">
-                                                           
-                                                            <input type="hidden" name="slotId" value="@slot.SlotId" />
-                                                        <button type="submit" class="slot-btn" style="border:2px solid black; border-radius:6px;padding:10px;margin:5px 10px;background:#C8E4C6;"
+                                                        <input type="hidden" name="slotId" value="@slot.SlotId" />
+                                                        <button type="submit" class="slot-btn" style="border:2px solid @(slot.AppointmentType.ToLower() == "video"? "#4CAF50" : "#9C27B0"); border-radius:6px;padding:10px;margin:5px 10px;background:#DEDEDE;"
                                                                 data-slotid="@slot.SlotId"
-                                                                data-date="@slot.AppointmentDate"
+                                                                data-doctor="@doctor.DoctorFullName"
+                                                                data-date="@slot.AppointmentDate.ToString("dd MMMM yyyy")"
                                                                 data-start="@slot.AptStartTime.ToString("hh:mm tt")"
                                                                 data-end="@slot.AptEndTime.ToString("hh:mm tt")"
-                                                                data-type="@slot.AppointmentType"
-                                                        @(slot.AppointmentStatus != 0 ? "disabled" : "")>
-                                                            Date: @slot.AppointmentDate <br />
+                                                                data-type="@slot.AppointmentType">
+                                                            Date: @slot.AppointmentDate.ToString("dd MMMM yyyy") <br />
                                                             Time: @slot.AptStartTime.ToString("hh:mm tt") - @slot.AptEndTime.ToString("hh:mm tt") <br />
                                                             Type: @slot.AppointmentType
                                                         </button>
-
-                                                        </form>
                                                     }
                                                 </div>
 
@@ -205,6 +201,7 @@
                                                             @if (doctor.AvailabilitySlots != null && doctor.AvailabilitySlots.Any())
                                                             {
                                                                 var types = doctor.AvailabilitySlots
+                                                                .Where(s => s.AppointmentStatus == 0)
                                                                 .Select(s => s.AppointmentType)
                                                                 .Distinct()
                                                                 .ToList();
@@ -276,8 +273,11 @@
                 <!-- Popup Container: View Doctor Profile & Make Appointment -->
                 <div class="modal" id="doctorModal" style="display:none;">
                     <div class="modal-content" style="margin:auto; margin-top:150px !important;">
-                        <form method="post" asp-antiforgery="true">
+                        <form method="post" asp-page="/PatientHomePage" asp-page-handler="BookAppointment" onsubmit="return showConfirm(this)">
                             @Html.AntiForgeryToken()
+
+                            <input type="hidden" name="slotId" id="modalSlotId"/>
+
                             <div class="modal-header">
                                 <div class="modal-close" id="closeModalBtn">&times;</div>
                             </div>
@@ -733,46 +733,48 @@
 
         var selectedSlotId = null;
 
-        document.querySelectorAll(".openModalBtn").forEach(btn => {
-            btn.addEventListener("click", () => {
-                const id = btn.dataset.doctorid;
-                const dataBlock = document.getElementById("doctor-data-" + id);
 
-                // Fill hidden DoctorId for the form
-                document.getElementById("modalDoctorId").value = id;
+        document.addEventListener("DOMContentLoaded", function () {
+            const modal = document.getElementById("doctorModal");
+            const modalName = document.getElementById("modalDoctorName");
+            const modalSpecialty = document.getElementById("modalSpecialty");
+            const modalProvider = document.getElementById("modalProvider");
+            const slotsContainer = document.getElementById("modalSlotsContainer");
+            const slotIdInput = document.getElementById("modalSlotId");
 
-                // Fill doctor info
-                document.getElementById("modalDoctorName").textContent = dataBlock.dataset.name;
-                document.getElementById("modalSpecialty").textContent = dataBlock.dataset.specialty;
-                document.getElementById("modalProvider").textContent = dataBlock.dataset.provider;
+            // Open modal and load doctor data
+            document.querySelectorAll(".openModalBtn").forEach(btn => {
+                btn.addEventListener("click", () => {
+                    const doctorId = btn.dataset.doctorid;
+                    const dataBlock = document.getElementById("doctor-data-" + doctorId);
 
-                // Fill slots (copy from hidden block)
-                const slotsContainer = document.getElementById("modalSlotsContainer");
-                slotsContainer.innerHTML = dataBlock.innerHTML;
+                    modalName.textContent = dataBlock.dataset.name;
+                    modalSpecialty.textContent = dataBlock.dataset.specialty;
+                    modalProvider.textContent = dataBlock.dataset.provider;
 
-                // Show modal
-                document.getElementById("doctorModal").style.display = "block";
+                    slotsContainer.innerHTML = dataBlock.innerHTML; // inject slot buttons
+                    modal.style.display = "block";
+                });
+            });
+
+            // Close modal
+            document.getElementById("closeModalBtn").addEventListener("click", () => {
+                modal.style.display = "none";
+            });
+    
+            // When slot button is clicked, set hidden slotId and submit form
+            document.addEventListener("click", function (e) {
+                if (e.target.classList.contains("slot-btn")) {
+                    slotIdInput.value = e.target.dataset.slotid;
+                }
             });
         });
 
-        // Close modal
-        document.getElementById("closeModalBtn").addEventListener("click", () => {
-            document.getElementById("doctorModal").style.display = "none";
-        });
+        function showConfirm(form) {
+            const doctor = document.getElementById("modalDoctorName").innerText;
 
-        // document.getElementById("openModalBtn").addEventListener("click", function () {
-        //     document.getElementById("viewDoctorProfile").style.display = "block";
-        // });
-        // document.getElementById("closeModalBtn").addEventListener("click", function () {
-        //     document.getElementById("viewDoctorProfile").style.display = "none";
-        // });
-
-        // window.addEventListener("click", function (event) {
-        //     const modal = document.getElementById("viewDoctorProfile");
-        //     if (event.target === modal) {
-        //         modal.style.display = "none";
-        //     }
-        // });
+            return confirm(`Are you sure you want to book Dr. ${doctor} slot?`);
+        }
     </script>
 </body>
 </html>

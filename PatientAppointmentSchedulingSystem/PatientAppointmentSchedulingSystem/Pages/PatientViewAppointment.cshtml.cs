@@ -8,57 +8,66 @@ namespace PatientAppointmentSchedulingSystem.Pages
     public class PatientViewAppointmentModel : PageModel
     {
         //database connection to query doctor and slots data
-        private readonly DoctorDbContext _context;
+        private readonly AvailabilitySlotDbContext _context;
 
         //constructor
-        public PatientViewAppointmentModel(DoctorDbContext context)
+        public PatientViewAppointmentModel(AvailabilitySlotDbContext context)
         {
             _context = context;
         }
 
-        [BindProperty(SupportsGet = true)]
-        public string Search { get; set; }
-
         public List<DoctorDetails> Doctors { get; set; } = new List<DoctorDetails>();
+
         public List<AvailabilitySlots> AppointmentSlots { get; set; } = new List<AvailabilitySlots>();
 
-        public string PatientFullName { get; set; }
-        public int? PatientId { get; set; }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
-            PatientFullName = HttpContext.Session.GetString("PatientFullName");
-            // ? Retrieve PatientId from session
-            PatientId = HttpContext.Session.GetInt32("PatientId");
-
-            //step 1
-            var doctorQuery = _context.Doctor.AsQueryable(); // don't ToList() yet
-
-            //step 2 apply search filter
-            if (!string.IsNullOrEmpty(Search))
+            int? patientIdFromSession = HttpContext.Session.GetInt32("PatientId");
+            if(patientIdFromSession == null)
             {
-                doctorQuery = doctorQuery
-                    .Where(d => d.DoctorMedicalService.ToLower().Contains(Search.ToLower()) ||
-                           d.DoctorFullName.ToLower().Contains(Search.ToLower()));
-                //d.DoctorSpeciality.ToLower().Contains(Search.ToLower())
+                return RedirectToPage("/PatientLogin");
             }
 
-            //step 3 fetch filtered doctors
-            Doctors = doctorQuery.ToList();
+            //get the slot with status = 1 and correct patient id
+            var appointmentSlotQuery = _context.AvailabilitySlots
+                .Where(s => s.AppointmentStatus == 1 && s.PatientId == (int)patientIdFromSession)
+                .Include(s => s.Doctor)
+                .ToList();
 
-            // Step 4: Get their IDs
-            var doctorIds = Doctors.Select(d => d.DoctorId).ToList();
+            // Step 2: get all specialties in one go (avoid hitting DB in a loop)
+            var specialtyDict = _context.SpecialtyDetails
+                .ToDictionary(sp => sp.SpecialtyId, sp => sp.SpecialtyName);
 
-
-            if (doctorIds.Any())
+            // Step 3: map DoctorSpecialtyName manually
+            foreach (var slot in appointmentSlotQuery)
             {
-                AppointmentSlots = _context.AvailabilitySlots
-                    .Where(slot => doctorIds.Contains(slot.DoctorId))
-                    .Include(slot => slot.Doctor)
-                    .OrderBy(s => s.AppointmentDate)
-                    .ThenBy(s => s.AptStartTime)
-                    .ToList();
+                if (specialtyDict.TryGetValue((int)slot.Doctor.SpecialtyId, out var specName))
+                {
+                    slot.Doctor.DoctorSpecialtyName = specName;
+                }
             }
+
+            AppointmentSlots = appointmentSlotQuery;
+
+            return Page();
+
+        }
+
+        public IActionResult OnPostDelete(int id)
+        {
+            var slot = _context.AvailabilitySlots.FirstOrDefault(s => s.SlotId == id);
+            if (slot != null)
+            {
+                // Clear patient assignment and mark as available
+                slot.PatientId = null;
+                slot.AppointmentStatus = 0;
+
+                _context.SaveChanges();
+            }
+
+            // Refresh page
+            return RedirectToPage();
         }
 
         public IActionResult OnPostBookAppointment(int slotId)

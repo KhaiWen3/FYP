@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PatientAppointmentSchedulingSystem.Pages.Data;
+using System.Diagnostics;
 
 namespace PatientAppointmentSchedulingSystem.Pages
 {
@@ -194,7 +195,7 @@ namespace PatientAppointmentSchedulingSystem.Pages
             return new JsonResult(doctor);
         }
 
-        public IActionResult OnPostBookAppointment(int slotId)
+       /* public IActionResult OnPostBookAppointment(int slotId)
         {
             var patientId = HttpContext.Session.GetInt32("PatientId");
 
@@ -217,6 +218,35 @@ namespace PatientAppointmentSchedulingSystem.Pages
 
             // After booking, refresh the page
             return RedirectToPage(); // reloads current page
+        }*/
+
+        // This handler matches asp-page-handler="BookAppointment"
+        public async Task<IActionResult> OnPostBookAppointmentAsync(int slotId)
+        {
+            // Optional: log to Output window
+            Console.WriteLine($"[DEBUG] Booking appointment for SlotId={slotId}");
+
+            int? patientIdFromSession = HttpContext.Session.GetInt32("PatientId");
+            if(patientIdFromSession == null)
+            {
+                return RedirectToPage("/PatientLogin");
+            }
+            // Find the slot in DB
+            var slot = await _context.AvailabilitySlots.FindAsync(slotId);
+            if (slot == null)
+            {
+                // Not found
+                return NotFound();
+            }
+
+            // Update the slot
+            slot.AppointmentStatus = 1; // e.g., mark as booked
+            slot.PatientId = (int)patientIdFromSession;
+            _context.AvailabilitySlots.Update(slot);
+            await _context.SaveChangesAsync();
+
+            // Redirect to refresh the page (or another page)
+            return RedirectToPage("/PatientHomePage"); // reloads current page
         }
     }
 }

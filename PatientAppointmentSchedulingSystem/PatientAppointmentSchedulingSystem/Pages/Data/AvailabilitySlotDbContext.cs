@@ -12,11 +12,13 @@ namespace PatientAppointmentSchedulingSystem.Pages.Data
 
         public DbSet<DoctorDetails> Doctor { get; set; }
 
+        public DbSet<Specialty> SpecialtyDetails {  get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
             modelBuilder.Entity<PatientDetails>().ToTable("Patients");
+            modelBuilder.Entity<Specialty>().ToTable("Specialty");
 
             //map doctor to the existing table
             modelBuilder.Entity<DoctorDetails>()
