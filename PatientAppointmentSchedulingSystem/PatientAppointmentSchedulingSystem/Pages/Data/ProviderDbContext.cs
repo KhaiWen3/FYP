@@ -12,7 +12,7 @@ namespace PatientAppointmentSchedulingSystem.Pages.Data
         public DbSet<ProviderSpecialty> ProviderSpecialties => Set<ProviderSpecialty>();
         public DbSet<AvailabilitySlots> AvailabilitySlots => Set<AvailabilitySlots>();
         public DbSet<PatientDetails> PatientDetails => Set<PatientDetails>();
-
+       
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

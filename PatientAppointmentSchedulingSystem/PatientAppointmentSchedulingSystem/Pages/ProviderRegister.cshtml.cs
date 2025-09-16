@@ -90,7 +90,7 @@ namespace PatientAppointmentSchedulingSystem.Pages
                         BedCount = Input.BedCount,
                         OwnershipType = Input.OwnershipType,
                         State = Input.State,
-                        Logo = Input.Logo
+                        ProviderLogo = Input.ProviderLogo
                     };
 
                     _context.Provider.Add(provider);

@@ -1,14 +1,17 @@
+using Azure.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using PatientAppointmentSchedulingSystem.Pages.Data;
 using System.Reflection.Metadata.Ecma335;
+using PatientAppointmentSchedulingSystem.Helpers;
 
 namespace PatientAppointmentSchedulingSystem.Pages
 {
     public class ProviderProfileModel : PageModel
     {
+        private readonly FirebaseStorageHelper _firebaseHelper;
         public string ProviderName { get; set; }
 
         [BindProperty]
@@ -21,12 +24,18 @@ namespace PatientAppointmentSchedulingSystem.Pages
         public List<int> SelectedSpecialtyIds { get; set; }
         [BindProperty]
         public List<Specialty> AllSpecialty { get; set; }
+        [BindProperty]
+        public IFormFile ProviderLogo { get; set; }
 
         private readonly ProviderDbContext _context;
-        public ProviderProfileModel(ProviderDbContext context)
+        public ProviderProfileModel(ProviderDbContext context, FirebaseStorageHelper firebaseHelper)
         {
             _context = context;
+            _firebaseHelper = firebaseHelper;
         }
+
+        //[BindProperty]
+        //public IFormFile ImageFile { get; set; }
 
         public async Task<IActionResult> OnGet()
         {
@@ -62,9 +71,9 @@ namespace PatientAppointmentSchedulingSystem.Pages
                         ProviderDetails.Description = "No Description.";
                     }
 
-                    if (ProviderDetails.Logo == null)
+                    if (ProviderDetails.ProviderLogo == null)
                     {
-                        ProviderDetails.Logo = "Default Image";
+                        ProviderDetails.ProviderLogo = "Default Image";
                     }
 
                     if (ProviderDetails.BedCount == 0 || ProviderDetails.BedCount == null)
@@ -122,7 +131,31 @@ namespace PatientAppointmentSchedulingSystem.Pages
                             ProviderDetails.ProviderId = (int)providerIdFromSession;
                             ProviderDetails.Password = pd.Password;
                             _context.Entry(pd).State = EntityState.Detached;
-                            _context.Provider.Update(ProviderDetails);
+
+                            //Firebase image upload for Provider
+                            string logoUrl = null;
+                            if (ProviderLogo != null)
+                            {
+                                using var stream = ProviderLogo.OpenReadStream();
+                                var fileName = $"{Guid.NewGuid()}_{Path.GetFileName(ProviderLogo.FileName)}";
+
+                                //upload to firebase
+                                logoUrl = await _firebaseHelper.UploadImageAsync(stream, fileName, "ProviderLogo", ProviderLogo.ContentType);
+                                TempData["AlertMsg"] = "Logo uploaded to Firebase: " + logoUrl;
+                            }
+                            else
+                            {
+                                TempData["AlertMsg"] = "No new logo uploaded, keeping old one.";
+                            }
+                            if (!string.IsNullOrEmpty(logoUrl))
+                            {
+                                ProviderDetails.ProviderLogo = logoUrl;   // ? save Firebase URL
+                            }
+                            else
+                            {
+                                ProviderDetails.ProviderLogo = pd.ProviderLogo;   // ? keep old
+                            }
+                                _context.Provider.Update(ProviderDetails);
 
                             //Remove old record
                             var existing = _context.ProviderSpecialties
@@ -166,6 +199,31 @@ namespace PatientAppointmentSchedulingSystem.Pages
                         ProviderDetails.ProviderId = (int)providerIdFromSession;
                         ProviderDetails.Password = pd.Password;
                         _context.Entry(pd).State = EntityState.Detached;
+
+                        //Firebase image upload for Provider
+                        string logoUrl = null;
+                        if (ProviderLogo != null)
+                        {
+                            using var stream = ProviderLogo.OpenReadStream();
+                            var fileName = $"{Guid.NewGuid()}_{Path.GetFileName(ProviderLogo.FileName)}";
+
+                            //upload to firebase
+                            logoUrl = await _firebaseHelper.UploadImageAsync(stream, fileName, "ProviderLogo", ProviderLogo.ContentType);
+                            TempData["AlertMsg"] = "Logo uploaded to Firebase: " + logoUrl;
+                        }
+                        else
+                        {
+                            TempData["AlertMsg"] = "No new logo uploaded, keeping old one.";
+                        }
+                        if (!string.IsNullOrEmpty(logoUrl))
+                        {
+                            ProviderDetails.ProviderLogo = logoUrl;   // ? save Firebase URL
+                        }
+                        else
+                        {
+                            ProviderDetails.ProviderLogo = pd.ProviderLogo;   // ? keep old
+                        }
+
                         _context.Provider.Update(ProviderDetails);
 
                         //Remove old record
@@ -204,6 +262,7 @@ namespace PatientAppointmentSchedulingSystem.Pages
 
             }
         }
+
 
     }
 }

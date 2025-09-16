@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using PatientAppointmentSchedulingSystem.Helpers;
 using PatientAppointmentSchedulingSystem.Pages.Data;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Security.Claims;
+using PatientAppointmentSchedulingSystem.Helpers;
 
 namespace PatientAppointmentSchedulingSystem.Pages
 {
@@ -16,6 +18,7 @@ namespace PatientAppointmentSchedulingSystem.Pages
     {
         // inject your ef core context so you can query/insert AvailabilitySlots
         private readonly AvailabilitySlotDbContext _context;
+        //private readonly LarkHelper _larkHelper;
         public DoctorAddAvailableSlotModel(AvailabilitySlotDbContext context)
         {
             _context = context;
@@ -113,6 +116,12 @@ namespace PatientAppointmentSchedulingSystem.Pages
             //    doctorId = int.Parse(doctorIdClaim.Value);
             //}
 
+            string? videoLink = null;
+            if (Input.AppointmentType == "Video")
+            {
+                videoLink = JitsiHelper.GenerateMeetingLink("MediBook-Appointment-VideoVisit");
+            }
+
             //4. using entity framework to create and save the slot
             var slot = new AvailabilitySlots
                 {
@@ -122,7 +131,8 @@ namespace PatientAppointmentSchedulingSystem.Pages
                     AppointmentType = Input.AppointmentType,
                     DoctorId = doctorId,
                     PatientId = null,
-                    AppointmentStatus = 0 //0 = available
+                    AppointmentStatus = 0, //0 = available
+                    VideoVisitLink = Input.AppointmentType =="Video" ? videoLink:null
                 };
     
             try

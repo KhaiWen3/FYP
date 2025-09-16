@@ -19,7 +19,7 @@ namespace PatientAppointmentSchedulingSystem.Pages.Data
                     OwnershipType = "Private",
                     Address= "126, Jalan Tambun, 31400 Ipoh, Perak, Malaysia",
                     State = "Perak",
-                    Logo = "",
+                    ProviderLogo = "",
                     BedCount = 225,
                     Email = "pantaihospitalipoh@gmail.com",
                     Password = "pantaihospitalipoh"

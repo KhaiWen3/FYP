@@ -26,7 +26,7 @@ namespace PatientAppointmentSchedulingSystem.Pages
         [Required]
         public string State { get; set; }
 
-        public string? Logo { get; set; }
+        public string? ProviderLogo { get; set; }
 
         [Required]
         public string Email { get; set; }

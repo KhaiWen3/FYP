@@ -35,6 +35,21 @@
             document.documentElement.setAttribute('data-bs-theme', storedTheme);
         })();
     </script>
+    <style>
+        /* Ensure modal is always on top */
+        .modal {
+            z-index: 2000 !important;
+        }
+
+        .modal-backdrop {
+            z-index: 1900 !important;
+        }
+
+        /* If your navbar has too high z-index, lower it */
+        .navbar {
+            z-index: 1000 !important;
+        }
+    </style>
 </head>
 <body>
     <!-- ======= Site Wrap =======-->
@@ -64,6 +79,7 @@
                                         <script>
                                             $(document).ready(function () {
                                                 $('#doctorTable').DataTable({
+                                                    scrollx:true,
                                                     initComplete: function () {
                                                         $('#doctorTable').show(); // show only after DataTable is styled
                                                     }
@@ -71,39 +87,137 @@
                                             });
                                         </script>
                                     }
-                                    <table id="doctorTable" class="display" style="display:none;">
-                                        <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Name</th>
-                                                <th>Specialty</th>
-                                                <th>Room Number</th>
-                                                <th>Medical Service</th>
-                                                <th>Phone Number</th>
-                                                <th>Email</th>
-                                                <th>Language Spoken</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var d in Model.DoctorList)
-                                            {
+                                    <div class="table-responsive">
+                                        <table id="doctorTable" class="display table table-striped" style="width:100%; display:none;">
+                                            <thead>
                                                 <tr>
-                                                    <td>@d.DoctorId</td>
-                                                    <td>@d.DoctorFullName</td>
-                                                    <td>@d.DoctorSpecialtyName</td>
-                                                    <td>@d.DoctorRoomNum</td>
-                                                    <td>@d.DoctorMedicalService</td>
-                                                    <td>@d.DoctorPhoneNum</td>
-                                                    <td>@d.DoctorEmail</td>
-                                                    <td>@d.DoctorLanguageSpoken</td>
+                                                    <th>ID</th>
+                                                    <th>Name</th>
+                                                    <th>Specialty</th>
+                                                    <th>Medical Service</th>
+                                                    <th>Room Number</th>
+                                                    <th>Phone Number</th>
+                                                    <th>Email</th>
+                                                    <th>Language Spoken</th>
+                                                    <th>Photo</th>
+                                                    <th></th>
                                                 </tr>
-                                            }
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var d in Model.DoctorList)
+                                                {
+                                                    <tr>
+                                                        <td>@d.DoctorId</td>
+                                                        <td>@d.DoctorFullName</td>
+                                                        <td>@d.DoctorSpecialtyName</td>
+                                                        <td>@d.DoctorMedicalService</td>
+                                                        <td>@d.DoctorRoomNum</td>
+                                                        <td>@d.DoctorPhoneNum</td>
+                                                        <td>@d.DoctorEmail</td>
+                                                        <td>@d.DoctorLanguageSpoken</td>
+                                                        <td>
+                                                            @if (!string.IsNullOrEmpty(d.DoctorPhoto))
+                                                            {
+                                                                <img src="@d.DoctorPhoto" alt="Doctor Photo" width="80" height="80" style="object-fit:cover;border-radius:6px;" />
+                                                            }
+                                                            else
+                                                            {
+                                                                <span>No Photo</span>
+                                                            }
+                                                        </td>
+                                                        <td>
+                                                            <button type="button"
+                                                                    class="btn btn-sm btn-outline-primary edit-btn"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#editDoctorModal"
+                                                                    data-id="@d.DoctorId"
+                                                                    data-name="@d.DoctorFullName"
+                                                                    data-specialty="@d.DoctorSpecialtyName"
+                                                                    data-medicalservice="@d.DoctorMedicalService"
+                                                                    data-room="@d.DoctorRoomNum"
+                                                                    data-phone="@d.DoctorPhoneNum"
+                                                                    data-email="@d.DoctorEmail"
+                                                                    data-language="@d.DoctorLanguageSpoken"
+                                                                    data-photo="@d.DoctorPhoto">
+                                                                <i class="bi bi-pencil"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    
                                     
                                 </div>
                             </section>
                         </div>
+
+                        <!--display modal box to update doctor details-->
+                        <div class="modal fade" id="editDoctorModal" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Edit Doctor</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+
+                                    <form method="post" enctype="multipart/form-data" asp-page-handler="EditDoctor">
+                                        <div class="modal-body">
+                                            <input type="hidden" id="DoctorId" name="DoctorId" />
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Full Name</label>
+                                                <input type="text" class="form-control" id="DoctorFullName" name="DoctorFullName" />
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Specialty</label>
+                                                <input type="text" class="form-control" id="DoctorSpecialtyName" name="DoctorSpecialtyName" />
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Medical Service</label>
+                                                <input type="text" class="form-control" id="DoctorMedicalService" name="DoctorMedicalService" />
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Room Number</label>
+                                                <input type="text" class="form-control" id="DoctorRoomNum" name="DoctorRoomNum" />
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Phone</label>
+                                                <input type="text" class="form-control" id="DoctorPhoneNum" name="DoctorPhoneNum" />
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Email</label>
+                                                <input type="email" class="form-control" id="DoctorEmail" name="DoctorEmail" />
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Language Spoken</label>
+                                                <input type="text" class="form-control" id="DoctorLanguageSpoken" name="DoctorLanguageSpoken" />
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Photo</label>
+                                                <input type="file" class="form-control" name="DoctorPhoto" />
+                                                <img id="DoctorPhotoPreview" src="" alt="Preview"
+                                                     style="width:80px;height:80px;margin-top:10px;object-fit:cover;border-radius:6px;" />
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 @* </main> *@
@@ -128,7 +242,34 @@
     <script src="/js/custom.js"></script>
     <script src="/js/send_email.js"></script>
 
-   
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const editButtons = document.querySelectorAll(".edit-btn");
+
+            editButtons.forEach(btn => {
+                btn.addEventListener("click", function () {
+                    document.getElementById("DoctorId").value = this.dataset.id;
+                    document.getElementById("DoctorFullName").value = this.dataset.name;
+                    document.getElementById("DoctorSpecialtyName").value = this.dataset.specialty;
+                    document.getElementById("DoctorMedicalService").value = this.dataset.medicalservice;
+                    document.getElementById("DoctorRoomNum").value = this.dataset.room;
+                    document.getElementById("DoctorPhoneNum").value = this.dataset.phone;
+                    document.getElementById("DoctorEmail").value = this.dataset.email;
+                    document.getElementById("DoctorLanguageSpoken").value = this.dataset.language;
+
+                    const photoPreview = document.getElementById("DoctorPhotoPreview");
+                    if (this.dataset.photo) {
+                        photoPreview.src = this.dataset.photo;
+                        photoPreview.style.display = "block";
+                    } else {
+                        photoPreview.style.display = "none";
+                    }
+                });
+            });
+        });
+    </script>
+
     <!-- End JavaScripts-->
 </body>
 </html>

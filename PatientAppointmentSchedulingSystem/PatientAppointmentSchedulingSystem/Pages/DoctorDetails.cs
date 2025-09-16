@@ -39,6 +39,7 @@ namespace PatientAppointmentSchedulingSystem.Pages
         [Required]
         public string DoctorLanguageSpoken { get; set; }
 
+        [Url]
         public string? DoctorPhoto { get; set; }
 
         //public List<AvailabilitySlots> AvailabilitySlots { get; set; }

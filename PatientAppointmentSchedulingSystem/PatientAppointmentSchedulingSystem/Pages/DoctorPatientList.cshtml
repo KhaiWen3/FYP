@@ -225,6 +225,12 @@
                                                         <span><b>Patient Name:</b> @slot.Patient.PatientLastName @slot.Patient.PatientFirstName</span><br />
                                                         <span><b>Phone:</b> @slot.Patient.PatientPhoneNum</span><br />
                                                         <span><b>Email:</b> @slot.Patient.PatientEmail</span>
+                                                        <span>
+                                                            @if (slot.AppointmentType.ToLower() == "video")
+                                                            {
+                                                                <p><strong>Link:</strong><a href="@slot.VideoVisitLink" target="_blank"> @slot.VideoVisitLink</a></p>
+                                                            }
+                                                        </span>
                                                     </div>
                                                 </div>
                                             }
