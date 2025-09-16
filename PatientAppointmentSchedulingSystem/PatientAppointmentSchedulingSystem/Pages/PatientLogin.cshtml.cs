@@ -10,11 +10,13 @@ namespace PatientAppointmentSchedulingSystem.Pages
     public class PatientLoginModel : PageModel
     {
         private readonly PatientDbContext _context;
+        private readonly EmailService _emailService;
         public string ErrorMessage { get; set; }
 
-        public PatientLoginModel(PatientDbContext context)
+        public PatientLoginModel(PatientDbContext context, EmailService emailService)
         {
             _context = context;
+            _emailService = emailService;
         }
 
         [BindProperty]
@@ -61,6 +63,8 @@ namespace PatientAppointmentSchedulingSystem.Pages
                 else
                 {
                     HttpContext.Session.SetInt32("PatientId", patient.PatientId);
+                    //testing email generate
+                    await _emailService.SendEmailAsync("kwen0310098@gmail.com", "Love U BB JI", "Nice to meet you, generate email successfully.");
                     return RedirectToPage("/PatientHomePage");
                 }
             }

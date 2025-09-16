@@ -3,12 +3,14 @@ using Microsoft.EntityFrameworkCore;
 using PatientAppointmentSchedulingSystem.Data;
 using PatientAppointmentSchedulingSystem.Pages.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using PatientAppointmentSchedulingSystem.Pages;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddSession();
+builder.Services.AddTransient<EmailService>();
 
 //add authentication services
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
