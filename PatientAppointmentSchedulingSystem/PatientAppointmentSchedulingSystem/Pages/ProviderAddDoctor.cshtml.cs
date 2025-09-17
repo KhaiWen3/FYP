@@ -36,7 +36,7 @@ namespace PatientAppointmentSchedulingSystem.Pages
             int? providerId = HttpContext.Session.GetInt32("ProviderId");
             if(providerId == null) 
             {
-                TempData["AlertMsg"] = "Session Time Out, Please Login Again";
+                //TempData["AlertMsg"] = "Session Time Out, Please Login Again";
                 return RedirectToPage("/ProviderLogin"); 
             }
             else

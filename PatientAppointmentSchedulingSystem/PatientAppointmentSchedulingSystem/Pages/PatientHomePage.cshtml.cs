@@ -23,8 +23,9 @@ namespace PatientAppointmentSchedulingSystem.Pages
         [BindProperty(SupportsGet = true)]
         public int? SpecialtyId { get; set; }
 
-        
-        
+        public List<ProviderDetails> Providers { get; set; } = new();
+        public List<InsuranceProvider> InsuranceList { get; set; } = new();
+
         public SelectList SpecialtyOptions => new SelectList(Specialties, "SpecialtyId", "SpecialtyName", SpecialtyId);
 
         [BindProperty]
@@ -128,7 +129,7 @@ namespace PatientAppointmentSchedulingSystem.Pages
                 {
                     DoctorId = d.DoctorId,
                     DoctorFullName = d.DoctorFullName,
-                    DoctorMedicalService = d.DoctorMedicalService,
+                    //DoctorMedicalService = d.DoctorMedicalService,
                     // uses the navigation loaded above
                     DoctorProviderName = d.Provider != null ? d.Provider.Name : null,
                     DoctorSpecialtyName = d.Specialty != null ? d.Specialty.SpecialtyName : null,

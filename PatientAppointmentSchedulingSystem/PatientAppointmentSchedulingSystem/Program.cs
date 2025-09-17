@@ -1,9 +1,10 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PatientAppointmentSchedulingSystem.Data;
-using PatientAppointmentSchedulingSystem.Pages.Data;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using PatientAppointmentSchedulingSystem.Helpers;
 using PatientAppointmentSchedulingSystem.Pages;
+using PatientAppointmentSchedulingSystem.Pages.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddSession();
 builder.Services.AddTransient<EmailService>();
+builder.Services.AddScoped<FirebaseStorageHelper>();
+
 
 //add authentication services
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

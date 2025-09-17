@@ -28,7 +28,7 @@ namespace PatientAppointmentSchedulingSystem.Pages
         
         //FK
         [Required]
-        public int InsuranceProviderId { get; set; }
+        public int? InsuranceProviderId { get; set; }
 
         public string? PatientAppointment {  get; set; }
 

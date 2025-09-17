@@ -29,6 +29,12 @@ namespace PatientAppointmentSchedulingSystem.Pages
         {
             int? idPatientSession = HttpContext.Session.GetInt32("PatientId");
 
+            //chatgpt call me add this
+            PatientDetails = await _context.Patients
+                .Include(p => p.InsuranceProviders) // navigation property
+                .FirstOrDefaultAsync(p => p.PatientId == idPatientSession);
+
+
             InsuranceProviderList = await _context.InsuranceProvider
                 .OrderBy(ip => ip.InsuranceProviderName)
                 .Select(ip => new SelectListItem
