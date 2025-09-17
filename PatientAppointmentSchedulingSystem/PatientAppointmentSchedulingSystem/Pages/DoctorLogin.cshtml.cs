@@ -13,11 +13,13 @@ namespace PatientAppointmentSchedulingSystem.Pages
     public class DoctorLoginModel : PageModel
     {
         private readonly DoctorDbContext _context;
+        private readonly EmailService _emailService;
         public string ErrorMessage { get; set; }
 
-        public DoctorLoginModel(DoctorDbContext context)
+        public DoctorLoginModel(DoctorDbContext context,EmailService emailService)
         {
             _context = context;
+            _emailService = emailService;
         }
         [BindProperty]
         public InputModel Input { get; set; }
@@ -68,58 +70,44 @@ namespace PatientAppointmentSchedulingSystem.Pages
                     return RedirectToPage("/DoctorHomePage");
                 }
             }
-            //else
-            //{
-            //    HttpContext.Session.SetInt32("DoctorId", doctor.DoctorId); // for this HttpContext u had been setup at Program.cs
-            //    //So when u login means that u will get the doctor id from the db
-            //    // so the parameter u pass to the session is ("Session Name",value) <-- for the session name u need to remmeber u need to reuse
-            //}
-
-            // 2) Store everything you need in Session (not claims)
-            //HttpContext.Session.SetInt32("DoctorId", doctor.DoctorId);
-            //HttpContext.Session.SetString("DoctorEmail", doctor.DoctorEmail);
-            //HttpContext.Session.SetString("DoctorName", doctor.DoctorFullName);
-            //HttpContext.Session.SetString("DoctorRole", "Doctor");
-
-            // 3) (Optional) Sign in with an empty identity so [Authorize] works
-            //    No user data in claims — you will read from Session everywhere.
-            //var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-            //var principal = new ClaimsPrincipal(identity);
-
-            // Create claims so the Add Slots page knows who the doctor is
-            //var claims = new List<Claim>
-            //{
-            //    new Claim(ClaimTypes.NameIdentifier, doctor.DoctorId.ToString()),
-            //    new Claim(ClaimTypes.Email, doctor.DoctorEmail),
-            //    new Claim(ClaimTypes.Name, doctor.DoctorFullName),
-            //    new Claim(ClaimTypes.Role, "Doctor")
-            //};
-
-            //var Identity = new ClaimsIdentity(
-            //    claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            //var principal = new ClaimsPrincipal(Identity);
-
-            //var authProperties = new AuthenticationProperties
-            //{
-            //    // You can configure additional properties here
-            //    IsPersistent = true // For "Remember me" functionality
-            //};
-
-            // Important - Sign in the doctor
-            //await HttpContext.SignInAsync(
-            //    CookieAuthenticationDefaults.AuthenticationScheme,
-            //    principal,  
-            //    new AuthenticationProperties { IsPersistent = true });
-
-
-            //return RedirectToPage("/DoctorHomePage"); // Redirect to doctor dashboard
         }
 
-        //private bool VerifyPassword(string enteredPassword, string storedHash)
-        //{
-        //    // Implement your password verification logic here
-        //    // This is a simple example - use proper password hashing in production
-        //    return enteredPassword == storedHash; // Replace with proper hashing
-        //}
+        public async Task<IActionResult> OnPostForgotPasswordAsync(string resetEmail)
+        {
+            if (string.IsNullOrEmpty(resetEmail))
+            {
+                TempData["AlertMsg"] = "Please enter an email address.";
+                return Page();
+            }
+
+            // Check if doctor exists
+            var doctor = await _context.Doctor.FirstOrDefaultAsync(d => d.DoctorEmail == resetEmail);
+            if (doctor == null)
+            {
+                TempData["AlertMsg"] = "Email not found in system.";
+                return Page();
+            }
+
+            var randomPassword = Guid.NewGuid().ToString("N").Substring(0, 8);
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(randomPassword);
+
+            doctor.DoctorPassword = hashedPassword;
+
+            await _context.SaveChangesAsync();
+
+            string subject = "Reset Your Account Password";
+            string body = $@"
+                <p>Hello Doctor {doctor.DoctorFullName},</p>
+                <p>Your password has been reset. Here is your new password:</p>
+                <h3>{randomPassword}</h3>
+                <p>If you does not request for new password, kindly ignore it.</p>
+                <p>Regards,<br/>MediBook Team</p>";
+
+            await _emailService.SendEmailAsync(doctor.DoctorEmail,subject,body);
+
+            TempData["AlertMsg"] = "Password reset had sent to " + resetEmail;
+
+            return RedirectToPage("/DoctorLogin");
+        }
     }
 }

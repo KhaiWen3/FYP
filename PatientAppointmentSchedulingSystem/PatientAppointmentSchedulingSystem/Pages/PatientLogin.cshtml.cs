@@ -112,7 +112,43 @@ namespace PatientAppointmentSchedulingSystem.Pages
             //return RedirectToPage("/PatientHomePage");
         }
 
+        public async Task<IActionResult> OnPostForgotPasswordAsync(string resetEmail)
+        {
+            if (string.IsNullOrEmpty(resetEmail))
+            {
+                TempData["AlertMsg"] = "Please enter an email address.";
+                return Page();
+            }
 
+            // Check if doctor exists
+            var patient = await _context.Patients.FirstOrDefaultAsync(p => p.PatientEmail == resetEmail);
+            if (patient == null)
+            {
+                TempData["AlertMsg"] = "Email not found in system.";
+                return Page();
+            }
+
+            var randomPassword = Guid.NewGuid().ToString("N").Substring(0, 8);
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(randomPassword);
+
+            patient.PatientPassword = hashedPassword;
+
+            await _context.SaveChangesAsync();
+
+            string subject = "Reset Your Account Password";
+            string body = $@"
+                <p>Hello Patient {patient.PatientLastName} {patient.PatientFirstName},</p>
+                <p>Your password has been reset. Here is your new password:</p>
+                <h3>{randomPassword}</h3>
+                <p>If you does not request for new password, kindly ignore it.</p>
+                <p>Regards,<br/>MediBook Team</p>";
+
+            await _emailService.SendEmailAsync(patient.PatientEmail, subject, body);
+
+            TempData["AlertMsg"] = "Password reset had sent to " + resetEmail;
+
+            return RedirectToPage("/DoctorLogin");
+        }
 
 
         //public async Task<IActionResult> OnPostAsync()
@@ -171,7 +207,7 @@ namespace PatientAppointmentSchedulingSystem.Pages
         //{
         //    return BCrypt.Net.BCrypt.Verify(providedPassword, hashedPassword);
         //}
-       
+
 
 
         //public async Task<IActionResult> OnPostAsync()

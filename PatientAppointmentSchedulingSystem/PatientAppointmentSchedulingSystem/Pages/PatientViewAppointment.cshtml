@@ -389,7 +389,14 @@
                                 <div class="appointment-card mb-3 " style="border: 3px solid var(--@(slot.AppointmentType.ToLower() == "video"? "video-color":"inperson-color")); border-radius:20px;">
                                     <div class="row align-items-center">
                                         <div class="col-md-2">
-                                            <img src="/lib/image/doctorimg1" /api/placeholder/80/80"" alt="Doctor" class="img-fluid rounded-circle">
+                                            @if (!string.IsNullOrEmpty(slot.Doctor.DoctorPhoto))
+                                            {
+                                                <img src="@slot.Doctor.DoctorPhoto" alt="Doctor Photo" width="150" height="auto" style="object-fit:cover;border-radius:6px;" />
+                                            }
+                                            else
+                                            {
+                                                <span>No Photo</span>
+                                            }
                                         </div>
                                         <div class="col-md-7">
                                             <h4 style="font-weight:bold;">@slot.Doctor.DoctorFullName</h4>

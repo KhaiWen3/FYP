@@ -42,6 +42,122 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
+        :root {
+            --accent: #2C7A6B; /* teal circle + accents */
+            --accent-ink: #19735F; /* specialty text */
+            --card-border: #DDEAE6;
+            --card-shadow: 0 6px 18px rgba(44,122,107,.08);
+        }
+
+        .med-block {
+            background-color: #fff;
+        }
+
+        .med-grid .med-card {
+            background: #fff;
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            padding: 22px 20px;
+            box-shadow: var(--card-shadow);
+            transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+            height: 100%;
+        }
+
+            .med-grid .med-card:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 10px 22px rgba(44,122,107,.12);
+                border-color: #cfe3df;
+            }
+
+        .med-avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: #fff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 22px;
+            letter-spacing: .5px;
+            margin-bottom: 16px;
+        }
+
+        .med-name {
+            font-weight: 700;
+            color: #1F2937; /* gray-800 */
+            font-size: clamp(16px, 1.4vw, 20px);
+            margin-bottom: 6px;
+            line-height: 1.25;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .med-spec {
+            color: var(--accent-ink);
+            font-weight: 600;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .cta-wrap .cta-btn {
+            border-radius: 14px;
+            padding: 14px 18px;
+        }
+
+        .track {
+            display: grid;
+            grid-auto-flow: column; /* make columns keep coming horizontally */
+            grid-template-rows: repeat(2, auto); /* exactly two rows */
+            grid-auto-columns: 220px; /* column (card) width */
+            gap: 12px;
+            overflow-x: auto; /* horizontal scroll area */
+            scroll-snap-type: x mandatory; /* nice snapping when auto-scrolling */
+        }
+
+        .testimonial-item {
+            background: #fff;
+            padding: 24px;
+            border-radius: 16px;
+            height: 100%;
+        }
+
+            .testimonial-item p {
+                font-style: italic;
+                color: #555;
+                min-height: 72px;
+            }
+
+        .testimonial-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 12px auto;
+            display: block;
+        }
+
+        .fallback-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #e9ecef;
+            font-weight: 700;
+            font-size: 28px;
+            color: #555;
+        }
+
+        .quote-icon-left, .quote-icon-right {
+            color: #adb5bd;
+        }
+
+        .bg-light {
+            background: #f7f7f7 !important;
+        }
+
         .search-title {
             display: block; /* block so width works */
             width: 100%; /* fill available space */
@@ -317,7 +433,7 @@
                                         <!--Redirect to Login Page to make appointment/ A popup show how to make appointment/ Redirect to "How it Use"-->
                                         <h3 class="fs-5 mb-3">Quick Simple Appointment</h3>
                                         <p class="mb-4">Book, reschedule, or cancel appointments with any doctor in your network in under 30 seconds — no calls, no queues. Just instant confirmation.</p>
-                                    </div><a class="special-link d-inline-flex gap-2 align-items-center text-decoration-none" href="#how-it-works"><span class="icons"><i class="bi bi-box-arrow-up-right"></i></span><span>Book Now</span></a>
+                                    </div><a class="special-link d-inline-flex gap-2 align-items-center text-decoration-none" href="#how-it-works"><span class="icons"><i class="bi bi-box-arrow-up-right" style="position:unset;"></i></span><span>Book Now</span></a>
                                 </div>
                             </div>
                             <!--(2)-->
@@ -327,7 +443,7 @@
                                         <!-- Show Video Visit Doctor Availability -->
                                         <h3 class="fs-5 mb-3">Online Doctor Consultation</h3>
                                         <p class="mb-4">Video consults with board-certified physicians, available day or night, with e-prescriptions sent instantly to your pharmacy.</p>
-                                    </div><a class="special-link d-inline-flex gap-2 align-items-center text-decoration-none" href="#doctor-section"><span class="icons"><i class="bi bi-box-arrow-up-right"></i></span><span>Read more</span></a>
+                                    </div><a class="special-link d-inline-flex gap-2 align-items-center text-decoration-none" href="#doctor-section"><span class="icons"><i class="bi bi-box-arrow-up-right" style="position:unset;"></i></span><span>Read more</span></a>
                                 </div>
                             </div>
                         </div>
@@ -339,7 +455,7 @@
                                         <!--Redirect to view Family Doctor Page-->
                                         <h3 class="fs-5 mb-3">Wide Partnership Network</h3>
                                         <p class="mb-4">We integrate with thousands of clinics, labs, insurers, and pharmacies so your care stays perfectly coordinated.</p>
-                                    </div><a class="special-link d-inline-flex gap-2 align-items-center text-decoration-none" href="#service-provider"><span class="icons"><i class="bi bi-box-arrow-up-right"></i></span><span>Read more</span></a>
+                                    </div><a class="special-link d-inline-flex gap-2 align-items-center text-decoration-none" href="#service-provider"><span class="icons"><i class="bi bi-box-arrow-up-right" style="position:unset;"></i></span><span>Read more</span></a>
                                 </div>
                             </div>
                             <!--(4)-->
@@ -350,7 +466,7 @@
                                         <h3 class="fs-5 mb-3">Insurance Plans</h3>
                                         <p class="mb-4">Real-time eligibility checks and automated claims filing mean you see your exact out-of-pocket cost before you confirm the appointment—no surprises, ever.</p>
                                     </div>
-                                    <a class="special-link d-inline-flex gap-2 align-items-center text-decoration-none" href="#insurance-provider"><span class="icons"><i class="bi bi-box-arrow-up-right"></i></span><span>Read more</span></a>
+                                    <a class="special-link d-inline-flex gap-2 align-items-center text-decoration-none" href="#insurance-provider"><span class="icons"><i class="bi bi-box-arrow-up-right" style="position:unset;"></i></span><span>Read more</span></a>
                                 </div>
                             </div>
                         </div>
@@ -464,7 +580,7 @@
                             <div class="col-md-8">
                                 <div class="p-3 p-md-4 rounded-4">
                                     <div class="row g-4 med-grid">
-                                        @foreach (var item in Model.Doctors.Take(5).Select((d, i) => new { Doctor = d, Index = i }))
+                                        @foreach (var item in Model.DoctorList.Take(5).Select((d, i) => new { Doctor = d, Index = i }))
                                         {
                                             var delay = 150 + item.Index * 100;
                                             <div class="col-12 col-sm-6 col-lg-4" data-aos="fade-up" data-aos-delay="@delay">

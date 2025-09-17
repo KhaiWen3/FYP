@@ -29,12 +29,6 @@ namespace PatientAppointmentSchedulingSystem.Pages
         {
             int? idPatientSession = HttpContext.Session.GetInt32("PatientId");
 
-            //chatgpt call me add this
-            PatientDetails = await _context.Patients
-                .Include(p => p.InsuranceProviders) // navigation property
-                .FirstOrDefaultAsync(p => p.PatientId == idPatientSession);
-
-
             InsuranceProviderList = await _context.InsuranceProvider
                 .OrderBy(ip => ip.InsuranceProviderName)
                 .Select(ip => new SelectListItem
@@ -93,14 +87,20 @@ namespace PatientAppointmentSchedulingSystem.Pages
                     {
                         PatientDetails.EmergencyPhone = "No Emergency Contact Number";
                     }
-                    //if (PatientDetails.InsuranceProvider == null)
-                    //{
-                    //    PatientDetails.InsuranceProvider = "No Insurance Provider";
-                    //}
-                    //if (PatientDetails.PolicyNumber == null)
-                    //{
-                    //    PatientDetails.PolicyNumber = "No Contact Number";
-                    //}
+
+                    var insuranceProviderName = await _context.InsuranceProvider
+                        .Where(ip => ip.InsuranceProviderId == PatientDetails.InsuranceProviderId)
+                        .Select(ip => ip.InsuranceProviderName)
+                        .FirstOrDefaultAsync();
+
+                    if(insuranceProviderName == null)
+                    {
+                        PatientDetails.InsuranceProviderName = "No Insurance Provider";
+                    }
+                    else
+                    {
+                        PatientDetails.InsuranceProviderName = insuranceProviderName;
+                    }
                     if (PatientDetails.BloodType == null)
                     {
                         PatientDetails.BloodType = "Unknown";
@@ -176,8 +176,12 @@ namespace PatientAppointmentSchedulingSystem.Pages
                     //continue the process
                     try
                     {
-                        PatientDetails.PatientId = (int)idPatientSession;
+                        //PatientDetails.PatientId = (int)idPatientSession; 
                         PatientDetails.PatientPassword = PatientD.PatientPassword;
+                        PatientDetails.InsuranceProviderId = InsuranceProviderId;
+
+                        TempData["AlertMsg"] = InsuranceProviderId;
+
                         _context.Entry(PatientD).State = EntityState.Detached;
                         _context.Patients.Update(PatientDetails);
 

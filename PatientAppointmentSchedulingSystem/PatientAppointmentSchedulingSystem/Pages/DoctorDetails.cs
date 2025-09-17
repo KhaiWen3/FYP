@@ -19,6 +19,7 @@ namespace PatientAppointmentSchedulingSystem.Pages
         public string DoctorFullName { get; set; }
 
         [Required]
+        [RegularExpression(@"^\+?[0-9]{9,15}$", ErrorMessage = "Phone number must be between 9 and 15 digits and can start with +")]
         public string DoctorPhoneNum { get; set; }
 
         //[Required]

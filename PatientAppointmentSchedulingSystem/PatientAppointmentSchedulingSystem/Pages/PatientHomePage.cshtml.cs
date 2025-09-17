@@ -36,12 +36,17 @@ namespace PatientAppointmentSchedulingSystem.Pages
         public DoctorDetails Input { get; set; }
 
         public List<DoctorDetails> Doctors { get; set; } = new List<DoctorDetails>();
+        public List<DoctorDetails> DoctorList { get; set; } = new List<DoctorDetails>();
         public List<AvailabilitySlots> AppointmentSlots { get; set; } = new List<AvailabilitySlots>();
         public List<Specialty> Specialties { get; set; } = new();
-
+        [BindProperty]
+        public string InsuranceName { get; set; }
 
         public void OnGet()
         {
+            Providers = _context.ProviderDetails
+                .ToList();
+
             // Load specialties for dropdown
             Specialties = _context.SpecialtyDetails
                 .AsNoTracking()
@@ -66,13 +71,6 @@ namespace PatientAppointmentSchedulingSystem.Pages
                         .ThenInclude(ps => ps.Specialty)   // only if you want SpecialtyName later
                 .AsQueryable();
 
-
-            // 4) Apply filters BEFORE materializing -------------------------
-            //if (!string.IsNullOrWhiteSpace(SearchDoctorName))
-            //{
-            //    var q = SearchDoctorName.Trim();
-            //    doctorQuery = doctorQuery.Where(d => EF.Functions.Like(d.DoctorFullName, $"%{q}%"));
-            //}
             if (!string.IsNullOrWhiteSpace(SearchDoctorName))
             {
                 var q = SearchDoctorName.Trim();
@@ -82,47 +80,12 @@ namespace PatientAppointmentSchedulingSystem.Pages
                 );
             }
 
-            // Specialty filter
-            //if (SpecialtyId.HasValue)
-            //{
-            //    int sid = SpecialtyId.Value;
-            //    doctorQuery = doctorQuery.Where(d => d.SpecialtyId == sid);
-
-            //    //int sid = SpecialtyId.Value;
-
-            //    // Option A: via Provider navigation (if Provider has ProviderSpecialties nav)
-            //    //doctorQuery = doctorQuery.Where(d =>
-            //    //  d.Provider != null &&
-            //    //_context.ProviderSpecialties.Any(ps =>
-            //    //  ps.ProviderId == d.ProviderId && ps.SpecialtyId == sid));
-
-            //    // === Option A: if you have a many-to-many nav:
-            //    //doctorQuery = doctorQuery.Where(d => d.ProviderSpecialties.Any(ps => ps.SpecialtyId == SpecialtyId.Value));
-            //}
             if (SpecialtyId.GetValueOrDefault() > 0)
             {
                 doctorQuery = doctorQuery.Where(d => d.SpecialtyId == SpecialtyId!.Value);
             }
 
-            // 5) Apply specialty filter via the join table (robust)
-            //if (SpecialtyId.GetValueOrDefault() > 0)
-            //{
-            //    var sid = SpecialtyId!.Value;
 
-            //    doctorQuery =
-            //        from d in doctorQuery
-            //        join ps in _context.ProviderSpecialties.AsNoTracking()
-            //            on d.ProviderId equals ps.ProviderId
-            //        where ps.SpecialtyId == sid
-            //        select d;
-
-            //    // If a doctor’s provider has the same specialty multiple times (data issue),
-            //    // remove duplicates:
-            //    doctorQuery = doctorQuery.Distinct();
-            //}
-
-
-            //materialize doctors (filtered)
             Doctors = doctorQuery
                 .Where(d => d.AvailabilitySlots.Any(s => s.AppointmentStatus == 0))
                 .Select(d => new DoctorDetails
@@ -146,26 +109,17 @@ namespace PatientAppointmentSchedulingSystem.Pages
                 })
                 .ToList();
 
+            DoctorList = doctorQuery
+               .Select(d => new DoctorDetails
+               {
+                   DoctorId = d.DoctorId,
+                   DoctorFullName = d.DoctorFullName,   // <-- THIS maps the DB column to your view model
+                   DoctorMedicalService = d.DoctorMedicalService,
+                   DoctorProviderName = d.Provider != null ? d.Provider.Name : null,
+                   DoctorSpecialtyName = d.Specialty != null ? d.Specialty.SpecialtyName : null
+               })
+               .ToList();
 
-            // LOAD SLOTS ONLY FOR FILTERED DOCTORS
-            /*var doctorIds = Doctors.Select(d => d.DoctorId).ToList();
-            if (doctorIds.Count > 0)
-            {
-                AppointmentSlots = _context.AvailabilitySlots
-                    .AsNoTracking()
-                    .Where(slot => doctorIds.Contains(slot.DoctorId))
-                    //.Include(slot => slot.Doctor)
-                    .OrderBy(s => s.AppointmentDate)
-                    .ThenBy(s => s.AptStartTime)
-                    .ToList();
-            }
-
-            foreach (var doctor in Doctors)
-            {
-                doctor.AvailabilitySlots = AppointmentSlots
-                    .Where(slot => slot.DoctorId == doctor.DoctorId)
-                    .ToList();
-            }*/
         }
 
         [HttpGet]
@@ -248,6 +202,18 @@ namespace PatientAppointmentSchedulingSystem.Pages
 
             // Redirect to refresh the page (or another page)
             return RedirectToPage("/PatientHomePage"); // reloads current page
+        }
+
+        public async Task<IActionResult> OnPostSearchAsync()
+        {
+            OnGet();
+            if (!string.IsNullOrWhiteSpace(InsuranceName))
+            {
+                InsuranceList = await _context.InsuranceProvider
+                    .Where(i => i.InsuranceProviderName.ToLower().Contains(InsuranceName.ToLower()))
+                    .ToListAsync();
+            }
+            return Page();
         }
     }
 }

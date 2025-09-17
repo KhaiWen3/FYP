@@ -9,11 +9,13 @@ namespace PatientAppointmentSchedulingSystem.Pages
     public class ProviderLoginModel : PageModel
     {
         private readonly ProviderDbContext _context;
+        private readonly EmailService _emailService;
         public string ErrorMessage { get; set; }
 
-        public ProviderLoginModel(ProviderDbContext context)
+        public ProviderLoginModel(ProviderDbContext context, EmailService emailService)
         {
             _context = context;
+            _emailService = emailService;
         }
 
         [BindProperty]
@@ -74,6 +76,44 @@ namespace PatientAppointmentSchedulingSystem.Pages
             //ProviderSession.ProviderId = provider.ProviderId;
             //System.Diagnostics.Debug.WriteLine("Current User : " + ProviderSession.ProviderId);
            
+        }
+
+        public async Task<IActionResult> OnPostForgotPasswordAsync(string resetEmail)
+        {
+            if (string.IsNullOrEmpty(resetEmail))
+            {
+                TempData["AlertMsg"] = "Please enter an email address.";
+                return Page();
+            }
+
+            // Check if doctor exists
+            var provider = await _context.Provider.FirstOrDefaultAsync(p => p.Email == resetEmail);
+            if (provider == null)
+            {
+                TempData["AlertMsg"] = "Email not found in system.";
+                return Page();
+            }
+
+            var randomPassword = Guid.NewGuid().ToString("N").Substring(0, 8);
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(randomPassword);
+
+            provider.Password = hashedPassword;
+
+            await _context.SaveChangesAsync();
+
+            string subject = "Reset Your Account Password";
+            string body = $@"
+                <p>Hello Provider {provider.Name},</p>
+                <p>Your password has been reset. Here is your new password:</p>
+                <h3>{randomPassword}</h3>
+                <p>If you does not request for new password, kindly ignore it.</p>
+                <p>Regards,<br/>MediBook Team</p>";
+
+            await _emailService.SendEmailAsync(provider.Email, subject, body);
+
+            TempData["AlertMsg"] = "Password reset had sent to " + resetEmail;
+
+            return RedirectToPage("/DoctorLogin");
         }
 
         // A method to verify password (assuming hashed password)

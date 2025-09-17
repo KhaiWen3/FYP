@@ -76,21 +76,28 @@ namespace PatientAppointmentSchedulingSystem.Pages
                     string photoUrl = null;
                     if(DoctorPhoto != null)
                     {
-                        //TempData["AlertMsg"] = "Image is not null";
-                        //var fileName = Path.GetFileName(DoctorPhoto.FileName);
-                        //var filePath = Path.Combine("wwwroot/uploads", fileName);
-                        //var fileName = $"{Guid.NewGuid()}_{Path.GetFileName(DoctorPhoto.FileName)}";
-                        //TempData["AlertMsg"] = "fileName : " + fileName;
                         using var stream = DoctorPhoto.OpenReadStream();
                         var fileName = $"{Guid.NewGuid()}_{Path.GetFileName(DoctorPhoto.FileName)}";
-                        //using (var stream = new FileStream(filePath, FileMode.Create))
-                        //{
-                        //  await DoctorPhoto.CopyToAsync(stream);
-                        //}
                         photoUrl = await _firebaseHelper.UploadImageAsync(stream, fileName, "DoctorImage", DoctorPhoto.ContentType);
                         TempData["AlertMsg"] = "photoUrl : " + photoUrl;
                     }
                     TempData["AlertMsg"] = "Photo Is Null";
+
+                    var duplicateEmail = await _context.Doctor
+                        .FirstOrDefaultAsync(d => d.DoctorEmail.ToLower() == Input.DoctorEmail.ToLower());
+                    if(duplicateEmail != null)
+                    {
+                        TempData["AlertMsg"] = "Email " + Input.DoctorEmail + " had been use, try another email.";
+                        return RedirectToPage("/ProviderAddDoctor");
+                    }
+
+                    var duplicateRoom = await _context.Doctor
+                        .FirstOrDefaultAsync(d => d.ProviderId == providerId && d.DoctorRoomNum == Input.DoctorRoomNum);
+                    if(duplicateRoom != null)
+                    {
+                        TempData["AlertMsg"] = "Room Number " + Input.DoctorRoomNum + " had been use, try another room number.";
+                        return RedirectToPage("/ProviderAddDoctor");
+                    }
 
                     // set ProviderId + hash password, then save
                     Input.ProviderId = (int)providerId.Value;
@@ -117,61 +124,7 @@ namespace PatientAppointmentSchedulingSystem.Pages
                 }
                 return Page();
             }
-
-            // ensure (ProviderId, SpecialtyId) exists due to your composite FK
-            /*await _context.Database.ExecuteSqlRawAsync(@"
-				IF NOT EXISTS (SELECT 1 FROM dbo.ProviderSpecialty WHERE ProviderId=@pid AND SpecialtyId=@sid)
-					INSERT INTO dbo.ProviderSpecialty (ProviderId, SpecialtyId) VALUES (@pid, @sid);",
-                new SqlParameter("@pid", (int)providerId),
-                new SqlParameter("@sid", Input.SpecialtyId));*/
         }
-
-        //public async Task<IActionResult> OnPostUploadImageAsync()
-        //{
-        //    if (DoctorPhoto != null)
-        //    {
-        //        var fileName = $"{Guid.NewGuid()}_{DoctorPhoto.FileName}";
-
-        //        using var stream = DoctorPhoto.OpenReadStream();
-        //        var imageUrl = await _firebaseHelper.UploadImageAsync(stream, fileName);
-
-        //        // Save URL to SQL Server (example: Provider table)
-        //        var provider = await _context.Provider.FindAsync(123); // replace with current providerId
-        //        if (provider != null)
-        //        {
-        //            provider.ProfileImageUrl = imageUrl;
-        //            await _context.SaveChangesAsync();
-        //        }
-        //    }
-
-        //    return RedirectToPage(); // reload ProviderProfile page
-        //}
-
-        //private async Task<int?> GetProviderIdForCurrentUserAsync()
-        //{
-        //    // Prefer explicit ProviderId claim if present
-        //    if (int.TryParse(User.FindFirstValue("ProviderId"), out var pidFromClaim))
-        //        return pidFromClaim;
-
-        //    // Otherwise resolve via email claim (or Name)
-        //    var email = User.FindFirstValue(ClaimTypes.Email) ?? User.Identity?.Name;
-        //    if (!string.IsNullOrWhiteSpace(email))
-        //    {
-        //        var providerIdFromEmail = await _context.Provider
-        //            .Where(p => p.Email == email)
-        //            .Select(p => (int?)p.ProviderId)
-        //            .FirstOrDefaultAsync();
-        //        if (providerIdFromEmail != null)
-        //            return providerIdFromEmail;
-        //    }
-
-        //    // Fallback to static ProviderSession used by ProviderLogin
-        //    if (ProviderSession.ProviderId > 0)
-        //        return ProviderSession.ProviderId;
-
-        //    return null;
-        //}
-
 
     }
 }

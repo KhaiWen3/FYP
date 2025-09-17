@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PatientAppointmentSchedulingSystem.Pages
 {
@@ -45,6 +46,9 @@ namespace PatientAppointmentSchedulingSystem.Pages
 
         //One patient → one provider; one provider → many patients
         public InsuranceProvider? InsuranceProviders { get; set; }
+
+        [NotMapped]
+        public string? InsuranceProviderName {  get; set; }
 
         //public ICollection<InsuranceProvider> InsuranceProviders { get; set; } = new List<InsuranceProvider>();
     }
